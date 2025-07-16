@@ -13,6 +13,8 @@ class TTextField extends StatefulWidget {
   List<TextInputFormatter>? inputFormatters;
   TextStyle? style;
   FocusNode? focusNode;
+  bool autofocus;
+  bool? enabled;
   void Function(String value)? onChanged;
   void Function(String value)? onSubmitted;
   void Function()? onTap;
@@ -32,6 +34,8 @@ class TTextField extends StatefulWidget {
     this.onTap,
     this.onSubmitted,
     this.style,
+    this.autofocus=false,
+    this.enabled,
   });
 
   @override
@@ -62,6 +66,8 @@ class _TTextFieldState extends State<TTextField> {
       controller: widget.controller,
       maxLines: widget.maxLines,
       focusNode: widget.focusNode,
+      autofocus: widget.autofocus,
+      enabled: widget.enabled,
       decoration: InputDecoration(
         label: widget.label,
         hintText: widget.hintText,

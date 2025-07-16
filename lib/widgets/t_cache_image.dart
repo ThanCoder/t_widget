@@ -74,6 +74,8 @@ class _TCacheImageState extends State<TCacheImage> {
       setState(() {
         isLoading = false;
       });
+      debugPrint('TCacheImage:error: ${e.toString()}');
+
     }
   }
 

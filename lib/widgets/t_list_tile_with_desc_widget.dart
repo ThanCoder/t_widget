@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ListTileWithDescWidget extends StatelessWidget {
+class TListTileWithDescWidget extends StatelessWidget {
   Widget widget1;
   Widget widget2;
   String? desc;
   double spacing;
-  ListTileWithDescWidget({
+  TListTileWithDescWidget({
     super.key,
     required this.widget1,
     required this.widget2,

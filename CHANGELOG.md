@@ -1,3 +1,15 @@
+## 0.1.1
+
+## Added Widget
+
++ `TNumberField`
++ `TSearchField`
++ `TListTileWithDescWidget`
+
+## Fixed
++ `TTextField` some pros added
++ `TCacheImage` some error fixed
+
 ## 0.0.1
 
-- init release
++ init release

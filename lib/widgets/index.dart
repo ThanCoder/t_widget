@@ -1,6 +1,6 @@
 export 't_font_list_wiget.dart';
 export 't_list_tile_with_desc.dart';
-export 'list_tile_with_desc_widget.dart';
+export 't_list_tile_with_desc_widget.dart';
 export 't_image_file.dart';
 export 't_image_url.dart';
 export 't_scaffold.dart';
