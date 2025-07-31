@@ -40,7 +40,7 @@ class _TCacheImageState extends State<TCacheImage> {
   void init() async {
     try {
       if (widget.cachePath == null) return;
-      if (TWidgets.instance.onDownloadCacheImage == null) {
+      if (TWidgets.instance.onDownloadImage == null) {
         throw Exception('''await TWidgets.instance.init(
           onDownloadCacheImage: (url, savePath) async {
           //your logic here
@@ -62,7 +62,7 @@ class _TCacheImageState extends State<TCacheImage> {
       });
       // await DioServices.instance.getDio.download(widget.url, file.path);
 
-      await TWidgets.instance.onDownloadCacheImage!(widget.url, file.path);
+      await TWidgets.instance.onDownloadImage!(widget.url, file.path);
 
       if (!mounted) return;
       setState(() {
@@ -74,8 +74,7 @@ class _TCacheImageState extends State<TCacheImage> {
       setState(() {
         isLoading = false;
       });
-      debugPrint('TCacheImage:error: ${e.toString()}');
-
+      TWidgets.instance.showDebugLog('TCacheImage:error: ${e.toString()}');
     }
   }
 

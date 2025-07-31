@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import '../../widgets/index.dart';
 
 class TRenameDialog extends StatefulWidget {
-  String title;
+  Widget? title;
   String text;
   String cancelText;
   String submitText;
@@ -15,10 +15,11 @@ class TRenameDialog extends StatefulWidget {
   TextInputType? textInputType;
   List<TextInputFormatter>? inputFormatters;
   String? Function(String text)? onCheckIsError;
+  bool autofocus;
 
   TRenameDialog({
     super.key,
-    this.title = 'Rename',
+    this.title,
     this.text = 'Untitled',
     this.cancelText = 'Cancel',
     this.submitText = 'Submit',
@@ -29,6 +30,7 @@ class TRenameDialog extends StatefulWidget {
     this.inputFormatters,
     this.textInputType,
     this.onCheckIsError,
+    this.autofocus=false,
   });
 
   @override
@@ -75,12 +77,13 @@ class _TRenameDialogState extends State<TRenameDialog> {
         isSelectAll = false;
       },
       child: AlertDialog(
-        title: Text(widget.title),
+        title: widget.title,
         content: TTextField(
           controller: controller,
           inputFormatters: widget.inputFormatters,
           textInputType: widget.textInputType,
           label: widget.renameLabelText,
+          autofocus: widget.autofocus,
           errorText: errorText,
           onChanged: (value) {
             _checkError(value);

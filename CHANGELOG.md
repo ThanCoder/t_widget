@@ -1,7 +1,20 @@
+## 0.3.0
+
+## Changed
+- `onDownloadCacheImage` -> `onDownloadImage`
+
+## Added Widgets
++ `TCoverChooser`
+
+## Added Libs
++ `file_selector: ^1.0.3`
+
+## Fixed Widgets
++ `TCacheImage`
+
 ## 0.2.0
 
 ## Added Widgets
-
 + `TLoaderRandom`
 
 ## Added Views
