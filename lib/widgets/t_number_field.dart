@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 't_text_field.dart';
+
 class TNumberField extends StatelessWidget {
   TextEditingController? controller;
   Widget? label;
@@ -8,6 +10,7 @@ class TNumberField extends StatelessWidget {
   int? maxLines;
   bool autofocus;
   bool? enabled;
+  String? hintText;
   void Function(String text)? onChanged;
   void Function(String text)? onSubmitted;
   TNumberField({
@@ -20,23 +23,23 @@ class TNumberField extends StatelessWidget {
     this.onSubmitted,
     this.autofocus=false,
     this.enabled,
+    this.hintText,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TTextField(
       controller: controller,
       focusNode: focusNode,
       maxLines: maxLines,
       autofocus: autofocus,
       enabled:enabled ,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      keyboardType: TextInputType.number,
+      textInputType: TextInputType.number,
       onChanged: onChanged,
       onSubmitted: onSubmitted,
-      decoration: InputDecoration(
-        label: label,
-      ),
+      label: label,
+      hintText:hintText,
     );
   }
 }

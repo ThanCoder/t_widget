@@ -1,6 +1,31 @@
+## 0.2.0
+
+## Added Widgets
+
++ `TLoaderRandom`
+
+## Added Views
+
++ `TTagsWrapView`
+
+
+## Added Functions
+
++ `showTMessageDialog`
++ `showTMessageDialogError`
++ `showTSnackBar`
++ `showTSnackBarError`
+
+
+## Fixed Widgets
+
+- `TNumberField`
+- `TChip`
+
+
 ## 0.1.0
 
-## Added Widget
+## Added Widgets
 
 + `TNumberField`
 + `TSearchField`

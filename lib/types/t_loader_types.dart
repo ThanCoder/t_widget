@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -57,14 +59,25 @@ enum TLoaderTypes {
         .toList();
   }
 
-  static Widget getLoaderWidget(
-    TLoaderTypes types, {
+  static Widget getRandomLoader({
     required double loaderSize,
     required Color color,
     Duration duration = const Duration(milliseconds: 3000),
     AnimationController? controller,
   }) {
-    switch (types) {
+    final types = TLoaderTypes.values;
+    final randomType = types[Random().nextInt(types.length)];
+    return getLoaderWidget(randomType, loaderSize: loaderSize, color: color);
+  }
+
+  static Widget getLoaderWidget(
+    TLoaderTypes type, {
+    required double loaderSize,
+    required Color color,
+    Duration duration = const Duration(milliseconds: 3000),
+    AnimationController? controller,
+  }) {
+    switch (type) {
       case TLoaderTypes.FadingCircle:
         return SpinKitFadingCircle(
           size: loaderSize,

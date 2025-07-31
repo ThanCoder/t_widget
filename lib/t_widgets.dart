@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 
 export 'dialogs/index.dart';
 export 'widgets/index.dart';
+export 'functions/index.dart';
+export 'views/index.dart';
+export 'pages/index.dart';
 
 class TWidgets {
   static final TWidgets instance = TWidgets._();
