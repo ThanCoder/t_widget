@@ -9,6 +9,9 @@
 ## Added Libs
 + `file_selector: ^1.0.3`
 
+## Added Services
++ `TAppServices`
+
 ## Fixed Widgets
 + `TCacheImage`
 

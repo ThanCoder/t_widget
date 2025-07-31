@@ -18,6 +18,11 @@ void main() async {
       await Future.delayed(Duration(seconds: 2));
     },
   );
+  // app services
+  await TAppServices.clearAndRefreshImage();
+  await TAppServices.copyText('text');
+  final text = await TAppServices.pasteFromClipboard();
+
   runApp(MyApp());
 }
 
