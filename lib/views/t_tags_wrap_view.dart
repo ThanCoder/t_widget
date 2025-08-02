@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:t_widgets/t_widgets.dart';
 
 class TTagsWrapView extends StatefulWidget {
-  String title;
-  Color? textColor;
+  Widget? title;
   Color? backgroundColor;
+  Color? textColor;
   List<String> values;
   List<String> allTags;
   void Function(List<String> values)? onApply;
   TTagsWrapView({
     super.key,
-    required this.title,
+    this.title,
     required this.values,
     this.allTags = const [],
     this.onApply,
@@ -77,13 +77,20 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
     );
   }
 
+  Widget _getTitle() {
+    if (widget.title != null) {
+      return widget.title!;
+    }
+    return SizedBox.shrink();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 5,
       children: [
-        Text(widget.title),
+        _getTitle(),
         Wrap(
           spacing: 5,
           runSpacing: 5,

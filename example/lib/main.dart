@@ -34,7 +34,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> values = ['name', 'age'];
+  List<String> values = ['name', 'age','name', 'age', 'place', 'home'];
   List<String> allTags = ['name', 'age', 'place', 'home'];
   @override
   Widget build(BuildContext context) {
@@ -53,13 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
             TTagsWrapView(
               textColor: Colors.white,
               backgroundColor: Colors.teal,
-              title: 'tags',
+              // title: Text('tags'),
               values: values,
               allTags: allTags,
-              onApply: (values) {
-                this.values = values;
-                setState(() {});
-              },
+              // onApply: (values) {
+              //   this.values = values;
+              //   setState(() {});
+              // },
             ),
 
             TLoader(types: TLoaderTypes.CubeGrid),
