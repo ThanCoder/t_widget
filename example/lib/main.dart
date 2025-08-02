@@ -19,9 +19,9 @@ void main() async {
     },
   );
   // app services
-  await TAppServices.clearAndRefreshImage();
-  await TAppServices.copyText('text');
-  final text = await TAppServices.pasteFromClipboard();
+  // await TAppServices.clearAndRefreshImage();
+  // await TAppServices.copyText('text');
+  // final text = await TAppServices.pasteFromClipboard();
 
   runApp(MyApp());
 }
@@ -51,6 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
             TChip(title: Text('hello')),
             TListTileWithDesc(title: 'hello', desc: 'i am desc'),
             TTagsWrapView(
+              textColor: Colors.white,
+              backgroundColor: Colors.teal,
               title: 'tags',
               values: values,
               allTags: allTags,

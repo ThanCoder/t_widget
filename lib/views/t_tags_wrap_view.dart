@@ -3,6 +3,8 @@ import 'package:t_widgets/t_widgets.dart';
 
 class TTagsWrapView extends StatefulWidget {
   String title;
+  Color? textColor;
+  Color? backgroundColor;
   List<String> values;
   List<String> allTags;
   void Function(List<String> values)? onApply;
@@ -12,6 +14,8 @@ class TTagsWrapView extends StatefulWidget {
     required this.values,
     this.allTags = const [],
     this.onApply,
+    this.backgroundColor,
+    this.textColor,
   });
 
   @override
@@ -23,12 +27,16 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
     return List.generate(widget.values.length, (index) {
       final name = widget.values[index];
       return TChip(
-        title: Text(name),
-        onDelete: () {
-          widget.values.removeAt(index);
-          if(widget.onApply == null) return;
-          widget.onApply!(widget.values);
-        },
+        backgroundColor: widget.backgroundColor,
+        title: Text(name, style: TextStyle(color: widget.textColor)),
+        onDelete:
+            widget.onApply == null
+                ? null
+                : () {
+                  widget.values.removeAt(index);
+                  if (widget.onApply == null) return;
+                  widget.onApply!(widget.values);
+                },
       );
     });
   }
@@ -48,16 +56,20 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
                   return 'Already Exists!';
                 }
                 return null;
-              }, onSubmit: (List<String> values) { 
-                if(widget.onApply == null) return;
+              },
+              onSubmit: (List<String> values) {
+                if (widget.onApply == null) return;
                 widget.onApply!(values);
-               },
+              },
             ),
       ),
     );
   }
 
   Widget _addButton() {
+    if (widget.onApply == null) {
+      return SizedBox.shrink();
+    }
     return IconButton(
       color: Colors.green,
       onPressed: _addTags,
