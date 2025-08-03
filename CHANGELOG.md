@@ -1,3 +1,6 @@
+## 0.4.2
+- `Fixed Some Errors`
+
 ## 0.4.1
 
 - `TTagsWrapView` add prps
