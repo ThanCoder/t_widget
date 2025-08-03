@@ -10,7 +10,7 @@ class TImageUrl extends StatelessWidget {
   double? height;
   double? size;
   double borderRadius;
-  Widget? loadingBuilder;
+  Widget? loadingProgressWidget;
   FilterQuality filterQuality;
 
   TImageUrl({
@@ -22,7 +22,8 @@ class TImageUrl extends StatelessWidget {
     this.height,
     this.size,
     this.borderRadius = 5,
-    this.filterQuality=FilterQuality.medium,
+    this.filterQuality = FilterQuality.medium,
+    this.loadingProgressWidget,
   });
 
   Widget _getImageWidget() {
@@ -45,6 +46,9 @@ class TImageUrl extends StatelessWidget {
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) {
             return child;
+          }
+          if (loadingProgressWidget != null) {
+            return loadingProgressWidget!;
           }
           return Center(child: TLoaderRandom());
         },

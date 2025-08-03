@@ -1,1 +1,2 @@
-export 'message_fuc.dart';
+export 'message_func.dart';
+export 'dialog_func.dart';

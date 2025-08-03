@@ -10,10 +10,10 @@ class TConfirmDialog extends StatelessWidget {
   TConfirmDialog({
     super.key,
     this.title = 'Confirm',
-    required this.contentText,
     this.cancelText = 'Cancel',
     this.submitText = 'Submit',
     this.onCancel,
+    required this.contentText,
     required this.onSubmit,
   });
 

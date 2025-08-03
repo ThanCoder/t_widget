@@ -1,0 +1,94 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:t_widgets/t_widgets.dart';
+
+void showTConfirmDialog(
+  BuildContext context, {
+  required String contentText,
+  required void Function() onSubmit,
+  Color? color,
+  String title = 'Confirm',
+  String cancelText = 'Cancel',
+  String submitText = 'Submit',
+  void Function()? onCancel,
+  bool barrierDismissible = true,
+}) {
+  showCupertinoDialog(
+    context: context,
+    barrierDismissible: barrierDismissible,
+    builder:
+        (context) => TConfirmDialog(
+          contentText: contentText,
+          onSubmit: onSubmit,
+          onCancel: onCancel,
+          cancelText: cancelText,
+          submitText: submitText,
+          title: title,
+        ),
+  );
+}
+
+void showTReanmeDialog(
+  BuildContext context, {
+  required String text,
+  required void Function(String text) onSubmit,
+  Color? color,
+  Widget? title,
+  String cancelText = 'Cancel',
+  String submitText = 'Submit',
+  void Function()? onCancel,
+  bool barrierDismissible = true,
+  Widget? labelText,
+  void Function(String text)? onChanged,
+  TextInputType? textInputType,
+  List<TextInputFormatter>? inputFormatters,
+  String? Function(String text)? onCheckIsError,
+  bool autofocus = false,
+  String? hintText,
+}) {
+  showCupertinoDialog(
+    context: context,
+    barrierDismissible: barrierDismissible,
+    builder:
+        (context) => TRenameDialog(
+          autofocus: autofocus,
+          inputFormatters: inputFormatters,
+          onCheckIsError: onCheckIsError,
+          onChanged: onChanged,
+          renameLabelText: labelText,
+          textInputType: textInputType,
+          title: title,
+          text: text,
+          onSubmit: onSubmit,
+          onCancel: onCancel,
+          cancelText: cancelText,
+          submitText: submitText,
+          hintText: hintText,
+        ),
+  );
+}
+
+// modal
+void showTModalBottomSheet(
+  BuildContext context, {
+  required Widget child,
+  double minHeight = 150,
+  bool isScrollControlled = false,
+  bool useSafeArea = false,
+  bool isDismissible = true,
+}) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: isScrollControlled,
+    useSafeArea: useSafeArea,
+    isDismissible: isDismissible,
+    builder:
+        (context) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: minHeight),
+            child: child,
+          ),
+        ),
+  );
+}

@@ -1,4 +1,17 @@
+## 0.5.3
+
+## Add Dialog Func
+
+- `showTModalBottomSheet`
+- `showTConfirmDialog`
+- `showTReanmeDialog`
+
+## Add Views
+
+- `TSeeAllView`
+
 ## 0.4.3
+
 - `Fixed Some Errors`
 
 ## 0.4.1

@@ -28,7 +28,7 @@ void showTMessageDialog(
 }) {
   showCupertinoDialog(
     context: context,
-barrierDismissible: true,
+    barrierDismissible: true,
     builder:
         (context) => TMessageDialog(
           title: title,

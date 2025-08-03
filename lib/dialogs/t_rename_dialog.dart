@@ -16,6 +16,7 @@ class TRenameDialog extends StatefulWidget {
   List<TextInputFormatter>? inputFormatters;
   String? Function(String text)? onCheckIsError;
   bool autofocus;
+  String? hintText;
 
   TRenameDialog({
     super.key,
@@ -30,7 +31,8 @@ class TRenameDialog extends StatefulWidget {
     this.inputFormatters,
     this.textInputType,
     this.onCheckIsError,
-    this.autofocus=false,
+    this.autofocus = false,
+    this.hintText,
   });
 
   @override
@@ -85,6 +87,7 @@ class _TRenameDialogState extends State<TRenameDialog> {
           label: widget.renameLabelText,
           autofocus: widget.autofocus,
           errorText: errorText,
+          hintText: widget.hintText,
           onChanged: (value) {
             _checkError(value);
             if (widget.onChanged != null) {
@@ -94,7 +97,9 @@ class _TRenameDialogState extends State<TRenameDialog> {
           onTap: () {
             if (!isSelectAll) {
               controller.selection = TextSelection(
-                  baseOffset: 0, extentOffset: controller.text.length);
+                baseOffset: 0,
+                extentOffset: controller.text.length,
+              );
               isSelectAll = true;
             }
           },
@@ -116,12 +121,13 @@ class _TRenameDialogState extends State<TRenameDialog> {
             child: Text(widget.cancelText),
           ),
           TextButton(
-            onPressed: errorText != null
-                ? null
-                : () {
-                    Navigator.of(context).pop(true);
-                    widget.onSubmit(controller.text);
-                  },
+            onPressed:
+                errorText != null
+                    ? null
+                    : () {
+                      Navigator.of(context).pop(true);
+                      widget.onSubmit(controller.text);
+                    },
             child: Text(widget.submitText),
           ),
         ],

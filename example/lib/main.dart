@@ -34,7 +34,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> values = ['name', 'age','name', 'age', 'place', 'home'];
+  List<String> values = ['name', 'age', 'name', 'age', 'place', 'home'];
   List<String> allTags = ['name', 'age', 'place', 'home'];
   @override
   Widget build(BuildContext context) {
@@ -42,6 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // TSeeAllView(title: title, list: list, onSeeAllClicked: onSeeAllClicked, gridItemBuilder: gridItemBuilder),
+
             TCoverChooser(
               coverPath:
                   '/home/than/Downloads/Telegram Desktop/photo_2025-07-16_01-40-55.jpg',
@@ -61,13 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
               //   setState(() {});
               // },
             ),
-            TImageUrl(url: 'https://raw.githubusercontent.com/ThanCoder/novel-v3-static-server/refs/heads/main/server/images/b1a6805d-8f01-44fc-b241-c349625bf55c.png', size: 150),
+            TImageUrl(
+              url:
+                  'https://raw.githubusercontent.com/ThanCoder/novel-v3-static-server/refs/heads/main/server/images/b1a6805d-8f01-44fc-b241-c349625bf55c.png',
+              size: 150,
+            ),
 
             TLoader(types: TLoaderTypes.CubeGrid),
             TLoaderRandom(),
             TImageFile(path: '', size: 100),
-            
+
             TCacheImage(url: '', size: 150),
+
           ],
         ),
       ),
@@ -75,7 +82,30 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           // darkNotifier.value = !darkNotifier.value;
           // showTMessageDialog(context, 'hello',color: Colors.red);
-          showTMessageDialogError(context, 'snapbar error');
+          // showTMessageDialogError(context, 'snapbar error');
+          // showTConfirmDialog(context, contentText: 'content', onSubmit: () {},barrierDismissible: false);
+          // showTReanmeDialog(
+          //   context,
+          //   text: 'Untitled',
+          //   onSubmit: (text) {},
+          //   title: Text('title'),
+          //   labelText: Text('label'),
+          //   hintText: 'hint',
+          //   barrierDismissible: false,
+          // );
+          showTModalBottomSheet(
+            context,
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text('one'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          );
         },
       ),
     );

@@ -12,6 +12,7 @@ class TCacheImage extends StatefulWidget {
   double? size;
   BoxFit fit;
   double borderRadius;
+  Widget? loadingProgressWidget;
   TCacheImage({
     super.key,
     required this.url,
@@ -21,6 +22,7 @@ class TCacheImage extends StatefulWidget {
     this.size,
     this.fit = BoxFit.cover,
     this.borderRadius = 5,
+    this.loadingProgressWidget,
   });
 
   @override
@@ -79,7 +81,10 @@ class _TCacheImageState extends State<TCacheImage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return TLoaderRandom();
+      if (widget.loadingProgressWidget != null) {
+        return widget.loadingProgressWidget!;
+      }
+      return Center(child: TLoaderRandom());
     }
     if (isExists) {
       return TImageFile(
@@ -98,6 +103,7 @@ class _TCacheImageState extends State<TCacheImage> {
       size: widget.size,
       fit: widget.fit,
       borderRadius: widget.borderRadius,
+      loadingProgressWidget: widget.loadingProgressWidget,
     );
   }
 }
