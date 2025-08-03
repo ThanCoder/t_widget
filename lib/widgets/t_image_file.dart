@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -41,13 +40,7 @@ class TImageFile extends StatelessWidget {
         width: width,
         height: height,
         errorBuilder: (context, error, stackTrace) {
-          // if (file.existsSync()) {
-          //   file.deleteSync();
-          // }
-          if (TWidgets.instance.isDebugPrint) {
-            log('TImageFile: ${error.toString()}');
-          }
-
+          TWidgets.instance.showDebugLog('TImageFile: ${error.toString()}');
           return Image.asset(defaultAssetsPath!, fit: fit);
         },
       );

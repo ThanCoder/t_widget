@@ -60,8 +60,6 @@ class _TCacheImageState extends State<TCacheImage> {
       setState(() {
         isLoading = true;
       });
-      // await DioServices.instance.getDio.download(widget.url, file.path);
-
       await TWidgets.instance.onDownloadImage!(widget.url, file.path);
 
       if (!mounted) return;
@@ -81,7 +79,7 @@ class _TCacheImageState extends State<TCacheImage> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return TLoader();
+      return TLoaderRandom();
     }
     if (isExists) {
       return TImageFile(

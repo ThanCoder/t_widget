@@ -61,11 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
               //   setState(() {});
               // },
             ),
+            TImageUrl(url: 'https://raw.githubusercontent.com/ThanCoder/novel-v3-static-server/refs/heads/main/server/images/b1a6805d-8f01-44fc-b241-c349625bf55c.png', size: 150),
 
             TLoader(types: TLoaderTypes.CubeGrid),
             TLoaderRandom(),
             TImageFile(path: '', size: 100),
-            TImageUrl(url: '', size: 50),
+            
             TCacheImage(url: '', size: 150),
           ],
         ),

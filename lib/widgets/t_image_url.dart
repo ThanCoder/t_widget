@@ -10,6 +10,8 @@ class TImageUrl extends StatelessWidget {
   double? height;
   double? size;
   double borderRadius;
+  Widget? loadingBuilder;
+  FilterQuality filterQuality;
 
   TImageUrl({
     super.key,
@@ -20,6 +22,7 @@ class TImageUrl extends StatelessWidget {
     this.height,
     this.size,
     this.borderRadius = 5,
+    this.filterQuality=FilterQuality.medium,
   });
 
   Widget _getImageWidget() {
@@ -38,16 +41,15 @@ class TImageUrl extends StatelessWidget {
         fit: fit,
         width: width,
         height: height,
+        filterQuality: filterQuality,
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) {
             return child;
           }
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: TLoaderRandom());
         },
         errorBuilder: (context, error, stackTrace) {
-          if (TWidgets.instance.isDebugPrint) {
-            debugPrint('TImageUrl:error $url');
-          }
+          TWidgets.instance.showDebugLog('TImageUrl:error $url');
           return Image.asset(defaultAssetsPath!, fit: fit);
         },
       );
