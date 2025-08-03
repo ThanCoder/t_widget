@@ -58,10 +58,13 @@ class _HomeScreenState extends State<HomeScreen> {
               // title: Text('tags'),
               values: values,
               allTags: allTags,
-              // onApply: (values) {
-              //   this.values = values;
-              //   setState(() {});
-              // },
+              onApply: (values) {
+                this.values = values;
+                setState(() {});
+              },
+              onAddButtonClicked: () {
+                print('on add clicked');
+              },
             ),
             TImageUrl(
               url:

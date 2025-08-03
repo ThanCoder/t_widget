@@ -8,6 +8,7 @@ class TTagsWrapView extends StatefulWidget {
   List<String> values;
   List<String> allTags;
   void Function(List<String> values)? onApply;
+  void Function()? onAddButtonClicked;
   TTagsWrapView({
     super.key,
     this.title,
@@ -16,6 +17,7 @@ class TTagsWrapView extends StatefulWidget {
     this.onApply,
     this.backgroundColor,
     this.textColor,
+    this.onAddButtonClicked,
   });
 
   @override
@@ -42,6 +44,10 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
   }
 
   void _addTags() {
+    if (widget.onAddButtonClicked != null) {
+      widget.onAddButtonClicked!();
+      return;
+    }
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -67,7 +73,7 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
   }
 
   Widget _addButton() {
-    if (widget.onApply == null) {
+    if (widget.onAddButtonClicked == null && widget.onApply == null) {
       return SizedBox.shrink();
     }
     return IconButton(

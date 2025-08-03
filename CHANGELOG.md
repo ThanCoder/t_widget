@@ -1,3 +1,7 @@
+## 0.5.4
+
+- `TTagsWrapView` -> Some Props Changed
+
 ## 0.5.3
 
 ## Add Dialog Func
