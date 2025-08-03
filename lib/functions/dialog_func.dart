@@ -92,3 +92,33 @@ void showTModalBottomSheet(
         ),
   );
 }
+
+// list dialog
+void showTListDialog<T>(
+  BuildContext context, {
+  required List<T> list,
+  required Widget? Function(BuildContext context, T item) listItemBuilder,
+  bool barrierDismissible = true,
+  double height = 200,
+  void Function()? onSubmit,
+  void Function()? onClose,
+}) {
+  showCupertinoDialog(
+    context: context,
+    barrierDismissible: barrierDismissible,
+    builder:
+        (context) => TListDialog<T>(
+          list: list,
+          listItemBuilder: listItemBuilder,
+          height: height,
+          onClose: () {
+            if (onClose == null) return;
+            onClose();
+          },
+          onSubmit: () {
+            if (onSubmit == null) return;
+            onSubmit();
+          },
+        ),
+  );
+}

@@ -43,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             // TSeeAllView(title: title, list: list, onSeeAllClicked: onSeeAllClicked, gridItemBuilder: gridItemBuilder),
-
             TCoverChooser(
               coverPath:
                   '/home/than/Downloads/Telegram Desktop/photo_2025-07-16_01-40-55.jpg',
@@ -62,9 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 this.values = values;
                 setState(() {});
               },
-              onAddButtonClicked: () {
-                print('on add clicked');
-              },
+              // onAddButtonClicked: () {
+              //   print('on add clicked');
+              // },
+              // onClicked: (value) {
+              //   print(value);
+              // },
             ),
             TImageUrl(
               url:
@@ -77,12 +79,22 @@ class _HomeScreenState extends State<HomeScreen> {
             TImageFile(path: '', size: 100),
 
             TCacheImage(url: '', size: 150),
-
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          showTListDialog<String>(
+            context,
+            list: values,
+            listItemBuilder:
+                (context, item) => ListTile(
+                  title: Text(item),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+          );
           // darkNotifier.value = !darkNotifier.value;
           // showTMessageDialog(context, 'hello',color: Colors.red);
           // showTMessageDialogError(context, 'snapbar error');
@@ -96,19 +108,19 @@ class _HomeScreenState extends State<HomeScreen> {
           //   hintText: 'hint',
           //   barrierDismissible: false,
           // );
-          showTModalBottomSheet(
-            context,
-            child: Column(
-              children: [
-                ListTile(
-                  title: Text('one'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          );
+          // showTModalBottomSheet(
+          //   context,
+          //   child: Column(
+          //     children: [
+          //       ListTile(
+          //         title: Text('one'),
+          //         onTap: () {
+          //           Navigator.pop(context);
+          //         },
+          //       ),
+          //     ],
+          //   ),
+          // );
         },
       ),
     );

@@ -9,6 +9,7 @@ class TTagsWrapView extends StatefulWidget {
   List<String> allTags;
   void Function(List<String> values)? onApply;
   void Function()? onAddButtonClicked;
+  void Function(String value)? onClicked;
   TTagsWrapView({
     super.key,
     this.title,
@@ -18,6 +19,7 @@ class TTagsWrapView extends StatefulWidget {
     this.backgroundColor,
     this.textColor,
     this.onAddButtonClicked,
+    this.onClicked,
   });
 
   @override
@@ -31,6 +33,10 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
       return TChip(
         backgroundColor: widget.backgroundColor,
         title: Text(name, style: TextStyle(color: widget.textColor)),
+        onClick: () {
+          if (widget.onClicked == null) return;
+          widget.onClicked!(name);
+        },
         onDelete:
             widget.onApply == null
                 ? null
@@ -43,6 +49,7 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
     });
   }
 
+  // open page
   void _addTags() {
     if (widget.onAddButtonClicked != null) {
       widget.onAddButtonClicked!();
@@ -55,6 +62,7 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
             (context) => TSearchListPage(
               list: widget.allTags.map((e) => e).toList(),
               values: widget.values,
+              autofocus: true,
               cancelText: 'Close',
               submitText: 'New',
               onCheckIsError: (text) {

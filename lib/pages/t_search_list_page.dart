@@ -14,6 +14,7 @@ class TSearchListPage extends StatefulWidget {
   Widget? renameLabelText;
   void Function(String text)? onChanged;
   String? Function(String text)? onCheckIsError;
+  bool autofocus;
   TSearchListPage({
     super.key,
     required this.list,
@@ -26,6 +27,7 @@ class TSearchListPage extends StatefulWidget {
     this.onCancel,
     this.onChanged,
     this.onCheckIsError,
+    this.autofocus=false,
   });
 
   @override
@@ -42,26 +44,6 @@ class _TSearchListPageState extends State<TSearchListPage> {
     // _checkError(controller.text);
     super.initState();
   }
-
-  // void _checkError(String value) {
-  //   if (value.isEmpty) {
-  //     setState(() {
-  //       errorText = 'တစ်ခုခုဖြည့်ရပါမယ်';
-  //     });
-  //     return;
-  //   } else {
-  //     if (widget.onCheckIsError != null) {
-  //       final text = widget.onCheckIsError!(value);
-  //       setState(() {
-  //         errorText = text;
-  //       });
-  //       return;
-  //     }
-  //     setState(() {
-  //       errorText = null;
-  //     });
-  //   }
-  // }
 
   void _addOrRemoveSearchText(bool isChecked, String name) {
     var values = controller.text.split(',').where((e) => e.isNotEmpty).toList();
@@ -90,6 +72,7 @@ class _TSearchListPageState extends State<TSearchListPage> {
               child: TTextField(
                 controller: controller,
                 label: widget.renameLabelText,
+                autofocus: widget.autofocus,
                 errorText: errorText,
                 onChanged: (value) {
                   // _checkError(value);

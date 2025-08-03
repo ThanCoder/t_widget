@@ -1,3 +1,8 @@
+## 0.6.4
+
+## Add Dialog Func
+- `showTListDialog`
+
 ## 0.5.4
 
 - `TTagsWrapView` -> Some Props Changed
