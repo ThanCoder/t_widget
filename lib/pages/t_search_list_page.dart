@@ -15,6 +15,7 @@ class TSearchListPage extends StatefulWidget {
   void Function(String text)? onChanged;
   String? Function(String text)? onCheckIsError;
   bool autofocus;
+  TSearchListTypes type;
   TSearchListPage({
     super.key,
     required this.list,
@@ -27,7 +28,8 @@ class TSearchListPage extends StatefulWidget {
     this.onCancel,
     this.onChanged,
     this.onCheckIsError,
-    this.autofocus=false,
+    this.autofocus = false,
+    this.type = TSearchListTypes.checkList,
   });
 
   @override
@@ -41,24 +43,8 @@ class _TSearchListPageState extends State<TSearchListPage> {
   @override
   void initState() {
     controller.text = widget.values.join(',');
-    // _checkError(controller.text);
     super.initState();
   }
-
-  void _addOrRemoveSearchText(bool isChecked, String name) {
-    var values = controller.text.split(',').where((e) => e.isNotEmpty).toList();
-    if (isChecked) {
-      values.add(name);
-    } else {
-      // ရှိနေရင် ဖျက်မယ်
-      values = values.where((e) => e != name).toList();
-    }
-    controller.text = values.join(',');
-    setState(() {});
-  }
-
-  List<String> get _getValues =>
-      controller.text.split(',').where((e) => e.isNotEmpty).toList();
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +54,18 @@ class _TSearchListPageState extends State<TSearchListPage> {
         padding: const EdgeInsets.all(8.0),
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
-              child: TTextField(
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              floating: true,
+              snap: true,
+              pinned: true,
+              expandedHeight: 100,
+              flexibleSpace: TTextField(
                 controller: controller,
                 label: widget.renameLabelText,
                 autofocus: widget.autofocus,
                 errorText: errorText,
+                maxLines: null,
                 onChanged: (value) {
                   // _checkError(value);
                   if (widget.onChanged != null) {
@@ -88,21 +80,8 @@ class _TSearchListPageState extends State<TSearchListPage> {
                 },
               ),
             ),
-            SliverList.separated(
-              itemCount: widget.list.length,
-              itemBuilder: (context, index) {
-                final item = widget.list[index];
-                return CheckboxListTile.adaptive(
-                  value: _getValues.contains(item),
-                  title: Text(item),
-                  onChanged: (value) {
-                    if (value == null) return;
-                    _addOrRemoveSearchText(value, item);
-                  },
-                );
-              },
-              separatorBuilder: (context, index) => Divider(),
-            ),
+            // style list
+            _getSliverStyleList(),
           ],
         ),
       ),
@@ -115,4 +94,66 @@ class _TSearchListPageState extends State<TSearchListPage> {
       ),
     );
   }
+
+  void _addOrRemoveSearchText(bool isChecked, String name) {
+    var values = controller.text.split(',').where((e) => e.isNotEmpty).toList();
+    if (isChecked) {
+      values.add(name);
+    } else {
+      // ရှိနေရင် ဖျက်မယ်
+      values = values.where((e) => e != name).toList();
+    }
+    controller.text = values.join(',');
+    setState(() {});
+  }
+
+  Widget _getSliverStyleList() {
+    // chip list
+    if (widget.type == TSearchListTypes.chipList) {
+      return _getSliverChipWidget();
+    }
+    // list
+    return _getSliverListWidget();
+  }
+
+  Widget _getSliverListWidget() {
+    return SliverList.separated(
+      itemCount: widget.list.length,
+      itemBuilder: (context, index) {
+        final item = widget.list[index];
+        return CheckboxListTile.adaptive(
+          value: _getValues.contains(item),
+          title: Text(item),
+          onChanged: (value) {
+            if (value == null) return;
+            _addOrRemoveSearchText(value, item);
+          },
+        );
+      },
+      separatorBuilder: (context, index) => Divider(),
+    );
+  }
+
+  Widget _getSliverChipWidget() {
+    return SliverToBoxAdapter(
+      child: Wrap(
+        spacing: 5,
+        runSpacing: 5,
+        children: List.generate(widget.list.length, (index) {
+          final item = widget.list[index];
+          final isChecked = _getValues.contains(item);
+          return TChip(
+            title: Text(item),
+            avatar: isChecked ? Icon(Icons.check) : null,
+            onClick: () {
+              _addOrRemoveSearchText(!isChecked, item);
+            },
+          );
+        }),
+      ),
+    );
+  }
+
+  List<String> get _getValues =>
+      controller.text.split(',').where((e) => e.isNotEmpty).toList();
 }

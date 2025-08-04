@@ -1,0 +1,4 @@
+enum TTagsTypes {
+  chip,
+  text;
+}

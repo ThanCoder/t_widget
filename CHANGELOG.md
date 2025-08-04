@@ -1,13 +1,19 @@
-## 0.6.4
+# 0.6.5
+
+## Fixed
+- Some Error Fixed
+
+# 0.6.4
 
 ## Add Dialog Func
+
 - `showTListDialog`
 
-## 0.5.4
+# 0.5.4
 
 - `TTagsWrapView` -> Some Props Changed
 
-## 0.5.3
+# 0.5.3
 
 ## Add Dialog Func
 
@@ -19,15 +25,15 @@
 
 - `TSeeAllView`
 
-## 0.4.3
+# 0.4.3
 
 - `Fixed Some Errors`
 
-## 0.4.1
+# 0.4.1
 
 - `TTagsWrapView` add prps
 
-## 0.3.0
+# 0.3.0
 
 ## Changed
 
@@ -49,7 +55,7 @@
 
 - `TCacheImage`
 
-## 0.2.0
+# 0.2.0
 
 ## Added Widgets
 
@@ -71,7 +77,7 @@
 - `TNumberField`
 - `TChip`
 
-## 0.1.0
+# 0.1.0
 
 ## Added Widgets
 
@@ -84,6 +90,6 @@
 - `TTextField` some pros added
 - `TCacheImage` some error fixed
 
-## 0.0.1
+# 0.0.1
 
 - init release

@@ -48,8 +48,6 @@ class _TTextFieldState extends State<TTextField> {
   void _selectAll() {
     if (widget.isSelectedAll && widget.controller != null) {
       if (!isSelected) {
-        // widget.controller!.selection = TextSelection(
-        //     baseOffset: 0, extentOffset: widget.controller!.text.length);
         widget.controller!.selectAll();
       }
       isSelected = true;

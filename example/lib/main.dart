@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:t_widgets/t_widgets.dart';
-import 'package:t_widgets/types/t_loader_types.dart';
-import 'package:t_widgets/widgets/t_number_field.dart';
 
-final darkNotifier = ValueNotifier<bool>(false);
+final darkNotifier = ValueNotifier<bool>(true);
 
 void main() async {
   await TWidgets.instance.init(
@@ -34,8 +32,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> values = ['name', 'age', 'name', 'age', 'place', 'home'];
-  List<String> allTags = ['name', 'age', 'place', 'home'];
+  List<String> values = [
+    'name',
+    'age',
+    'name',
+    'place',
+    'city',
+    'yangon',
+    'mm',
+    'gold',
+    'mon',
+    'fast',
+    'logan',
+  ];
+  List<String> allTags = ['than', 'coder', 'win', 'mon'];
+
+  List<String> get _getAllTags {
+    allTags.addAll(values);
+    return allTags.toSet().toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,16 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
               coverPath:
                   '/home/than/Downloads/Telegram Desktop/photo_2025-07-16_01-40-55.jpg',
             ),
-            TTextField(hintText: 'text'),
-            TNumberField(hintText: 'number'),
-            TChip(title: Text('hello')),
+            // TTextField(hintText: 'text'),
+            // TNumberField(hintText: 'number'),
+            // TChip(title: Text('hello')),
             TListTileWithDesc(title: 'hello', desc: 'i am desc'),
             TTagsWrapView(
-              textColor: Colors.white,
-              backgroundColor: Colors.teal,
+              // textColor: Colors.white,
+              // backgroundColor: Colors.teal,
               // title: Text('tags'),
               values: values,
-              allTags: allTags,
+              type: TTagsTypes.text,
+              // searchListType: TSearchListTypes.checkList,
+              allTags: _getAllTags,
               onApply: (values) {
                 this.values = values;
                 setState(() {});
@@ -64,38 +82,25 @@ class _HomeScreenState extends State<HomeScreen> {
               // onAddButtonClicked: () {
               //   print('on add clicked');
               // },
-              // onClicked: (value) {
-              //   print(value);
-              // },
             ),
-            TImageUrl(
-              url:
-                  'https://raw.githubusercontent.com/ThanCoder/novel-v3-static-server/refs/heads/main/server/images/b1a6805d-8f01-44fc-b241-c349625bf55c.png',
-              size: 150,
-            ),
+            // TImageUrl(
+            //   url:
+            //       'https://raw.githubusercontent.com/ThanCoder/novel-v3-static-server/refs/heads/main/server/images/b1a6805d-8f01-44fc-b241-c349625bf55c.png',
+            //   size: 150,
+            // ),
 
-            TLoader(types: TLoaderTypes.CubeGrid),
-            TLoaderRandom(),
-            TImageFile(path: '', size: 100),
+            // TLoader(types: TLoaderTypes.CubeGrid),
+            // TLoaderRandom(),
+            // TImageFile(path: '', size: 100),
 
-            TCacheImage(url: '', size: 150),
+            // TCacheImage(url: '', size: 150),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showTListDialog<String>(
-            context,
-            list: values,
-            listItemBuilder:
-                (context, item) => ListTile(
-                  title: Text(item),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-          );
-          // darkNotifier.value = !darkNotifier.value;
+          darkNotifier.value = !darkNotifier.value;
+
           // showTMessageDialog(context, 'hello',color: Colors.red);
           // showTMessageDialogError(context, 'snapbar error');
           // showTConfirmDialog(context, contentText: 'content', onSubmit: () {},barrierDismissible: false);
@@ -121,6 +126,17 @@ class _HomeScreenState extends State<HomeScreen> {
           //     ],
           //   ),
           // );
+          // showTListDialog<String>(
+          //   context,
+          //   list: values,
+          //   listItemBuilder:
+          //       (context, item) => ListTile(
+          //         title: Text(item),
+          //         onTap: () {
+          //           Navigator.pop(context);
+          //         },
+          //       ),
+          // );
         },
       ),
     );
@@ -136,6 +152,7 @@ class MyApp extends StatelessWidget {
       valueListenable: darkNotifier,
       builder: (context, value, child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           darkTheme: ThemeData.dark(),
           themeMode: value ? ThemeMode.dark : null,
           home: HomeScreen(),

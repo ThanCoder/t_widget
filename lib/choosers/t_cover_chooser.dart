@@ -24,46 +24,58 @@ class _TCoverChooserState extends State<TCoverChooser> {
     super.initState();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: _showMenu,
+        child: SizedBox(
+          width: 150,
+          height: 150,
+          child:
+              isLoading
+                  ? TLoader()
+                  : TImageFile(path: imagePath, borderRadius: 5),
+        ),
+      ),
+    );
+  }
+
   void _showMenu() {
-    showModalBottomSheet(
-      context: context,
-      builder:
-          (context) => SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 150),
-              child: Column(
-                children: [
-                  ListTile(
-                    onTap: () {
-                      Navigator.pop(context);
-                      _addFromPath();
-                    },
-                    leading: const Icon(Icons.add),
-                    title: const Text('Add From Path'),
-                  ),
-                  ListTile(
-                    onTap: () {
-                      Navigator.pop(context);
-                      _downloadUrl();
-                    },
-                    leading: const Icon(Icons.add),
-                    title: const Text('Add From Url'),
-                  ),
-                  File(widget.coverPath).existsSync()
-                      ? ListTile(
-                        onTap: () {
-                          Navigator.pop(context);
-                          _delete();
-                        },
-                        iconColor: Colors.red,
-                        leading: const Icon(Icons.delete_forever_rounded),
-                        title: const Text('Delete'),
-                      )
-                      : const SizedBox.shrink(),
-                ],
-              ),
-            ),
+    showTModalBottomSheet(
+      context,
+      child: Column(
+        children: [
+          ListTile(
+            onTap: () {
+              Navigator.pop(context);
+              _addFromPath();
+            },
+            leading: const Icon(Icons.add),
+            title: const Text('Add From Path'),
           ),
+          ListTile(
+            onTap: () {
+              Navigator.pop(context);
+              _downloadUrl();
+            },
+            leading: const Icon(Icons.add),
+            title: const Text('Add From Url'),
+          ),
+          File(widget.coverPath).existsSync()
+              ? ListTile(
+                onTap: () {
+                  Navigator.pop(context);
+                  _delete();
+                },
+                iconColor: Colors.red,
+                leading: const Icon(Icons.delete_forever_rounded),
+                title: const Text('Delete'),
+              )
+              : const SizedBox.shrink(),
+        ],
+      ),
     );
   }
 
@@ -73,11 +85,13 @@ class _TCoverChooserState extends State<TCoverChooser> {
       builder:
           (context) => TRenameDialog(
             autofocus: true,
-            renameLabelText: const Text('Download From Url'),
+            renameLabelText: const Text('Image Direct Url'),
             submitText: 'Download',
+            cancelText: 'Close',
             text: '',
+            hintText: 'http***....',
             onCheckIsError: (text) {
-              if(!text.startsWith('http')){
+              if (!text.startsWith('http')) {
                 return 'url required!';
               }
               return null;
@@ -89,17 +103,11 @@ class _TCoverChooserState extends State<TCoverChooser> {
                 });
 
                 if (TWidgets.instance.onDownloadImage == null) {
-                  throw Exception('''await TWidgets.instance.init(
-          onDownloadImage: (url, savePath) async {
-          //your logic here
-          },
-        );''');
+                  throw Exception(
+                    TWidgets.instance.getOnDownloadImageErrorText,
+                  );
                 }
-                // await Dio().download(url, widget.coverPath);
-                await TWidgets.instance.onDownloadImage!(
-                  url,
-                  widget.coverPath,
-                );
+                await TWidgets.instance.onDownloadImage!(url, widget.coverPath);
 
                 if (!mounted) return;
 
@@ -110,11 +118,11 @@ class _TCoverChooserState extends State<TCoverChooser> {
                   widget.onChanged!();
                 }
               } catch (e) {
+                TWidgets.instance.showDebugLog(e.toString());
                 if (!mounted) return;
                 setState(() {
                   isLoading = false;
                 });
-                TWidgets.instance.showDebugLog(e.toString());
               }
             },
           ),
@@ -182,23 +190,5 @@ class _TCoverChooserState extends State<TCoverChooser> {
     } catch (e) {
       TWidgets.instance.showDebugLog(e.toString());
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: _showMenu,
-        child: SizedBox(
-          width: 150,
-          height: 150,
-          child:
-              isLoading
-                  ? TLoader()
-                  : TImageFile(path: imagePath, borderRadius: 5),
-        ),
-      ),
-    );
   }
 }

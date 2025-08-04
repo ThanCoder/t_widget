@@ -55,7 +55,7 @@ class _TRenameDialogState extends State<TRenameDialog> {
   void _checkError(String value) {
     if (value.isEmpty) {
       setState(() {
-        errorText = 'တစ်ခုခုဖြည့်ရပါမယ်';
+        errorText = 'required field';
       });
       return;
     } else {

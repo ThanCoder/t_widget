@@ -19,15 +19,14 @@ class TLoaderRandom extends StatelessWidget {
     if (color != null) {
       return color!;
     }
-    if (TWidgets.instance.getDarkMode != null) {
-      final isDark = TWidgets.instance.getDarkMode!();
-      return isDark ? Colors.white : Colors.black;
-    }
-    if (isDarkMode != null) {
-      return isDarkMode! ? Colors.white : Colors.black;
-    }
+    final isDark = TWidgets.instance.getDarkMode();
+    return isDark ? Colors.white : Colors.black;
 
-    return Colors.black;
+    // if (isDarkMode != null) {
+    //   return isDarkMode! ? Colors.white : Colors.black;
+    // }
+
+    // return Colors.black;
   }
 
   @override
