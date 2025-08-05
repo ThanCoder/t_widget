@@ -74,7 +74,7 @@ class _TCacheImageState extends State<TCacheImage> {
       setState(() {
         isLoading = false;
       });
-      TWidgets.instance.showDebugLog('TCacheImage:error: ${e.toString()}');
+      TWidgets.showDebugLog('TCacheImage:error: ${e.toString()}');
     }
   }
 

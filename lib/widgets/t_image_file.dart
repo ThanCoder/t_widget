@@ -40,7 +40,7 @@ class TImageFile extends StatelessWidget {
         width: width,
         height: height,
         errorBuilder: (context, error, stackTrace) {
-          TWidgets.instance.showDebugLog('TImageFile: ${error.toString()}');
+          TWidgets.showDebugLog('TImageFile: ${error.toString()}');
           return Image.asset(defaultAssetsPath!, fit: fit);
         },
       );

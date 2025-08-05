@@ -93,6 +93,29 @@ void showTModalBottomSheet(
   );
 }
 
+void showTMenuBottomSheet(
+  BuildContext context, {
+  required List<Widget> children,
+  double minHeight = 150,
+  bool isScrollControlled = false,
+  bool useSafeArea = false,
+  bool isDismissible = true,
+}) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: isScrollControlled,
+    useSafeArea: useSafeArea,
+    isDismissible: isDismissible,
+    builder:
+        (context) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: minHeight),
+            child: Column(children: children),
+          ),
+        ),
+  );
+}
+
 // list dialog
 void showTListDialog<T>(
   BuildContext context, {

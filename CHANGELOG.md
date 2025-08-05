@@ -1,3 +1,11 @@
+# 0.7.0
+
+## Add Dialog Func
+- `showTMenuBottomSheet`
+
+## Fixed
+- Some Error Fixed
+
 # 0.6.5
 
 ## Fixed

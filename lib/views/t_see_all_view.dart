@@ -20,9 +20,9 @@ class TSeeAllView<T> extends StatelessWidget {
     required this.onSeeAllClicked,
     required this.gridItemBuilder,
     this.moreTitle = const Text('More', style: TextStyle(color: Colors.blue)),
-    this.showCount = 8,
+    this.showCount = 5,
     this.margin,
-    this.showLines,
+    this.showLines = 1,
     this.fontSize = 11,
     this.padding = 6,
     this.titleColor,
@@ -30,8 +30,6 @@ class TSeeAllView<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('${list.length} > $showCount');
-
     final showList = list.take(showCount).toList();
     if (showList.isEmpty) return const SizedBox.shrink();
     int showLine = 1;

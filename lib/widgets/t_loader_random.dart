@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:t_widgets/t_widgets.dart';
-import 'package:t_widgets/types/t_loader_types.dart';
 
 class TLoaderRandom extends StatelessWidget {
   double size;

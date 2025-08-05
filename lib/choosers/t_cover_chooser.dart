@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
 import '../t_widgets.dart';
+
+String? initialDirectory;
 
 class TCoverChooser extends StatefulWidget {
   String coverPath;
@@ -118,7 +119,7 @@ class _TCoverChooserState extends State<TCoverChooser> {
                   widget.onChanged!();
                 }
               } catch (e) {
-                TWidgets.instance.showDebugLog(e.toString());
+                TWidgets.showDebugLog(e.toString());
                 if (!mounted) return;
                 setState(() {
                   isLoading = false;
@@ -134,16 +135,23 @@ class _TCoverChooserState extends State<TCoverChooser> {
       setState(() {
         isLoading = true;
       });
-      final files = await openFiles(
-        acceptedTypeGroups: [
-          const XTypeGroup(
-            mimeTypes: ['image/png', 'image/jpg', 'image/webp', 'image/jpeg'],
-          ),
-        ],
-      );
-      if (files.isNotEmpty) {
-        final path = files.first.path;
+      // default chooser
+      String? path;
+      // check custom image chooser
+      if (TWidgets.instance.onOpenImageFileChooser != null) {
+        // custom
+        path = await TWidgets.instance.onOpenImageFileChooser!(
+          initialDirectory: initialDirectory,
+        );
+      } else {
+        // default
+        path = await getDefaultImageChooser(initialDirectory: initialDirectory);
+      }
+
+      if (path != null) {
         final file = File(path);
+        initialDirectory = file.parent.path;
+
         if (widget.coverPath.isNotEmpty) {
           await file.copy(widget.coverPath);
           // clear image cache
@@ -163,7 +171,7 @@ class _TCoverChooserState extends State<TCoverChooser> {
       setState(() {
         isLoading = false;
       });
-      TWidgets.instance.showDebugLog(e.toString());
+      TWidgets.showDebugLog(e.toString());
     }
   }
 
@@ -188,7 +196,7 @@ class _TCoverChooserState extends State<TCoverChooser> {
         }
       }
     } catch (e) {
-      TWidgets.instance.showDebugLog(e.toString());
+      TWidgets.showDebugLog(e.toString());
     }
   }
 }

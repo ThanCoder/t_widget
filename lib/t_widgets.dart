@@ -15,27 +15,32 @@ class TWidgets {
   factory TWidgets() => instance;
 
   String? defaultImageAssetsPath;
-  bool isDebugPrint = true;
+  static bool isDebugPrint = true;
   Future<void> Function(String url, String savePath)? onDownloadImage;
   late bool Function() getDarkMode;
-  List<String> Function({String? initialDirectory})? onOpenFilesChooser;
+  Future<String?> Function({String? initialDirectory})? onOpenImageFileChooser;
 
   Future<void> init({
     required String defaultImageAssetsPath,
-    bool isDebugPrint = false,
+    bool isDebugPrint = true,
     Future<void> Function(String url, String savePath)? onDownloadImage,
     bool Function()? getDarkMode,
-    List<String> Function({String? initialDirectory})? onOpenFilesChooser,
+    Future<String?> Function({String? initialDirectory})?
+    onOpenImageFileChooser,
   }) async {
     this.defaultImageAssetsPath = defaultImageAssetsPath;
-    this.isDebugPrint = isDebugPrint;
+    isDebugPrint = isDebugPrint;
     this.onDownloadImage = onDownloadImage;
     this.getDarkMode = getDarkMode ?? () => false;
-    this.onOpenFilesChooser = onOpenFilesChooser;
+    this.onOpenImageFileChooser = onOpenImageFileChooser;
   }
 
-  void showDebugLog(String msg) {
+  static void showDebugLog(String msg, {String? tag}) {
     if (isDebugPrint) {
+      if (tag != null) {
+        debugPrint('[$tag]: $msg');
+        return;
+      }
       debugPrint(msg);
     }
   }

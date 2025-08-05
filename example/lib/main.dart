@@ -15,6 +15,10 @@ void main() async {
       //for download image
       await Future.delayed(Duration(seconds: 2));
     },
+    // onOpenImageFileChooser:({initialDirectory})async {
+    //   await Future.delayed(Duration(seconds: 2));
+    //   return null;
+    // },
   );
   // app services
   // await TAppServices.clearAndRefreshImage();

@@ -53,7 +53,7 @@ class TImageUrl extends StatelessWidget {
           return Center(child: TLoaderRandom());
         },
         errorBuilder: (context, error, stackTrace) {
-          TWidgets.instance.showDebugLog('TImageUrl:error $url');
+          TWidgets.showDebugLog('TImageUrl:error $url');
           return Image.asset(defaultAssetsPath!, fit: fit);
         },
       );
