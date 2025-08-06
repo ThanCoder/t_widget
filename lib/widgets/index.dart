@@ -10,3 +10,4 @@ export 't_text_field.dart';
 export 't_cache_image.dart';
 export 't_loader_random.dart';
 export 't_number_field.dart';
+export 't_image.dart';

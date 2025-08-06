@@ -105,7 +105,7 @@ class _TCoverChooserState extends State<TCoverChooser> {
 
                 if (TWidgets.instance.onDownloadImage == null) {
                   throw Exception(
-                    TWidgets.instance.getOnDownloadImageErrorText,
+                    TWidgets.getOnDownloadImageErrorText,
                   );
                 }
                 await TWidgets.instance.onDownloadImage!(url, widget.coverPath);

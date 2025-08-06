@@ -45,7 +45,7 @@ class TWidgets {
     }
   }
 
-  String get getOnDownloadImageErrorText {
+  static String get getOnDownloadImageErrorText {
     return '''await TWidgets.instance.init(
           onDownloadImage: (url, savePath) async {
           //your logic here

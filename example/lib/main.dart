@@ -62,11 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            TImage(source: 'https://raw.githubusercontent.com/ThanCoder/novel-v3-static-server/refs/heads/main/server/images/b1a6805d-8f01-44fc-b241-c349625bf55c.png',size: 200,),
             // TSeeAllView(title: title, list: list, onSeeAllClicked: onSeeAllClicked, gridItemBuilder: gridItemBuilder),
-            TCoverChooser(
-              coverPath:
-                  '/home/than/Downloads/Telegram Desktop/photo_2025-07-16_01-40-55.jpg',
-            ),
+            // TCoverChooser(
+            //   coverPath:
+            //       '/home/than/Downloads/Telegram Desktop/photo_2025-07-16_01-40-55.jpg',
+            // ),
             // TTextField(hintText: 'text'),
             // TNumberField(hintText: 'number'),
             // TChip(title: Text('hello')),
@@ -103,7 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          darkNotifier.value = !darkNotifier.value;
+          // darkNotifier.value = !darkNotifier.value;
+          
 
           // showTMessageDialog(context, 'hello',color: Colors.red);
           // showTMessageDialogError(context, 'snapbar error');

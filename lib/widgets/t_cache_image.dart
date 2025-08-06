@@ -43,11 +43,7 @@ class _TCacheImageState extends State<TCacheImage> {
     try {
       if (widget.cachePath == null) return;
       if (TWidgets.instance.onDownloadImage == null) {
-        throw Exception('''await TWidgets.instance.init(
-          onDownloadCacheImage: (url, savePath) async {
-          //your logic here
-          },
-        );''');
+        throw Exception(TWidgets.getOnDownloadImageErrorText);
       }
       //check file
       final file = File('${widget.cachePath}/${widget.url.getName()}');

@@ -20,7 +20,7 @@ class TSeeAllView<T> extends StatelessWidget {
     required this.onSeeAllClicked,
     required this.gridItemBuilder,
     this.moreTitle = const Text('More', style: TextStyle(color: Colors.blue)),
-    this.showCount = 5,
+    this.showCount = 4,
     this.margin,
     this.showLines = 1,
     this.fontSize = 11,

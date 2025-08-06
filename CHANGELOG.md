@@ -1,14 +1,23 @@
+# 0.8.0
+
+## Added Widgets
+
+- `TImage`
+
 # 0.7.0
 
 ## Add Dialog Func
+
 - `showTMenuBottomSheet`
 
 ## Fixed
+
 - Some Error Fixed
 
 # 0.6.5
 
 ## Fixed
+
 - Some Error Fixed
 
 # 0.6.4
