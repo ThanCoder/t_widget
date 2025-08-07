@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SeeAllView<T> extends StatelessWidget {
+class TSeeAllView<T> extends StatelessWidget {
   List<T> list;
   String title;
   String moreTitle;
@@ -15,7 +15,7 @@ class SeeAllView<T> extends StatelessWidget {
   double itemWidth;
   bool showMoreButtonBottomPos;
 
-  SeeAllView({
+  TSeeAllView({
     super.key,
     required this.title,
     required this.list,
