@@ -1,6 +1,13 @@
 # 0.8.1
 
 ## Fixed
+
+- `SeeAllView`
+
+# 0.8.1
+
+## Fixed
+
 - `SeeAllView`
 
 # 0.8.0
