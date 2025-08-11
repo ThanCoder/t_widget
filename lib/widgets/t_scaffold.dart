@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class MyScaffold extends StatelessWidget {
+class TScaffold extends StatelessWidget {
   PreferredSizeWidget? appBar;
   Widget? body;
   Widget? floatingActionButton;
@@ -28,7 +28,7 @@ class MyScaffold extends StatelessWidget {
   bool drawerEnableOpenDragGesture;
   bool endDrawerEnableOpenDragGesture;
   String? restorationId;
-  MyScaffold({
+  TScaffold({
     super.key,
     required this.body,
     this.customBoxConstraints,
