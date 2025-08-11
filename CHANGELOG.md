@@ -1,10 +1,15 @@
-# 0.8.2
+# 0.9.4
 
-## Fixed
+## Added Widgets
 
-- `SeeAllView`
+- `TScrollableColumn`
+- `MyScaffold` -> changed new class && add `BoxConstraints` props
 
-# 0.8.1
+## Fixed Widgets
+
+- `TSearchField` -> some props added && fixed
+
+# 0.8.3
 
 ## Fixed
 

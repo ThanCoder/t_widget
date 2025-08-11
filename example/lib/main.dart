@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:t_widgets/t_widgets.dart';
+import 'package:t_widgets/widgets/t_search_field.dart';
 
 final darkNotifier = ValueNotifier<bool>(true);
 
@@ -60,9 +61,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
+        child: TScrollableColumn(
           children: [
-            TImage(source: 'https://raw.githubusercontent.com/ThanCoder/novel-v3-static-server/refs/heads/main/server/images/b1a6805d-8f01-44fc-b241-c349625bf55c.png',size: 200,),
+            TSearchField(),
+            TImage(
+              source:
+                  'https://raw.githubusercontent.com/ThanCoder/novel-v3-static-server/refs/heads/main/server/images/b1a6805d-8f01-44fc-b241-c349625bf55c.png',
+              size: 200,
+            ),
             // TSeeAllView(title: title, list: list, onSeeAllClicked: onSeeAllClicked, gridItemBuilder: gridItemBuilder),
             // TCoverChooser(
             //   coverPath:
@@ -105,7 +111,10 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // darkNotifier.value = !darkNotifier.value;
-          
+          showTMenuBottomSheet(
+            context,
+            children: [ListTile(title: Text('hello'))],
+          );
 
           // showTMessageDialog(context, 'hello',color: Colors.red);
           // showTMessageDialogError(context, 'snapbar error');
