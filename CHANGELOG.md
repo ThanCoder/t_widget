@@ -1,3 +1,9 @@
+# 0.9.6
+
+## Fixed Widgets
+
+- `TTagsWrapView`
+
 # 0.9.5
 
 ## Added Widgets

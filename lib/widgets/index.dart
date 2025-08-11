@@ -12,3 +12,4 @@ export 't_loader_random.dart';
 export 't_number_field.dart';
 export 't_image.dart';
 export 't_scrollable_column.dart';
+export 't_search_field.dart';

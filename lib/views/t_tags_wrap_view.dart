@@ -148,7 +148,9 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
               ? Icon(Icons.check)
               : null,
       onClick: () {
-        widget.onChecked!(false, name);
+        if (widget.onChecked != null) {
+          widget.onChecked!(false, name);
+        }
       },
       onDelete:
           widget.onApply == null

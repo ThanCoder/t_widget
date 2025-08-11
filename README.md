@@ -3,7 +3,7 @@
 ```Dart
 await TWidgets.instance.init(
   // required for TImage,TCoverImage -> default cover path
-  defaultImageAssetsPath: 'assets/logo.webp',
+  defaultImageAssetsPath: 'assets/logo.png',
   isDebugPrint: true,
   getDarkMode: () => darkNotifier.value,
   onDownloadImage: (url, savePath) async {

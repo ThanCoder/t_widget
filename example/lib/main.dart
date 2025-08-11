@@ -85,14 +85,17 @@ class _HomeScreenState extends State<HomeScreen> {
               values: values,
               type: TTagsTypes.text,
               // searchListType: TSearchListTypes.checkList,
-              allTags: _getAllTags,
-              onApply: (values) {
-                this.values = values;
-                setState(() {});
-              },
+              // allTags: _getAllTags,
+              // onApply: (values) {
+              //   this.values = values;
+              //   setState(() {});
+              // },
               // onAddButtonClicked: () {
               //   print('on add clicked');
               // },
+              onClicked: (value) {
+                print(value);
+              },
             ),
             // TImageUrl(
             //   url:
