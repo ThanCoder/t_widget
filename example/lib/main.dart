@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // backgroundColor: Colors.teal,
               // title: Text('tags'),
               values: values,
-              type: TTagsTypes.text,
+              // type: TTagsTypes.text,
               // searchListType: TSearchListTypes.checkList,
               // allTags: _getAllTags,
               // onApply: (values) {
