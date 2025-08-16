@@ -1,3 +1,15 @@
+# 1.0.0
+
+## Fixed Widgets
+
+- `TFontListWiget` -> some pros && error
+- `TListTileWithDescWidget` -> props
+- `TCoverChooser` -> default params
+
+## Added Widgets
+
+- `TLoaderRandom` -> `TLoader.random()`
+
 # 0.9.7
 
 ## Fixed Widgets

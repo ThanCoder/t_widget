@@ -14,6 +14,10 @@ class TLoader extends StatelessWidget {
     this.types = TLoaderTypes.FadingCircle,
   });
 
+  static Widget random({double size = 50, Color? color, bool? isDarkMode}) {
+    return TLoaderRandom(size: size, color: color, isDarkMode: isDarkMode);
+  }
+
   Widget _getLoaderWidget() {
     return TLoaderTypes.getLoaderWidget(
       types,
@@ -28,16 +32,6 @@ class TLoader extends StatelessWidget {
     }
     final isDark = TWidgets.instance.getDarkMode();
     return isDark ? Colors.white : Colors.black;
-
-    // if (TWidgets.instance.getDarkMode != null) {
-    //   final isDark = TWidgets.instance.getDarkMode!();
-    //   return isDark ? Colors.white : Colors.black;
-    // }
-    // if (isDarkMode != null) {
-    //   return isDarkMode! ? Colors.white : Colors.black;
-    // }
-
-    // return Colors.black;
   }
 
   @override

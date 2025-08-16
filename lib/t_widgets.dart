@@ -9,6 +9,11 @@ export 'services/index.dart';
 export 'choosers/index.dart';
 export 'types/index.dart';
 
+typedef DownloadImageCallback =
+    Future<void> Function(String url, String savePath);
+typedef OpenImageFileChooserCallback =
+    Future<String?> Function({String? initialDirectory});
+
 class TWidgets {
   static final TWidgets instance = TWidgets._();
   TWidgets._();
@@ -16,17 +21,16 @@ class TWidgets {
 
   String? defaultImageAssetsPath;
   static bool isDebugPrint = true;
-  Future<void> Function(String url, String savePath)? onDownloadImage;
+  DownloadImageCallback? onDownloadImage;
   late bool Function() getDarkMode;
-  Future<String?> Function({String? initialDirectory})? onOpenImageFileChooser;
+  OpenImageFileChooserCallback? onOpenImageFileChooser;
 
   Future<void> init({
     required String defaultImageAssetsPath,
     bool isDebugPrint = true,
-    Future<void> Function(String url, String savePath)? onDownloadImage,
+    DownloadImageCallback? onDownloadImage,
     bool Function()? getDarkMode,
-    Future<String?> Function({String? initialDirectory})?
-    onOpenImageFileChooser,
+    OpenImageFileChooserCallback? onOpenImageFileChooser,
   }) async {
     this.defaultImageAssetsPath = defaultImageAssetsPath;
     isDebugPrint = isDebugPrint;

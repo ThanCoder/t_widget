@@ -1,3 +1,5 @@
+import 'dart:io';
+
 extension StringExtension on String {
   String toCaptalize() {
     if (isEmpty) return this;
@@ -5,18 +7,17 @@ extension StringExtension on String {
   }
 
   String getName({bool withExt = true}) {
-    var name = split('/').last;
-    if (withExt) {
-      return name;
+    final file = File(this);
+    if (!withExt) {
+      // ext မပါဘူး
+      final name = file.uri.pathSegments.last;
+      return name.split('.').first;
     }
-    //replace . ပါလာရင်
-    String ext = name.split('.').last;
-    final noExt = name.replaceAll('.$ext', '');
-    // name = '${name.replaceAll('.', ' ')}.$ext';
-    return noExt;
+    return file.uri.pathSegments.last;
   }
 
-  String getExt() {
-    return split('/').last.split('.').last;
+  String get getExt {
+    final file = File(this);
+    return file.uri.pathSegments.last.split('.').last;
   }
 }

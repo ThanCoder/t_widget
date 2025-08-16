@@ -1,27 +1,30 @@
 import 'dart:io';
 
+import 'package:t_widgets/extensions/double_extension.dart';
+
 extension FileSystemEntityExtension on FileSystemEntity {
   String getName({bool withExt = true}) {
-    var name = path.split('/').last;
-    if (withExt) {
-      return name;
+    if (!withExt) {
+      // ext မပါဘူး
+      final name = uri.pathSegments.last;
+      return name.split('.').first;
     }
-    //replace . ပါလာရင်
-    String ext = name.split('.').last;
-    final noExt = name.replaceAll('.$ext', '');
-    // name = '${noExt.replaceAll('.', ' ')}.$ext';
-    return noExt;
+    return uri.pathSegments.last;
   }
 
-  String getExt() {
-    return path.split('/').last.split('.').last;
+  String get getExt {
+    return uri.pathSegments.last.split('.').last;
   }
 
-  bool isDirectory() {
+  bool get isDirectory {
     return statSync().type == FileSystemEntityType.directory;
   }
 
-  bool isFile() {
+  bool get isFile {
     return statSync().type == FileSystemEntityType.file;
+  }
+
+  String getSizeLabel({int asFixed = 2}) {
+    return statSync().size.toDouble().toFileSizeLabel(asFixed: asFixed);
   }
 }

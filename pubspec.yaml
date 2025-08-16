@@ -1,11 +1,11 @@
 name: t_widgets
 description: "flutter custom widgets "
-version: 0.9.7
+version: 1.0.0
 homepage: https://github.com/ThanCoder/t_widget.git
 repository: https://github.com/ThanCoder/t_widget.git
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.8.1
   flutter: ">=3.3.0"
 
 dependencies:

@@ -7,7 +7,7 @@ Future<String?> getDefaultImageChooser({String? initialDirectory}) async {
       initialDirectory: initialDirectory,
       acceptedTypeGroups: [
         const XTypeGroup(
-          mimeTypes: ['image/png', 'image/jpg', 'image/webp', 'image/jpeg'],
+          mimeTypes: ['image/*'],
         ),
       ],
     );

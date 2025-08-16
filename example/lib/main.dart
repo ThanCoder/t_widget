@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:t_widgets/t_widgets.dart';
-import 'package:t_widgets/widgets/t_search_field.dart';
 
 final darkNotifier = ValueNotifier<bool>(true);
 
@@ -52,10 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   List<String> allTags = ['than', 'coder', 'win', 'mon'];
 
-  List<String> get _getAllTags {
-    allTags.addAll(values);
-    return allTags.toSet().toList();
-  }
+  // List<String> get _getAllTags {
+  //   allTags.addAll(values);
+  //   return allTags.toSet().toList();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: TScrollableColumn(
           children: [
             TSearchField(),
+            TFontListWiget(
+              label: Text('Font Chooser'),
+              fontSize: 15,
+              onChange: (fontSize) {
+                print('fontSize: $fontSize');
+              },
+            ),
             TImage(
               source:
                   'https://raw.githubusercontent.com/ThanCoder/novel-v3-static-server/refs/heads/main/server/images/b1a6805d-8f01-44fc-b241-c349625bf55c.png',

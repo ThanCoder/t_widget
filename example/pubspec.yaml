@@ -3,7 +3,7 @@ description: "Demonstrates how to use the t_widgets plugin."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.8.1
 dependencies:
   flutter:
     sdk: flutter
