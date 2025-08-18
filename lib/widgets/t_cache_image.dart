@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:t_widgets/extensions/index.dart';
+import 'package:t_widgets/extensions/string_extension.dart';
 import 'package:t_widgets/t_widgets.dart';
 
 class TCacheImage extends StatefulWidget {

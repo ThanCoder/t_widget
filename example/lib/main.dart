@@ -6,7 +6,7 @@ final darkNotifier = ValueNotifier<bool>(true);
 void main() async {
   await TWidgets.instance.init(
     // required for TImage,TCoverImage -> default cover path
-    defaultImageAssetsPath: 'assets/logo.webp',
+    defaultImageAssetsPath: 'assets/logo.png',
     isDebugPrint: true,
     getDarkMode: () => darkNotifier.value,
     onDownloadImage: (url, savePath) async {
@@ -119,11 +119,50 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // darkNotifier.value = !darkNotifier.value;
           showTMenuBottomSheet(
             context,
-            children: [ListTile(title: Text('hello'))],
+            title: Text('i am title widget'),
+            // isScrollControlled: true,
+            children: List.generate(
+              3,
+              (index) => ListTile(
+                title: Text('menu ${index + 1}'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
           );
+          // showTAlertDialog(
+          //   context,
+          //   content: Text('content'),
+          //   onCancel: () {
+          //     print('cancel');
+          //   },
+          //   onSubmit: () {
+          //     print('submit');
+          //   },
+          // );
+          // darkNotifier.value = !darkNotifier.value;
+          // showTMenuBottomSheet(
+          //   context,
+          //   children: [ListTile(title: Text('hello'))],
+          // );
+          // showTSortDialog(
+          //   context,
+          //   sortTitle: Text('My Sort'),
+          //   // isAsc: false,
+          //   defaultId: 0,
+          //   sortList: [
+          //     TSort(id: 0, title: 'Size', ascTitle: 'အကြီး', descTitle: 'အသေး'),
+          //     TSort(id: 1, title: 'Type', ascTitle: 'A-Z', descTitle: 'Z-A'),
+          //     TSort(id: 2, title: 'AA', ascTitle: 'A-Z', descTitle: 'Z-A'),
+          //   ],
+          //   showSortType: TShowSortTypes.title,
+          //   sortDialogCallback: (id, isAsc) {
+          //     print('id: $id - isAsc: $isAsc');
+          //   },
+          // );
 
           // showTMessageDialog(context, 'hello',color: Colors.red);
           // showTMessageDialogError(context, 'snapbar error');

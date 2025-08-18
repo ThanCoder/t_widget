@@ -1,3 +1,23 @@
+# 1.1.1
+
+## Added Dialogs
+
+- `TSortDalog`
+- `TAlertDialog`
+
+## Add Dialog Func
+
+- `showTSortDialog`
+- `showTAlertDialog`
+
+## Fixed Dialog Func
+
+- `showTMenuBottomSheet` ->  `title widget`
+
+## Removed
+
+- `Remove Extensions`
+
 # 1.0.0
 
 ## Fixed Widgets

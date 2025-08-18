@@ -58,6 +58,8 @@ TConfirmDialog
 TListDialog<T>
 TMessageDialog
 TRenameDialog
+TSortDalog
+TAlertDialog
 ```
 
 ## Custom Views
@@ -75,14 +77,20 @@ getDefaultImageChooser
 //dialog function
 showTConfirmDialog
 showTReanmeDialog
+//show menu bottom sheet
 showTModalBottomSheet
 showTMenuBottomSheet
+//dynamic list
 showTListDialog<T>
 // show message function
 showTMessageDialog
 showTMessageDialogError
 showTSnackBar
 showTSnackBarError
+//Sorting widget
+showTSortDialog
+
+showTAlertDialog
 ```
 
 ## Custom Extensions

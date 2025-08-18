@@ -3,6 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:t_widgets/t_widgets.dart';
 
+void showTAlertDialog(
+  BuildContext context, {
+  required Widget content,
+  bool scrollable = true,
+  bool barrierDismissible = true,
+  Widget? title,
+  TextStyle? titleTextStyle,
+  List<Widget>? actions,
+  VoidCallback? onCancel,
+  VoidCallback? onSubmit,
+}) {
+  showCupertinoDialog(
+    context: context,
+    barrierDismissible: barrierDismissible,
+    builder: (context) => TAlertDialog(
+      content: content,
+      scrollable: scrollable,
+      title: title,
+      titleTextStyle: titleTextStyle,
+      actions: actions,
+      onCancel: onCancel,
+      onSubmit: onSubmit,
+    ),
+  );
+}
+
 void showTConfirmDialog(
   BuildContext context, {
   required String contentText,
@@ -17,15 +43,14 @@ void showTConfirmDialog(
   showCupertinoDialog(
     context: context,
     barrierDismissible: barrierDismissible,
-    builder:
-        (context) => TConfirmDialog(
-          contentText: contentText,
-          onSubmit: onSubmit,
-          onCancel: onCancel,
-          cancelText: cancelText,
-          submitText: submitText,
-          title: title,
-        ),
+    builder: (context) => TConfirmDialog(
+      contentText: contentText,
+      onSubmit: onSubmit,
+      onCancel: onCancel,
+      cancelText: cancelText,
+      submitText: submitText,
+      title: title,
+    ),
   );
 }
 
@@ -50,22 +75,21 @@ void showTReanmeDialog(
   showCupertinoDialog(
     context: context,
     barrierDismissible: barrierDismissible,
-    builder:
-        (context) => TRenameDialog(
-          autofocus: autofocus,
-          inputFormatters: inputFormatters,
-          onCheckIsError: onCheckIsError,
-          onChanged: onChanged,
-          renameLabelText: labelText,
-          textInputType: textInputType,
-          title: title,
-          text: text,
-          onSubmit: onSubmit,
-          onCancel: onCancel,
-          cancelText: cancelText,
-          submitText: submitText,
-          hintText: hintText,
-        ),
+    builder: (context) => TRenameDialog(
+      autofocus: autofocus,
+      inputFormatters: inputFormatters,
+      onCheckIsError: onCheckIsError,
+      onChanged: onChanged,
+      renameLabelText: labelText,
+      textInputType: textInputType,
+      title: title,
+      text: text,
+      onSubmit: onSubmit,
+      onCancel: onCancel,
+      cancelText: cancelText,
+      submitText: submitText,
+      hintText: hintText,
+    ),
   );
 }
 
@@ -83,13 +107,12 @@ void showTModalBottomSheet(
     isScrollControlled: isScrollControlled,
     useSafeArea: useSafeArea,
     isDismissible: isDismissible,
-    builder:
-        (context) => SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: minHeight),
-            child: child,
-          ),
-        ),
+    builder: (context) => SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: minHeight),
+        child: child,
+      ),
+    ),
   );
 }
 
@@ -100,19 +123,15 @@ void showTMenuBottomSheet(
   bool isScrollControlled = false,
   bool useSafeArea = false,
   bool isDismissible = true,
+  Widget? title,
 }) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: isScrollControlled,
     useSafeArea: useSafeArea,
     isDismissible: isDismissible,
-    builder:
-        (context) => SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: minHeight),
-            child: Column(children: children),
-          ),
-        ),
+    builder: (context) =>
+        MenuBottomSheet(minHeight: minHeight, title: title, children: children),
   );
 }
 
@@ -129,19 +148,18 @@ void showTListDialog<T>(
   showCupertinoDialog(
     context: context,
     barrierDismissible: barrierDismissible,
-    builder:
-        (context) => TListDialog<T>(
-          list: list,
-          listItemBuilder: listItemBuilder,
-          height: height,
-          onClose: () {
-            if (onClose == null) return;
-            onClose();
-          },
-          onSubmit: () {
-            if (onSubmit == null) return;
-            onSubmit();
-          },
-        ),
+    builder: (context) => TListDialog<T>(
+      list: list,
+      listItemBuilder: listItemBuilder,
+      height: height,
+      onClose: () {
+        if (onClose == null) return;
+        onClose();
+      },
+      onSubmit: () {
+        if (onSubmit == null) return;
+        onSubmit();
+      },
+    ),
   );
 }

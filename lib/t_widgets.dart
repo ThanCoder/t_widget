@@ -8,6 +8,8 @@ export 'pages/index.dart';
 export 'services/index.dart';
 export 'choosers/index.dart';
 export 'types/index.dart';
+export 't_sort/index.dart';
+export 'menu/index.dart';
 
 typedef DownloadImageCallback =
     Future<void> Function(String url, String savePath);
