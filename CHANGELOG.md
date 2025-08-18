@@ -1,3 +1,9 @@
+# 1.1.2
+
+## Fixed Widgets
+
+- `Some Error Fixed`
+
 # 1.1.1
 
 ## Added Dialogs
@@ -12,7 +18,7 @@
 
 ## Fixed Dialog Func
 
-- `showTMenuBottomSheet` ->  `title widget`
+- `showTMenuBottomSheet` -> `title widget`
 
 ## Removed
 

@@ -7,7 +7,7 @@ typedef TSortDialogCallback = void Function(int id, bool isAsc);
 
 class TSortDalog extends StatefulWidget {
   TSortDialogCallback sortDialogCallback;
-  int? defaultId;
+  int? currentId;
   bool isAsc;
   List<TSort>? sortList;
   Color activeColor;
@@ -19,7 +19,7 @@ class TSortDalog extends StatefulWidget {
   TSortDalog({
     super.key,
     required this.sortDialogCallback,
-    required this.defaultId,
+    required this.currentId,
     this.isAsc = true,
     this.sortList = const [],
     this.sortTitle,
@@ -43,10 +43,10 @@ class _TSortDalogState extends State<TSortDalog> {
     isAsc = widget.isAsc;
     if (widget.sortList != null && widget.sortList!.isNotEmpty) {
       list = widget.sortList!;
-      currentId = widget.defaultId ?? list.first.id;
+      currentId = widget.currentId ?? list.first.id;
     } else {
       list = TSort.getDefaultList;
-      currentId = widget.defaultId ?? TSort.getDefaultList.last.id;
+      currentId = widget.currentId ?? TSort.getDefaultList.last.id;
     }
     super.initState();
     init();

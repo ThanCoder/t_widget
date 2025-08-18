@@ -18,6 +18,9 @@ class TSort {
     ];
   }
 
+  static int get getTitleId => 100;
+  static int get getDateId => 101;
+
   @override
   String toString() {
     return 'id: $id';

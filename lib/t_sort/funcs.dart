@@ -7,7 +7,7 @@ void showTSortDialog(
   BuildContext context, {
   required TSortDialogCallback sortDialogCallback,
   Widget? sortTitle,
-  int? defaultId,
+  int? currentId,
   List<TSort>? sortList,
   bool isAsc = true,
   Color? activeColor,
@@ -21,7 +21,7 @@ void showTSortDialog(
     barrierDismissible: false,
     builder: (context) => TSortDalog(
       sortDialogCallback: sortDialogCallback,
-      defaultId: defaultId,
+      currentId: currentId,
       sortList: sortList,
       sortTitle: sortTitle,
       showSortType: showSortType,
