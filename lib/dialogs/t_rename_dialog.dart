@@ -4,21 +4,21 @@ import 'package:flutter/services.dart';
 import '../../widgets/index.dart';
 
 class TRenameDialog extends StatefulWidget {
-  Widget? title;
-  String text;
-  String cancelText;
-  String submitText;
-  void Function()? onCancel;
-  void Function(String text) onSubmit;
-  Widget? renameLabelText;
-  void Function(String text)? onChanged;
-  TextInputType? textInputType;
-  List<TextInputFormatter>? inputFormatters;
-  String? Function(String text)? onCheckIsError;
-  bool autofocus;
-  String? hintText;
+  final Widget? title;
+  final String text;
+  final String cancelText;
+  final String submitText;
+  final void Function()? onCancel;
+  final void Function(String text) onSubmit;
+  final Widget? renameLabelText;
+  final void Function(String text)? onChanged;
+  final TextInputType? textInputType;
+  final List<TextInputFormatter>? inputFormatters;
+  final String? Function(String text)? onCheckIsError;
+  final bool autofocus;
+  final String? hintText;
 
-  TRenameDialog({
+  const TRenameDialog({
     super.key,
     this.title,
     this.text = 'Untitled',

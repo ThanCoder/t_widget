@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 
-class TSeeAllView<T> extends StatelessWidget {
-  List<T> list;
-  String title;
-  String moreTitle;
-  int showCount;
-  double fontSize;
-  double padding;
-  EdgeInsetsGeometry? margin;
-  Color? titleColor;
-  void Function(String title, List<T> list) onSeeAllClicked;
-  Widget Function(BuildContext context, T item) gridItemBuilder;
-  double itemHeight;
-  double itemWidth;
-  bool showMoreButtonBottomPos;
+typedef OnSeeAllClickedCallback<T> = void Function(String title, List<T> list);
+typedef GridItemBuilderCallback<T> =
+    Widget Function(BuildContext context, T item);
 
-  TSeeAllView({
+class TSeeAllView<T> extends StatelessWidget {
+  final List<T> list;
+  final String title;
+  final String moreTitle;
+  final int showCount;
+  final double fontSize;
+  final double padding;
+  final EdgeInsetsGeometry? margin;
+  final Color? titleColor;
+  final OnSeeAllClickedCallback? onSeeAllClicked;
+  final GridItemBuilderCallback gridItemBuilder;
+  final double itemHeight;
+  final double itemWidth;
+  final double viewHeight;
+  final bool showMoreButtonBottomPos;
+  final int? showLines;
+  final double itemSpacing;
+
+  const TSeeAllView({
     super.key,
     required this.title,
     required this.list,
-    required this.onSeeAllClicked,
+    this.onSeeAllClicked,
     required this.gridItemBuilder,
     this.showCount = 4,
     this.margin,
@@ -28,7 +35,10 @@ class TSeeAllView<T> extends StatelessWidget {
     this.moreTitle = 'More',
     this.titleColor,
     this.itemHeight = 200,
+    this.viewHeight = 200,
     this.itemWidth = 160,
+    this.showLines = 1,
+    this.itemSpacing = 5,
     this.showMoreButtonBottomPos = false,
   });
 
@@ -46,25 +56,39 @@ class TSeeAllView<T> extends StatelessWidget {
         // header row
         _getHeader(),
         // grid item
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            spacing: 5,
-            children: List.generate(
-              showList.length,
-              (index) => MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: SizedBox(
-                    width: itemWidth,
-                    height: itemHeight,
-                    child: gridItemBuilder(context, showList[index])),
-              ),
+        SizedBox(
+          height: viewHeight,
+          width: MediaQuery.of(context).size.width,
+          child: GridView.builder(
+            itemCount: showList.length,
+            scrollDirection: Axis.horizontal,
+            gridDelegate: _getSliverGridDelegate(),
+            itemBuilder: (context, index) => MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: gridItemBuilder(context, showList[index]),
             ),
           ),
         ),
         // botton nav
         _getSeeAllButtonBottomPos(),
       ],
+    );
+  }
+
+  SliverGridDelegate _getSliverGridDelegate() {
+    if (showLines != null) {
+      return SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 1,
+        mainAxisSpacing: itemSpacing,
+        crossAxisSpacing: itemSpacing,
+        mainAxisExtent: itemWidth,
+      );
+    }
+    return SliverGridDelegateWithMaxCrossAxisExtent(
+      maxCrossAxisExtent: itemHeight,
+      mainAxisExtent: itemWidth,
+      mainAxisSpacing: itemSpacing,
+      crossAxisSpacing: itemSpacing,
     );
   }
 
@@ -91,11 +115,9 @@ class TSeeAllView<T> extends StatelessWidget {
         children: [
           SizedBox(height: 15),
           TextButton(
-              onPressed: () => onSeeAllClicked(title, list),
-              child: Text(
-                'See All',
-                style: TextStyle(color: Colors.blue),
-              ))
+            onPressed: () => onSeeAllClicked?.call(title, list),
+            child: Text('See All', style: TextStyle(color: Colors.blue)),
+          ),
         ],
       );
     }
@@ -107,20 +129,14 @@ class TSeeAllView<T> extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.only(right: 2),
         child: GestureDetector(
-          onTap: () => onSeeAllClicked(title, list),
+          onTap: () => onSeeAllClicked?.call(title, list),
           child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: Row(
               spacing: 2,
               children: [
-                Text(
-                  moreTitle,
-                  style: const TextStyle(color: Colors.blue),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 15,
-                )
+                Text(moreTitle, style: const TextStyle(color: Colors.blue)),
+                Icon(Icons.arrow_forward_ios, size: 15),
               ],
             ),
           ),

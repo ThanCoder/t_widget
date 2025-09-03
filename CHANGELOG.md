@@ -1,3 +1,10 @@
+# 1.1.3
+
+## Changed
+
+- `TSeeAllView`
+- `showTListDialog`
+
 # 1.1.2
 
 ## Fixed Widgets

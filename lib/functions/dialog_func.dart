@@ -139,11 +139,16 @@ void showTMenuBottomSheet(
 void showTListDialog<T>(
   BuildContext context, {
   required List<T> list,
-  required Widget? Function(BuildContext context, T item) listItemBuilder,
+  required ItemListBuilderCallback<T> listItemBuilder,
+  SeparatorBuilderCallback? separatorBuilder,
   bool barrierDismissible = true,
   double height = 200,
   void Function()? onSubmit,
   void Function()? onClose,
+  Widget? closeText,
+  Widget? submitText,
+  EdgeInsetsGeometry? contentPadding,
+  Widget? title,
 }) {
   showCupertinoDialog(
     context: context,
@@ -152,14 +157,13 @@ void showTListDialog<T>(
       list: list,
       listItemBuilder: listItemBuilder,
       height: height,
-      onClose: () {
-        if (onClose == null) return;
-        onClose();
-      },
-      onSubmit: () {
-        if (onSubmit == null) return;
-        onSubmit();
-      },
+      onClose: onClose,
+      onSubmit: onSubmit,
+      closeText: closeText,
+      contentPadding: contentPadding,
+      separatorBuilder: separatorBuilder,
+      submitText: submitText,
+      title: title,
     ),
   );
 }

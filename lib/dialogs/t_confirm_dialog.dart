@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TConfirmDialog extends StatelessWidget {
-  String title;
-  String contentText;
-  String cancelText;
-  String submitText;
-  void Function()? onCancel;
-  void Function() onSubmit;
-  TConfirmDialog({
+  final String title;
+  final String contentText;
+  final String cancelText;
+  final String submitText;
+  final void Function()? onCancel;
+  final void Function() onSubmit;
+  const TConfirmDialog({
     super.key,
     this.title = 'Confirm',
     this.cancelText = 'Cancel',

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class TAlertDialog extends StatefulWidget {
-  Widget content;
-  bool scrollable;
-  Widget? title;
-  TextStyle? titleTextStyle;
-  List<Widget>? actions;
-  VoidCallback? onCancel;
-  VoidCallback? onSubmit;
-  TAlertDialog({
+  final Widget content;
+  final bool scrollable;
+  final Widget? title;
+  final TextStyle? titleTextStyle;
+  final List<Widget>? actions;
+  final VoidCallback? onCancel;
+  final VoidCallback? onSubmit;
+  const TAlertDialog({
     super.key,
     required this.content,
     this.scrollable = true,

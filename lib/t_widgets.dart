@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 export 'dialogs/index.dart';
@@ -15,6 +17,8 @@ typedef DownloadImageCallback =
     Future<void> Function(String url, String savePath);
 typedef OpenImageFileChooserCallback =
     Future<String?> Function({String? initialDirectory});
+typedef OnFileChooserGetCoverPath =
+    Future<String> Function(FileSystemEntity file);
 
 class TWidgets {
   static final TWidgets instance = TWidgets._();
@@ -26,6 +30,7 @@ class TWidgets {
   DownloadImageCallback? onDownloadImage;
   late bool Function() getDarkMode;
   OpenImageFileChooserCallback? onOpenImageFileChooser;
+  OnFileChooserGetCoverPath? onFileChooserGetCoverPath;
 
   Future<void> init({
     required String defaultImageAssetsPath,
@@ -33,12 +38,14 @@ class TWidgets {
     DownloadImageCallback? onDownloadImage,
     bool Function()? getDarkMode,
     OpenImageFileChooserCallback? onOpenImageFileChooser,
+    OnFileChooserGetCoverPath? onFileChooserGetCoverPath,
   }) async {
-    this.defaultImageAssetsPath = defaultImageAssetsPath;
     isDebugPrint = isDebugPrint;
+    this.defaultImageAssetsPath = defaultImageAssetsPath;
     this.onDownloadImage = onDownloadImage;
     this.getDarkMode = getDarkMode ?? () => false;
     this.onOpenImageFileChooser = onOpenImageFileChooser;
+    this.onFileChooserGetCoverPath = onFileChooserGetCoverPath;
   }
 
   static void showDebugLog(String msg, {String? tag}) {
