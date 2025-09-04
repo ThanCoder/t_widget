@@ -1,3 +1,8 @@
+# 1.2.0
+
+- Added `TMultiUploaderDialog`
+- Added `TMultiDownloaderDialog`
+
 # 1.1.3
 
 ## Changed

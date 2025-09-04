@@ -3,7 +3,7 @@ import 'package:t_widgets/t_widgets.dart';
 
 void main() async {
   await TWidgets.instance.init(defaultImageAssetsPath: 'assets/cover.png');
-  runApp(const MyApp());
+  runApp(MaterialApp(home: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -16,12 +16,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Plugin example app')),
-        body: Center(child: TImage(source: '')),
-        floatingActionButton: FloatingActionButton(onPressed: () {}),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Plugin example app')),
+      body: Center(child: TImage(source: '')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          
+        },
       ),
     );
   }
 }
+
