@@ -1,3 +1,10 @@
+# 1.3.0
+
+- Changed `TManager`
+- Changed `TDownloadManager`
+- Changed `TUploadManager`
+- `Some Error Fixed`.
+
 # 1.2.0
 
 - Added `TMultiUploaderDialog`

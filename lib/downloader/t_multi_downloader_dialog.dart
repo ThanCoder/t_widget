@@ -5,7 +5,7 @@ import 'package:t_widgets/t_widgets.dart';
 
 class TMultiDownloaderDialog extends StatefulWidget {
   final List<String> urls;
-  final TDownloadManager manager;
+  final TManager manager;
   final void Function(String message)? onError;
   final VoidCallback? onSuccess;
   final Widget? title;
@@ -15,7 +15,7 @@ class TMultiDownloaderDialog extends StatefulWidget {
     required this.urls,
     this.onError,
     this.onSuccess,
-    this.title = const Text('All Download'),
+    this.title = const Text('Downloader'),
   });
 
   @override
@@ -23,14 +23,15 @@ class TMultiDownloaderDialog extends StatefulWidget {
 }
 
 class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
-  late final StreamSubscription<DownloadProgress> _streamSub;
-  DownloadProgress? progress;
+  late final StreamSubscription<TProgress> _streamSub;
+  TProgress? progress;
   String? errorMsg;
+  bool isProgress = true;
 
   @override
   void initState() {
     _streamSub = widget.manager
-        .downloadFiles(widget.urls)
+        .actions(widget.urls)
         .listen(
           (event) {
             if (!mounted) return;
@@ -60,68 +61,80 @@ class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
       content: TScrollableColumn(
         children: [
           errorMsg == null
-              ? SizedBox.shrink()
+              ? progress == null
+                    ? Text('Preparing...')
+                    : _getMessage()
               : Text(errorMsg!, style: TextStyle(color: Colors.red)),
-          errorMsg != null
-              ? SizedBox.shrink()
-              : Text(progress == null ? 'Preparing...' : progress!.status),
           // progress
-          progress == null
-              ? SizedBox.shrink()
-              : errorMsg != null
-              ? SizedBox.shrink()
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // progress lable
-                    Text('${progress!.index}/${progress!.total}'),
-                    // progress
-                    LinearProgressIndicator(
-                      value: progress!.fileSize == 0
-                          ? null
-                          : progress!.downloaded / progress!.fileSize,
-                    ),
-                    // label
-                    progress!.fileSize == 0
-                        ? const SizedBox.shrink()
-                        : Text(
-                            '${progress!.downloaded.toDouble().toFileSizeLabel()} / ${progress!.fileSize.toDouble().toFileSizeLabel()}',
-                          ),
-                  ],
-                ),
+          _getProgress(),
         ],
       ),
-      actions: [
-        errorMsg != null
-            ? SizedBox.shrink()
-            : TextButton(
-                onPressed: () {
-                  widget.manager.cancel();
-                },
-                child: const Text('Cancel'),
-              ),
-        errorMsg == null
-            ? SizedBox.shrink()
-            : TextButton(
-                onPressed: () {
-                  if (!mounted) return;
-                  Navigator.pop(context);
-                },
-                child: const Text('Close'),
+      actions: _getActions(),
+    );
+  }
+
+  Widget _getMessage() {
+    if (progress == null) {
+      return SizedBox.shrink();
+    }
+    return Text(progress!.message);
+  }
+
+  Widget _getProgress() {
+    if (progress == null || errorMsg != null) {
+      return SizedBox.shrink();
+    }
+    if (progress!.status == TProgressTypes.done) {
+      return SizedBox.shrink();
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // progress lable
+        Text('${progress!.index}/${progress!.indexLength}'),
+        // progress
+        LinearProgressIndicator(
+          value: progress!.total == 0
+              ? null
+              : progress!.loaded / progress!.total,
+        ),
+        // label
+        progress!.total == 0
+            ? const SizedBox.shrink()
+            : Text(
+                '${progress!.loaded.toDouble().toFileSizeLabel()} / ${progress!.total.toDouble().toFileSizeLabel()}',
               ),
       ],
     );
   }
 
+  List<Widget> _getActions() {
+    return [
+      isProgress
+          ? TextButton(
+              onPressed: () {
+                widget.manager.cancel();
+              },
+              child: const Text('Cancel'),
+            )
+          : TextButton(
+              onPressed: () {
+                if (!mounted) return;
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+    ];
+  }
+
   void _closeDialog() {
+    isProgress = false;
     if (errorMsg == null) {
       widget.onSuccess?.call();
       if (!mounted) return;
       Navigator.pop(context);
-    } else {
-      // error
-      if (!mounted) return;
-      setState(() {});
     }
+    if (!mounted) return;
+    setState(() {});
   }
 }

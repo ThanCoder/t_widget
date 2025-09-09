@@ -13,6 +13,7 @@ dependencies:
     path: ../
   cupertino_icons: ^1.0.8
   dio: ^5.9.0
+  t_client: ^0.0.2
 
 dev_dependencies:
   integration_test:

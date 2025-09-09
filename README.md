@@ -26,187 +26,139 @@ final text = await TAppServices.pasteFromClipboard();
 ## Multi Uploader && Downloader
 
 ```Dart
-// multi uploader
-final hostUrl = 'http://10.37.17.103:9000/upload?path=';
-showDialog(
-  context: context,
-  barrierDismissible: false,
-  builder: (context) => TMultiUploaderDialog(
-    pathList: ['/home/than/Videos/The.Sandman.2025.S02E06.mp4'],
-    manager: DioUploadManager(hostUrl: hostUrl),
-  ),
-);
-final urls = [
-  'http://10.37.17.103:9000/download?path=/storage/emulated/0/Download/personal_server/Cadmium%20-%20Melody%20(ft.%20Jon%20Becker)%20(Lyrics%20Video).webm',
-  'http://10.37.17.103:9000/download?path=/storage/emulated/0/Download/personal_server/Demons%20imagine%20dragons.mp4',
-];
-// multi downloader
 showDialog(
   context: context,
   barrierDismissible: false,
   builder: (context) => TMultiDownloaderDialog(
-    manager: DioDownloadManager(savedDir: '/home/than'),
-    urls: urls,
-    onError: (message) {
-      debugPrint(message);
-    },
-    onSuccess: () {
-      debugPrint('success');
-    },
+    manager: TDownloadManager(),
+    urls: [
+      'http://10.37.17.103:9000/download?path=/storage/emulated/0/Download/Telegram/Dandadan%20S02E09.mp4',
+    ],
   ),
 );
-//class
-class DioUploadManager extends TUploadManager {
-  final dio = Dio();
-  final cancelToken = CancelToken();
-  final String hostUrl;
-  final Duration sendTimeout;
-  final Duration receiveTimeout;
-  DioUploadManager({
-    required this.hostUrl,
-    this.sendTimeout = const Duration(hours: 1),
-    this.receiveTimeout = const Duration(hours: 1),
-  });
+
+class DownloadManager extends TDownloadManager {
+  final token = TClientToken(isCancelFileDelete: true);
+  final client = TClient();
+  final savePath = '/home/than/Downloads/personal_server';
 
   @override
   void cancel() {
-    cancelToken.cancel('Cancel Upload');
+    token.cancel();
   }
 
   @override
-  Stream<UploadProgress> uploadFiles(List<String> pathList) {
-    final controller = StreamController<UploadProgress>();
-    int index = 0;
-
-    () async {
+  Stream<TProgress> actions(List<String> urls) {
+    final controller = StreamController<TProgress>();
+    (() async {
       try {
-        controller.add(
-          UploadProgress(
-            index: index,
-            total: pathList.length,
-            uploaded: 0,
-            fileSize: 0,
-            status: 'Preparing',
-          ),
-        );
-        for (var path in pathList) {
+        controller.add(TProgress.preparing(indexLength: urls.length));
+
+        int index = 0;
+        for (var url in urls) {
+          final name = url.getName();
+
           index++;
-          final name = path.getName();
-          final formData = FormData.fromMap({
-            'file': await MultipartFile.fromFile(path, filename: name),
-          });
-          await dio.post(
-            hostUrl,
-            data: formData,
-            cancelToken: cancelToken,
-            options: Options(
-              contentType: 'multipart/form-data',
-              sendTimeout: sendTimeout, // 2GB ဆိုတာကြောင့် timeout ကြီးကြီးထား
-              receiveTimeout: receiveTimeout,
-            ),
-            onSendProgress: (sent, total) {
+          await client.download(
+            url,
+            token: token,
+            savePath: '$savePath/$name',
+            onError: controller.addError,
+            // onReceiveProgress: (received, total) {
+            //   controller.add(
+            //     TProgress.progress(
+            //       index: index,
+            //       indexLength: urls.length,
+            //       message: '$name\n Downloading...',
+            //       loaded: received,
+            //       total: total,
+            //     ),
+            //   );
+            // },
+            onReceiveProgressSpeed: (received, total, speed, eta) {
               controller.add(
-                UploadProgress(
+                TProgress.progress(
                   index: index,
-                  total: pathList.length,
-                  uploaded: sent.toDouble(),
-                  fileSize: total.toDouble(),
-                  status: '$name Uploading...',
+                  indexLength: urls.length,
+                  message:
+                      '$name\n Downloading...\n Speed: ${speed.toFileSizeLabel()} Left: ${eta?.toAutoTimeLabel()}',
+                  loaded: received,
+                  total: total,
                 ),
               );
             },
           );
         }
-        // done
-        controller.add(
-          UploadProgress(
-            index: index,
-            total: pathList.length,
-            uploaded: 0,
-            fileSize: 0,
-            status: 'Uploaded',
-          ),
-        );
+
+        controller.add(TProgress.done(message: 'Downloaded'));
       } catch (e) {
         controller.addError(e);
-      } finally {
-        await controller.close();
       }
-    }();
-
+    })();
     return controller.stream;
   }
 }
 
-class DioDownloadManager extends TDownloadManager {
-  final dio = Dio();
-  final cancelToken = CancelToken();
-  final String savedDir;
-  int index = 0;
-  DioDownloadManager({required this.savedDir});
+final path = '/home/than/Videos';
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => TMultiDownloaderDialog(
+      manager: UploadManager(),
+      pathList: ['$path/Dan Da Dan S02 E02.mp4'],
+    ),
+  );
+class UploadManager extends TUploadManager {
+  final token = TClientToken(isCancelFileDelete: true);
+  final client = TClient();
+  final String apiUrl = 'http://10.37.17.103:9000/upload';
 
   @override
   void cancel() {
-    cancelToken.cancel('Download Cancel');
+    token.cancel();
   }
 
   @override
-  Stream<DownloadProgress> downloadFiles(List<String> urls) {
-    final streamController = StreamController<DownloadProgress>();
-
-    () async {
+  Stream<TProgress> actions(List<String> pathList) {
+    final controller = StreamController<TProgress>();
+    (() async {
       try {
-        streamController.add(
-          DownloadProgress(
-            index: index,
-            total: urls.length,
-            downloaded: 0,
-            fileSize: 0,
-            status: 'Preparing...',
-          ),
-        );
+        controller.add(TProgress.preparing(indexLength: pathList.length));
 
-        for (var url in urls) {
+        int index = 0;
+        for (var path in pathList) {
+          final name = path.getName();
+
           index++;
-          final name = url.getName();
-          final savePath = '$savedDir/$name';
-
-          await dio.download(
-            url,
-            savePath,
-            cancelToken: cancelToken,
-            onReceiveProgress: (count, total) {
-              // Stream yield for UI update
-              streamController.add(
-                DownloadProgress(
+          await client.upload(
+            apiUrl,
+            file: File(path),
+            token: token,
+            onError: controller.addError,
+            onCancelCallback: controller.addError,
+            onUploadProgress: (sent, total) {
+              controller.add(
+                TProgress.progress(
                   index: index,
-                  total: urls.length,
-                  downloaded: count.toDouble(),
-                  fileSize: total.toDouble(),
-                  status: "`$name` Downloading...",
+                  indexLength: pathList.length,
+                  message: '$name\n Uploading...',
+                  loaded: sent,
+                  total: total,
                 ),
               );
             },
           );
         }
-        streamController.add(
-          DownloadProgress(
-            index: index,
-            total: urls.length,
-            downloaded: 0,
-            fileSize: 0,
-            status: 'All Downloaded',
-          ),
-        );
+
+        controller.add(TProgress.done(message: 'Uploaded'));
       } catch (e) {
-        streamController.addError(e);
-      } finally {
-        await streamController.close();
+        controller.addError(e);
       }
-    }();
-    return streamController.stream;
+    })();
+    return controller.stream;
   }
 }
+
 
 ```
 
