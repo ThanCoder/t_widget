@@ -1,3 +1,7 @@
+# 1.3.1
+
+- Remove `ThanPkg` lib
+
 # 1.3.0
 
 - Changed `TManager`

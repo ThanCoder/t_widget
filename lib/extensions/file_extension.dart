@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:t_widgets/extensions/double_extension.dart';
 
 
-extension FileSystemEntityExtension on FileSystemEntity {
+extension FileExtension on File {
   String getName({bool withExt = true}) {
     final name = path.split('/').last;
     if (!withExt) {
@@ -27,6 +27,8 @@ extension FileSystemEntityExtension on FileSystemEntity {
   int get getSize {
     return statSync().size;
   }
+
+
 
   DateTime get getDate {
     return statSync().modified;

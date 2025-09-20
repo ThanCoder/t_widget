@@ -129,6 +129,7 @@ class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
 
   void _closeDialog() {
     isProgress = false;
+    print('call');
     if (errorMsg == null) {
       widget.onSuccess?.call();
       if (!mounted) return;

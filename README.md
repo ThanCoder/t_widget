@@ -93,6 +93,8 @@ class DownloadManager extends TDownloadManager {
         controller.add(TProgress.done(message: 'Downloaded'));
       } catch (e) {
         controller.addError(e);
+      }finally{
+        await controller.close();
       }
     })();
     return controller.stream;
@@ -153,6 +155,8 @@ class UploadManager extends TUploadManager {
         controller.add(TProgress.done(message: 'Uploaded'));
       } catch (e) {
         controller.addError(e);
+      }finally{
+        await controller.close();
       }
     })();
     return controller.stream;
