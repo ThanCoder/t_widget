@@ -1,3 +1,7 @@
+## 1.5.0
+
+- Added `TCoverChooser`
+
 ## 1.4.0
 
 - Some Error Fixed.

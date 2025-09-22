@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Plugin example app')),
-      body: Center(child: TImage(source: '')),
+      body: Center(child: TCoverChooser(coverPath: '')),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
@@ -33,8 +33,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
 
 class ProgressManager extends TProgressManager {
   bool isCancel = false;

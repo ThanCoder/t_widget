@@ -14,6 +14,7 @@ export 't_sort/index.dart';
 export 'types/index.dart';
 export 'views/index.dart';
 export 'widgets/index.dart';
+export 'choosers/index.dart';
 
 typedef DownloadImageCallback =
     Future<void> Function(String url, String savePath);
