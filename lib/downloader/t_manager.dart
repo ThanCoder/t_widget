@@ -15,6 +15,12 @@ abstract class TUploadManager extends TManager {
   Stream<TProgress> actions(List<String> pathList);
 }
 
+// progress
+abstract class TProgressManager {
+  void cancel();
+  Stream<TProgress> run();
+}
+
 class TProgress {
   final int index;
   final int indexLength;

@@ -1,28 +1,26 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:t_widgets/internal.dart';
-import 'package:t_widgets/t_widgets_dev.dart';
 
-class TMultiDownloaderDialog extends StatefulWidget {
-  final List<String> urls;
-  final TManager manager;
+import 'package:flutter/material.dart';
+import 'package:t_widgets/t_widgets.dart';
+
+class TProgressDialog extends StatefulWidget {
+  final TProgressManager manager;
   final void Function(String message)? onError;
-  final VoidCallback? onSuccess;
   final Widget? title;
-  const TMultiDownloaderDialog({
+  final VoidCallback? onSuccess;
+  const TProgressDialog({
     super.key,
     required this.manager,
-    required this.urls,
+    this.title,
     this.onError,
     this.onSuccess,
-    this.title = const Text('Downloader'),
   });
 
   @override
-  State<TMultiDownloaderDialog> createState() => _TMultiDownloaderDialogState();
+  State<TProgressDialog> createState() => _TProgressDialogState();
 }
 
-class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
+class _TProgressDialogState extends State<TProgressDialog> {
   late final StreamSubscription<TProgress> _streamSub;
   TProgress? progress;
   String? errorMsg;
@@ -30,21 +28,19 @@ class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
 
   @override
   void initState() {
-    _streamSub = widget.manager
-        .actions(widget.urls)
-        .listen(
-          (event) {
-            if (!mounted) return;
-            progress = event;
-            setState(() {});
-          },
-          onDone: _closeDialog,
-          onError: (e) {
-            if (!mounted) return;
-            errorMsg = e.toString();
-            _closeDialog();
-          },
-        );
+    _streamSub = widget.manager.run().listen(
+      (event) {
+        if (!mounted) return;
+        progress = event;
+        setState(() {});
+      },
+      onDone: _closeDialog,
+      onError: (e) {
+        if (!mounted) return;
+        errorMsg = e.toString();
+        _closeDialog();
+      },
+    );
     super.initState();
   }
 
@@ -91,7 +87,9 @@ class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // progress lable
-        Text('${progress!.index}/${progress!.indexLength}'),
+        progress!.status == TProgressTypes.preparing
+            ? Text(progress!.status.name)
+            : Text('${progress!.index}/${progress!.indexLength}'),
         // progress
         LinearProgressIndicator(
           value: progress!.total == 0
@@ -101,9 +99,7 @@ class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
         // label
         progress!.total == 0
             ? const SizedBox.shrink()
-            : Text(
-                '${progress!.loaded.toDouble().toFileSizeLabel()} / ${progress!.total.toDouble().toFileSizeLabel()}',
-              ),
+            : Text('${progress!.loaded} / ${progress!.total}'),
       ],
     );
   }

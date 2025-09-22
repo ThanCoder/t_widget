@@ -3,6 +3,8 @@ analyzer:
   errors:
     must_be_immutable: ignore
     constant_identifier_names: ignore
-
+    invalid_use_of_internal_member: error
+    invalid_export_of_internal_element: error
+    invalid_internal_annotation: ignore
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

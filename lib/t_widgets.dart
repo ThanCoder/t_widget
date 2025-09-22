@@ -1,3 +1,5 @@
+library;
+
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -29,6 +31,7 @@ class TWidgets {
   static bool isDebugPrint = true;
   DownloadImageCallback? onDownloadImage;
   late bool Function() getDarkMode;
+  late Duration Function() getThemeServicesInitDelay;
   OpenImageFileChooserCallback? onOpenImageFileChooser;
   OnFileChooserGetCoverPath? onFileChooserGetCoverPath;
 
@@ -39,6 +42,7 @@ class TWidgets {
     bool Function()? getDarkMode,
     OpenImageFileChooserCallback? onOpenImageFileChooser,
     OnFileChooserGetCoverPath? onFileChooserGetCoverPath,
+    Duration Function()? getThemeServicesInitDelay,
   }) async {
     isDebugPrint = isDebugPrint;
     this.defaultImageAssetsPath = defaultImageAssetsPath;
@@ -46,6 +50,8 @@ class TWidgets {
     this.getDarkMode = getDarkMode ?? () => false;
     this.onOpenImageFileChooser = onOpenImageFileChooser;
     this.onFileChooserGetCoverPath = onFileChooserGetCoverPath;
+    this.getThemeServicesInitDelay =
+        getThemeServicesInitDelay ?? () => Duration(milliseconds: 500);
   }
 
   static void showDebugLog(String msg, {String? tag}) {

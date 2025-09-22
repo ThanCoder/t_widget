@@ -1,33 +1,39 @@
-# 1.3.1
+## 1.4.0
+
+- Some Error Fixed.
+- Added `TProgressDialog`
+- Added `TThemeServices`
+
+## 1.3.1
 
 - Remove `ThanPkg` lib
 
-# 1.3.0
+## 1.3.0
 
 - Changed `TManager`
 - Changed `TDownloadManager`
 - Changed `TUploadManager`
 - `Some Error Fixed`.
 
-# 1.2.0
+## 1.2.0
 
 - Added `TMultiUploaderDialog`
 - Added `TMultiDownloaderDialog`
 
-# 1.1.3
+## 1.1.3
 
 ## Changed
 
 - `TSeeAllView`
 - `showTListDialog`
 
-# 1.1.2
+## 1.1.2
 
 ## Fixed Widgets
 
 - `Some Error Fixed`
 
-# 1.1.1
+## 1.1.1
 
 ## Added Dialogs
 
@@ -47,9 +53,9 @@
 
 - `Remove Extensions`
 
-# 1.0.0
+### 1.0.0
 
-## Fixed Widgets
+- Fixed Widgets
 
 - `TFontListWiget` -> some pros && error
 - `TListTileWithDescWidget` -> props
@@ -59,138 +65,132 @@
 
 - `TLoaderRandom` -> `TLoader.random()`
 
-# 0.9.7
+## 0.9.7
 
-## Fixed Widgets
+- Fixed Widgets
 
 - `TTagsWrapView`
 
-# 0.9.5
+## 0.9.5
 
-## Added Widgets
+- Added Widgets
 
 - `TScrollableColumn`
 - `MyScaffold` -> changed new class && add `BoxConstraints` props
 
-## Fixed Widgets
+- Fixed Widgets
 
 - `TSearchField` -> some props added && fixed
 
-# 0.8.3
+## 0.8.3
 
 ## Fixed
 
 - `SeeAllView`
 
-# 0.8.0
+## 0.8.0
 
-## Added Widgets
+- Added Widgets `TImage`
 
-- `TImage`
+## 0.7.0
 
-# 0.7.0
-
-## Add Dialog Func
+- Add Dialog Func
 
 - `showTMenuBottomSheet`
 
-## Fixed
+- Some Error Fixed
+
+## 0.6.5
 
 - Some Error Fixed
 
-# 0.6.5
+## 0.6.4
 
-## Fixed
-
-- Some Error Fixed
-
-# 0.6.4
-
-## Add Dialog Func
+- Add Dialog Func
 
 - `showTListDialog`
 
-# 0.5.4
+## 0.5.4
 
 - `TTagsWrapView` -> Some Props Changed
 
-# 0.5.3
+## 0.5.3
 
-## Add Dialog Func
+- Add Dialog Func
 
 - `showTModalBottomSheet`
 - `showTConfirmDialog`
 - `showTReanmeDialog`
 
-## Add Views
+- Add Views
 
 - `TSeeAllView`
 
-# 0.4.3
+## 0.4.3
 
 - `Fixed Some Errors`
 
-# 0.4.1
+## 0.4.1
 
 - `TTagsWrapView` add prps
 
-# 0.3.0
+## 0.3.0
 
-## Changed
+- Changed
 
 - `onDownloadCacheImage` -> `onDownloadImage`
 
-## Added Widgets
+- Added Widgets
 
 - `TCoverChooser`
 
-## Added Libs
+- Added Libs
 
 - `file_selector: ^1.0.3`
 
-## Added Services
+- Added Services
 
 - `TAppServices`
 
-## Fixed Widgets
+- Fixed Widgets
 
 - `TCacheImage`
 
-# 0.2.0
+## 0.2.0
 
-## Added Widgets
+- Added Widgets
 
 - `TLoaderRandom`
 
-## Added Views
+- Added Views
 
 - `TTagsWrapView`
 
-## Added Functions
+- Added Functions
 
 - `showTMessageDialog`
 - `showTMessageDialogError`
 - `showTSnackBar`
 - `showTSnackBarError`
 
-## Fixed Widgets
+- Fixed Widgets
 
 - `TNumberField`
 - `TChip`
 
-# 0.1.0
+## 0.1.0
 
-## Added Widgets
+- Added Widgets
 
 - `TNumberField`
 - `TSearchField`
 - `TListTileWithDescWidget`
 
-## Fixed
+-Fixed
 
 - `TTextField` some pros added
 - `TCacheImage` some error fixed
 
-# 0.0.1
+## 0.0.1
 
 - init release

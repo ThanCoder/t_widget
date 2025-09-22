@@ -190,7 +190,7 @@ class _TSortDalogState extends State<TSortDalog> {
           Navigator.pop(context);
           widget.sortDialogCallback(currentId, isAsc);
         },
-        child: widget.submitText ?? Text('Submit'),
+        child: widget.submitText ?? Text('Sort'),
       ),
     ];
   }

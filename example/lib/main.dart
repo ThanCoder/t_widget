@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:t_widgets/t_widgets.dart';
-
 
 void main() async {
   await TWidgets.instance.init(defaultImageAssetsPath: 'assets/cover.png');
@@ -25,31 +23,55 @@ class _MyAppState extends State<MyApp> {
       body: Center(child: TImage(source: '')),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // showDialog(
-          //   context: context,
-          //   barrierDismissible: false,
-          //   builder: (context) => TMultiDownloaderDialog(
-          //     manager: DownloadManager(),
-          //     urls: [
-          //       'http://10.37.17.103:9000/download?path=/storage/emulated/0/Movies/Neon/Neon.mp4',
-          //     ],
-          //   ),
-          // );
-          final name = 'than';
-          name;
-          
-          // final path = '/home/than/Videos';
-          // showDialog(
-          //   context: context,
-          //   barrierDismissible: false,
-          //   builder: (context) => TMultiUploaderDialog(
-          //     manager: UploadManager(),
-          //     pathList: ['$path/test.mp4'],
-          //   ),
-          // );
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) => TProgressDialog(manager: ProgressManager()),
+          );
         },
       ),
     );
   }
 }
 
+
+
+class ProgressManager extends TProgressManager {
+  bool isCancel = false;
+  @override
+  void cancel() {
+    isCancel = true;
+  }
+
+  @override
+  Stream<TProgress> run() {
+    final controller = StreamController<TProgress>();
+    (() async {
+      try {
+        controller.add(TProgress.preparing(indexLength: 100));
+
+        await Future.delayed(Duration(seconds: 1));
+
+        for (var i = 0; i <= 100; i++) {
+          if (isCancel) {
+            break;
+          }
+          controller.add(
+            TProgress.progress(
+              index: 1,
+              indexLength: 1,
+              loaded: i,
+              total: 100,
+              message: 'Progress: $i',
+            ),
+          );
+          await Future.delayed(Duration(milliseconds: 100));
+        }
+        await controller.close();
+      } catch (e) {
+        controller.addError(e);
+      }
+    })();
+    return controller.stream;
+  }
+}
