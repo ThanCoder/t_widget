@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 typedef ItemListBuilderCallback<T> =
     Widget Function(BuildContext context, T item);
-typedef SeparatorBuilderCallback<T> =
-    Widget Function(BuildContext context, T item);
+typedef SeparatorBuilderCallback =
+    Widget Function(BuildContext context, int index);
 
 class TListDialog<T> extends StatelessWidget {
   final List<T> list;

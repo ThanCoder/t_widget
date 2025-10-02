@@ -21,15 +21,7 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       appBar: AppBar(title: const Text('Plugin example app')),
       body: Center(child: TCoverChooser(coverPath: '')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            barrierDismissible: true,
-            builder: (context) => TProgressDialog(manager: ProgressManager()),
-          );
-        },
-      ),
+      floatingActionButton: FloatingActionButton(onPressed: () {}),
     );
   }
 }

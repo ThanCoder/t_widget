@@ -5,9 +5,9 @@ import '../../widgets/index.dart';
 
 class TRenameDialog extends StatefulWidget {
   final Widget? title;
-  final String text;
-  final String cancelText;
-  final String submitText;
+  final String? text;
+  final String? cancelText;
+  final String? submitText;
   final void Function()? onCancel;
   final void Function(String text) onSubmit;
   final Widget? renameLabelText;
@@ -21,9 +21,9 @@ class TRenameDialog extends StatefulWidget {
   const TRenameDialog({
     super.key,
     this.title,
-    this.text = 'Untitled',
-    this.cancelText = 'Cancel',
-    this.submitText = 'Submit',
+    this.text,
+    this.cancelText,
+    this.submitText,
     this.onCancel,
     required this.onSubmit,
     this.renameLabelText,
@@ -44,7 +44,7 @@ class _TRenameDialogState extends State<TRenameDialog> {
 
   @override
   void initState() {
-    controller.text = widget.text;
+    controller.text = widget.text ?? 'Untitled';
     _checkError(controller.text);
     super.initState();
   }
@@ -118,17 +118,16 @@ class _TRenameDialogState extends State<TRenameDialog> {
                 widget.onCancel!();
               }
             },
-            child: Text(widget.cancelText),
+            child: Text(widget.cancelText ?? 'Cancel'),
           ),
           TextButton(
-            onPressed:
-                errorText != null
-                    ? null
-                    : () {
-                      Navigator.of(context).pop(true);
-                      widget.onSubmit(controller.text);
-                    },
-            child: Text(widget.submitText),
+            onPressed: errorText != null
+                ? null
+                : () {
+                    Navigator.of(context).pop(true);
+                    widget.onSubmit(controller.text);
+                  },
+            child: Text(widget.submitText ?? 'Rename'),
           ),
         ],
       ),

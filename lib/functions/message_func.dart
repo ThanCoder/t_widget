@@ -11,12 +11,14 @@ void showTMessageDialogError(
   showCupertinoDialog(
     barrierDismissible: true,
     context: context,
-    builder:
-        (context) => TMessageDialog(
-          backgroundColor: Colors.red,
-          title: title,
-          content: Text(message, style: TextStyle(color: Colors.white)),
-        ),
+    builder: (context) => TMessageDialog(
+      // backgroundColor: Colors.red,
+      title: title ?? Text('Error'),
+      content: Container(
+        color: const Color.fromARGB(255, 216, 54, 42),
+        child: SelectableText(message, style: TextStyle(color: Colors.white)),
+      ),
+    ),
   );
 }
 
@@ -29,11 +31,10 @@ void showTMessageDialog(
   showCupertinoDialog(
     context: context,
     barrierDismissible: true,
-    builder:
-        (context) => TMessageDialog(
-          title: title,
-          content: Text(message, style: TextStyle(color: color)),
-        ),
+    builder: (context) => TMessageDialog(
+      title: title,
+      content: SelectableText(message, style: TextStyle(color: color)),
+    ),
   );
 }
 

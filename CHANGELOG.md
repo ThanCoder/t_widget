@@ -1,3 +1,11 @@
+## 1.5.1
+
+- Fixed `TSeeAllView<T>` -> `OnSeeAllClickedCallback` to `OnSeeAllClickedCallback<T>`
+- Fixed `TSeeAllView<T>` -> `GridItemBuilderCallback` to `GridItemBuilderCallback<T>`
+- Fixed `TListDialog<T>`
+- Changed `showTMessageDialog` -> `Text` to `SelectableText`
+- Changed `showTMessageDialogError` -> `Text` to `SelectableText`
+
 ## 1.5.0
 
 - Added `TCoverChooser`

@@ -13,8 +13,8 @@ class TSeeAllView<T> extends StatelessWidget {
   final double padding;
   final EdgeInsetsGeometry? margin;
   final Color? titleColor;
-  final OnSeeAllClickedCallback? onSeeAllClicked;
-  final GridItemBuilderCallback gridItemBuilder;
+  final OnSeeAllClickedCallback<T>? onSeeAllClicked;
+  final GridItemBuilderCallback<T> gridItemBuilder;
   final double itemHeight;
   final double itemWidth;
   final double viewHeight;
