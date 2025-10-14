@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import '../t_widgets.dart';
 
 class TImageUrl extends StatelessWidget {
-  String url;
-  String? defaultAssetsPath;
-  BoxFit fit;
-  double? width;
-  double? height;
-  double? size;
-  double borderRadius;
-  Widget? loadingProgressWidget;
-  FilterQuality filterQuality;
+  final String url;
+  final String? defaultAssetsPath;
+  final BoxFit fit;
+  final double? width;
+  final double? height;
+  final double? size;
+  final double borderRadius;
+  final FilterQuality filterQuality;
+  final LoadingBuilderCallback? loadingBuilder;
+  final FrameBuilderCallback? frameBuilder;
+  final ErrorBuilderCallback? errorBuilder;
 
-  TImageUrl({
+  const TImageUrl({
     super.key,
     required this.url,
     this.defaultAssetsPath,
@@ -23,42 +25,10 @@ class TImageUrl extends StatelessWidget {
     this.size,
     this.borderRadius = 5,
     this.filterQuality = FilterQuality.medium,
-    this.loadingProgressWidget,
+    this.errorBuilder,
+    this.frameBuilder,
+    this.loadingBuilder,
   });
-
-  Widget _getImageWidget() {
-    if (TWidgets.instance.defaultImageAssetsPath == null) {
-      throw Exception('you should called => `await TWidgets.instance.init()`');
-    }
-    if (TWidgets.instance.defaultImageAssetsPath!.isEmpty) {
-      throw Exception('defaultImageAssetsPath is required!');
-    }
-    defaultAssetsPath = TWidgets.instance.defaultImageAssetsPath;
-    if (url.isEmpty) {
-      return Image.asset(defaultAssetsPath!, fit: fit);
-    } else {
-      return Image.network(
-        url,
-        fit: fit,
-        width: width,
-        height: height,
-        filterQuality: filterQuality,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          }
-          if (loadingProgressWidget != null) {
-            return loadingProgressWidget!;
-          }
-          return Center(child: TLoaderRandom());
-        },
-        errorBuilder: (context, error, stackTrace) {
-          TWidgets.showDebugLog('TImageUrl:error $url');
-          return Image.asset(defaultAssetsPath!, fit: fit);
-        },
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,5 +42,41 @@ class TImageUrl extends StatelessWidget {
       borderRadius: BorderRadius.circular(borderRadius),
       child: _getImageWidget(),
     );
+  }
+
+  Widget _getImageWidget() {
+    if (TWidgets.instance.defaultImageAssetsPath == null) {
+      throw Exception('you should called => `await TWidgets.instance.init()`');
+    }
+    if (TWidgets.instance.defaultImageAssetsPath!.isEmpty) {
+      throw Exception('defaultImageAssetsPath is required!');
+    }
+    if (url.isEmpty) {
+      return Image.asset(defaultAssetsPath!, fit: fit);
+    } else {
+      return Image.network(
+        url,
+        fit: fit,
+        width: width,
+        height: height,
+        filterQuality: filterQuality,
+        frameBuilder: frameBuilder,
+        loadingBuilder:
+            loadingBuilder ??
+            (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(child: TLoader.random());
+            },
+        errorBuilder:
+            errorBuilder ??
+            (context, error, stackTrace) {
+              TWidgets.showDebugLog('TImageUrl:error $url');
+              return Image.asset(
+                defaultAssetsPath ?? TWidgets.instance.defaultImageAssetsPath!,
+                fit: fit,
+              );
+            },
+      );
+    }
   }
 }

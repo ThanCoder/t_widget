@@ -5,24 +5,31 @@ import 'package:t_widgets/internal.dart';
 import 'package:t_widgets/t_widgets_dev.dart';
 
 class TCacheImage extends StatefulWidget {
-  String url;
-  String? cachePath;
-  double? height;
-  double? width;
-  double? size;
-  BoxFit fit;
-  double borderRadius;
-  Widget? loadingProgressWidget;
-  TCacheImage({
+  final String url;
+  final String? defaultAssetsPath;
+  final BoxFit fit;
+  final double? width;
+  final double? height;
+  final double? size;
+  final double borderRadius;
+  final FilterQuality filterQuality;
+  final LoadingBuilderCallback? loadingBuilder;
+  final FrameBuilderCallback? frameBuilder;
+  final ErrorBuilderCallback? errorBuilder;
+
+  const TCacheImage({
     super.key,
     required this.url,
-    this.cachePath,
+    this.defaultAssetsPath,
+    this.fit = BoxFit.cover,
     this.width,
     this.height,
     this.size,
-    this.fit = BoxFit.cover,
     this.borderRadius = 5,
-    this.loadingProgressWidget,
+    this.filterQuality = FilterQuality.medium,
+    this.errorBuilder,
+    this.frameBuilder,
+    this.loadingBuilder,
   });
 
   @override
@@ -36,70 +43,66 @@ class _TCacheImageState extends State<TCacheImage> {
     init();
   }
 
-  bool isLoading = false;
-  bool isExists = false;
+  @override
+  void didUpdateWidget(covariant TCacheImage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.url != widget.url) {
+      cacheFile = null;
+      init();
+    }
+    // print('old: ${oldWidget.url} - new: ${widget.url}');
+  }
+
+  File? cacheFile;
 
   void init() async {
     try {
-      if (widget.cachePath == null) return;
+      if (TWidgets.instance.getCachePath == null) return;
       if (TWidgets.instance.onDownloadImage == null) {
         throw Exception(TWidgets.getOnDownloadImageErrorText);
       }
+      final cachePath = TWidgets.instance.getCachePath?.call();
       //check file
-      final file = File('${widget.cachePath}/${widget.url.getName()}');
-      if (await file.exists()) {
+      final file = File('$cachePath/${widget.url.getName()}.png');
+      if (file.existsSync()) {
         setState(() {
-          isExists = true;
+          cacheFile = file;
         });
         return;
       }
-      //မရှိရင်
-      if (!mounted) return;
-      setState(() {
-        isLoading = true;
-      });
       await TWidgets.instance.onDownloadImage!(widget.url, file.path);
 
       if (!mounted) return;
       setState(() {
-        isLoading = false;
-        isExists = true;
+        cacheFile = file;
       });
     } catch (e) {
       if (!mounted) return;
-      setState(() {
-        isLoading = false;
-      });
+      setState(() {});
       TWidgets.showDebugLog('TCacheImage:error: ${e.toString()}');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      if (widget.loadingProgressWidget != null) {
-        return widget.loadingProgressWidget!;
-      }
-      return Center(child: TLoaderRandom());
-    }
-    if (isExists) {
-      return TImageFile(
-        path: '${widget.cachePath}/${widget.url.getName()}',
-        width: widget.height,
-        height: widget.height,
-        size: widget.size,
-        fit: widget.fit,
-        borderRadius: widget.borderRadius,
-      );
-    }
-    return TImageUrl(
-      url: widget.url,
-      width: widget.height,
-      height: widget.height,
-      size: widget.size,
-      fit: widget.fit,
+    final source = cacheFile == null ? widget.url : cacheFile!.path;
+    return TImage(
+      source: source,
+      defaultAssetsPath: widget.defaultAssetsPath,
       borderRadius: widget.borderRadius,
-      loadingProgressWidget: widget.loadingProgressWidget,
+      filterQuality: widget.filterQuality,
+      fit: widget.fit,
+      height: widget.height,
+      width: widget.width,
+      size: widget.size,
+      errorBuilder: widget.errorBuilder,
+      frameBuilder: widget.frameBuilder,
+      loadingBuilder:
+          widget.loadingBuilder ??
+          (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(child: TLoader.random());
+          },
     );
   }
 }

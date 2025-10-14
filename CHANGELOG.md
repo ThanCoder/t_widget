@@ -1,3 +1,9 @@
+# 1.5.2
+
+- Changed `TThemeServices` -> Props
+- Fixed `TCacheImage` -> `Update State Error`,`Download Cache Loading`
+- Changed `TImage,TImageFile,TImageUrl`
+
 ## 1.5.1
 
 - Fixed `TSeeAllView<T>` -> `OnSeeAllClickedCallback` to `OnSeeAllClickedCallback<T>`

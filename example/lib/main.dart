@@ -1,10 +1,19 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:t_widgets/t_widgets.dart';
 
 void main() async {
-  await TWidgets.instance.init(defaultImageAssetsPath: 'assets/cover.png');
+  final dio = Dio();
+
+  await TWidgets.instance.init(
+    defaultImageAssetsPath: 'assets/cover.png',
+    getCachePath: () => '/home/than/projects/plugins/t_widget/example/.cache',
+    onDownloadImage: (url, savePath) async {
+      await dio.download(url, savePath);
+    },
+  );
   runApp(MaterialApp(home: const MyApp()));
 }
 
@@ -16,12 +25,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String url =
+      'https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=2000';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Plugin example app')),
-      body: Center(child: TCoverChooser(coverPath: '')),
-      floatingActionButton: FloatingActionButton(onPressed: () {}),
+      body: Center(child: TCacheImage(url: url)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          url =
+              'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=2000';
+          setState(() {});
+        },
+      ),
     );
   }
 }

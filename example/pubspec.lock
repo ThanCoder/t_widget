@@ -362,7 +362,7 @@ packages:
       path: "/home/than/projects/plugins/t_client"
       relative: false
     source: path
-    version: "0.0.6"
+    version: "0.1.6"
   t_widgets:
     dependency: "direct main"
     description:

@@ -36,16 +36,19 @@ enum TThemeModes {
 }
 
 class TThemeServices with WidgetsBindingObserver {
+  final _controller = StreamController<TThemeModes>.broadcast();
+  Stream<TThemeModes> get onBrightnessChanged => _controller.stream;
+
   TThemeServices() {
     WidgetsBinding.instance.addObserver(this);
     // init
-    final brightness = WidgetsBinding.instance.window.platformBrightness;
-    Future.delayed(TWidgets.instance.getThemeServicesInitDelay(), () {
-      _controller.add(TThemeModes.fromBrightness(brightness));
-    });
+
+    Future.delayed(TWidgets.instance.getThemeServicesInitDelay(), () => init());
   }
-  final _controller = StreamController<TThemeModes>.broadcast();
-  Stream<TThemeModes> get onBrightnessChanged => _controller.stream;
+  void init() {
+    final brightness = WidgetsBinding.instance.window.platformBrightness;
+    _controller.add(TThemeModes.fromBrightness(brightness));
+  }
 
   @override
   void didChangePlatformBrightness() {

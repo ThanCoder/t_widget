@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:t_widgets/t_widgets.dart';
 
 class TImageFile extends StatelessWidget {
-  String path;
-  String? defaultAssetsPath;
-  BoxFit fit;
-  double? width;
-  double? height;
-  double? size;
-  double borderRadius;
+  final String path;
+  final String? defaultAssetsPath;
+  final BoxFit fit;
+  final double? width;
+  final double? height;
+  final double? size;
+  final double borderRadius;
+  final FilterQuality filterQuality;
+  final FrameBuilderCallback? frameBuilder;
+  final ErrorBuilderCallback? errorBuilder;
 
-  TImageFile({
+  const TImageFile({
     super.key,
     required this.path,
     this.defaultAssetsPath,
@@ -21,33 +24,10 @@ class TImageFile extends StatelessWidget {
     this.height,
     this.borderRadius = 5,
     this.size,
+    this.errorBuilder,
+    this.frameBuilder,
+    this.filterQuality = FilterQuality.medium,
   });
-
-  Widget _getImageWidget() {
-    if (TWidgets.instance.defaultImageAssetsPath == null) {
-      throw Exception('you should called => `await TWidgets.instance.init()`');
-    }
-    if (TWidgets.instance.defaultImageAssetsPath!.isEmpty) {
-      throw Exception('defaultImageAssetsPath is required!');
-    }
-    defaultAssetsPath = TWidgets.instance.defaultImageAssetsPath;
-
-    final file = File(path);
-    if (file.existsSync()) {
-      return Image.file(
-        file,
-        fit: fit,
-        width: width,
-        height: height,
-        errorBuilder: (context, error, stackTrace) {
-          TWidgets.showDebugLog('TImageFile: ${error.toString()}');
-          return Image.asset(defaultAssetsPath!, fit: fit);
-        },
-      );
-    } else {
-      return Image.asset(defaultAssetsPath!, fit: fit);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,5 +41,37 @@ class TImageFile extends StatelessWidget {
       borderRadius: BorderRadius.circular(borderRadius),
       child: _getImageWidget(),
     );
+  }
+
+  Widget _getImageWidget() {
+    if (TWidgets.instance.defaultImageAssetsPath == null) {
+      throw Exception('you should called => `await TWidgets.instance.init()`');
+    }
+    if (TWidgets.instance.defaultImageAssetsPath!.isEmpty) {
+      throw Exception('defaultImageAssetsPath is required!');
+    }
+
+    final file = File(path);
+    if (file.existsSync()) {
+      return Image.file(
+        file,
+        fit: fit,
+        width: width,
+        height: height,
+        frameBuilder: frameBuilder,
+        filterQuality: filterQuality,
+        errorBuilder:
+            errorBuilder ??
+            (context, error, stackTrace) {
+              TWidgets.showDebugLog('TImageFile: ${error.toString()}');
+              return Image.asset(defaultAssetsPath!, fit: fit);
+            },
+      );
+    } else {
+      return Image.asset(
+        defaultAssetsPath ?? TWidgets.instance.defaultImageAssetsPath!,
+        fit: fit,
+      );
+    }
   }
 }
