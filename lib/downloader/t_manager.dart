@@ -1,3 +1,5 @@
+import 'dart:async';
+
 enum TProgressTypes { preparing, progress, done, error }
 
 abstract class TManager {
@@ -21,6 +23,47 @@ abstract class TProgressManager {
   Stream<TProgress> run();
 }
 
+// simple task
+abstract class TUploadManagerSimple extends TUploadManager {
+  Future<void> startWorking(
+    StreamController<TProgress> controller,
+    List<String> pathList,
+  );
+
+  @override
+  Stream<TProgress> actions(List<String> pathList) {
+    final controller = StreamController<TProgress>();
+    startWorking(controller, pathList);
+    return controller.stream;
+  }
+}
+
+abstract class TDownloadManagerSimple extends TDownloadManager {
+  Future<void> startWorking(
+    StreamController<TProgress> controller,
+    List<String> urls,
+  );
+
+  @override
+  Stream<TProgress> actions(List<String> urls) {
+    final controller = StreamController<TProgress>();
+    startWorking(controller, urls);
+    return controller.stream;
+  }
+}
+
+abstract class TProgressManagerSimple extends TProgressManager {
+  Future<void> startWorking(StreamController<TProgress> controller);
+
+  @override
+  Stream<TProgress> run() {
+    final controller = StreamController<TProgress>();
+    startWorking(controller);
+    return controller.stream;
+  }
+}
+
+// progress
 class TProgress {
   final int index;
   final int indexLength;
@@ -40,7 +83,7 @@ class TProgress {
   factory TProgress.preparing({
     required int indexLength,
     int fileSize = 0,
-    String message = '',
+    String message = 'Preparing',
   }) {
     return TProgress(
       index: 0,

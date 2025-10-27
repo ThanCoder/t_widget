@@ -35,7 +35,7 @@ class TWidgets {
   late Duration Function() getThemeServicesInitDelay;
   OpenImageFileChooserCallback? onOpenImageFileChooser;
   OnFileChooserGetCoverPath? onFileChooserGetCoverPath;
-  String Function()? getCachePath;
+  String Function(String url)? getCachePath;
 
   Future<void> init({
     required String defaultImageAssetsPath,
@@ -49,7 +49,7 @@ class TWidgets {
     ///
     /// all `TImageCache` path
     ///
-    String Function()? getCachePath,
+    String Function(String url)? getCachePath,
   }) async {
     isDebugPrint = isDebugPrint;
     this.defaultImageAssetsPath = defaultImageAssetsPath;

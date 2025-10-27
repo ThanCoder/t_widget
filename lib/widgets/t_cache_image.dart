@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:t_widgets/internal.dart';
 import 'package:t_widgets/t_widgets_dev.dart';
 
 class TCacheImage extends StatefulWidget {
@@ -61,13 +60,17 @@ class _TCacheImageState extends State<TCacheImage> {
       if (TWidgets.instance.onDownloadImage == null) {
         throw Exception(TWidgets.getOnDownloadImageErrorText);
       }
-      final cachePath = TWidgets.instance.getCachePath?.call();
+      final cachePath = TWidgets.instance.getCachePath?.call(widget.url);
       //check file
-      final file = File('$cachePath/${widget.url.getName()}.png');
+      final file = File(cachePath ?? '');
       if (file.existsSync()) {
         setState(() {
           cacheFile = file;
         });
+        return;
+      }
+      if (cachePath == null) {
+        setState(() {});
         return;
       }
       await TWidgets.instance.onDownloadImage!(widget.url, file.path);
@@ -101,7 +104,7 @@ class _TCacheImageState extends State<TCacheImage> {
           widget.loadingBuilder ??
           (context, child, loadingProgress) {
             if (loadingProgress == null) return child;
-            return Center(child: TLoader.random());
+            return Center(child: TLoader());
           },
     );
   }

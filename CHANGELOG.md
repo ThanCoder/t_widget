@@ -1,4 +1,10 @@
-# 1.5.2
+# 1.6.4
+
+- Added `TProgressManagerSimple`,`TUploadManagerSimple`,`TDownloadManagerSimple` -> `abstract class`
+- Fixed `TCacheImage`
+- Changed `TThemeServices` -> `TThemeServices.instance`
+
+## 1.5.2
 
 - Changed `TThemeServices` -> Props
 - Fixed `TCacheImage` -> `Update State Error`,`Download Cache Loading`

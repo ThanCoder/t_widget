@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:t_widgets/internal.dart';
 import 'package:t_widgets/t_widgets.dart';
 
 void main() async {
@@ -9,7 +10,8 @@ void main() async {
 
   await TWidgets.instance.init(
     defaultImageAssetsPath: 'assets/cover.png',
-    getCachePath: () => '/home/than/projects/plugins/t_widget/example/.cache',
+    getCachePath: (url) =>
+        '/home/than/projects/plugins/t_widget/example/.cache/1234-${url.getName()}.png',
     onDownloadImage: (url, savePath) async {
       await dio.download(url, savePath);
     },
@@ -35,51 +37,65 @@ class _MyAppState extends State<MyApp> {
       body: Center(child: TCacheImage(url: url)),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          url =
-              'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=2000';
-          setState(() {});
+          // url =
+          //     'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=2000';
+          // setState(() {});
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => TProgressDialog(manager: ProgressManager()),
+          );
         },
       ),
     );
   }
 }
 
-class ProgressManager extends TProgressManager {
-  bool isCancel = false;
+class ProgressManager extends TProgressManagerSimple {
   @override
   void cancel() {
-    isCancel = true;
+    // TODO: implement cancel
   }
 
   @override
-  Stream<TProgress> run() {
-    final controller = StreamController<TProgress>();
-    (() async {
-      try {
-        controller.add(TProgress.preparing(indexLength: 100));
-
-        await Future.delayed(Duration(seconds: 1));
-
-        for (var i = 0; i <= 100; i++) {
-          if (isCancel) {
-            break;
-          }
-          controller.add(
-            TProgress.progress(
-              index: 1,
-              indexLength: 1,
-              loaded: i,
-              total: 100,
-              message: 'Progress: $i',
-            ),
-          );
-          await Future.delayed(Duration(milliseconds: 100));
-        }
-        await controller.close();
-      } catch (e) {
-        controller.addError(e);
-      }
-    })();
-    return controller.stream;
+  Future<void> startWorking(StreamController<TProgress> controller) {
+    // TODO: implement startWorking
+    throw UnimplementedError();
   }
 }
+// class ProgressManager extends TProgressManagerSimple {
+//   bool isCancel = false;
+//   @override
+//   void cancel() {
+//     isCancel = true;
+//   }
+
+//   @override
+//   Future<void> startWorking(StreamController<TProgress> controller) async {
+//     try {
+//       controller.add(TProgress.preparing(indexLength: 100));
+
+//       await Future.delayed(Duration(seconds: 1));
+
+//       for (var i = 0; i <= 100; i++) {
+//         if (isCancel) {
+//           controller.addError('progress cancel');
+//           break;
+//         }
+//         controller.add(
+//           TProgress.progress(
+//             index: 1,
+//             indexLength: 1,
+//             loaded: i,
+//             total: 100,
+//             message: 'Progress: $i',
+//           ),
+//         );
+//         await Future.delayed(Duration(milliseconds: 100));
+//       }
+//       await controller.close();
+//     } catch (e) {
+//       controller.addError(e);
+//     }
+//   }
+// }

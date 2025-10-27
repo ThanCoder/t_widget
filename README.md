@@ -6,6 +6,7 @@ await TWidgets.instance.init(
   defaultImageAssetsPath: 'assets/logo.webp',
   isDebugPrint: true,
   getDarkMode: () => true,
+  getCachePath: (url) => '.cache/1234-${url.getName()}.png',
   onDownloadImage: (url, savePath) async {
     //your logic here
     await Dio().download(url, savePath);
@@ -23,6 +24,45 @@ final text = await TAppServices.pasteFromClipboard();
 
 ```
 
+## Theme Services
+
+```Dart
+//init
+TThemeServices.instance.init();
+//theme check event
+TThemeServices.instance.checkThemeEvent();
+// start listen
+StreamSubscription subscription = TThemeServices.instance.onBrightnessChanged
+    .listen((themeMode) {});
+//listen end
+subscription.cancel();
+//dispose
+TThemeServices.instance.dispose();
+
+```
+
+## Progress
+
+```Dart
+showDialog(
+  context: context,
+  barrierDismissible: false,
+  builder: (context) => TProgressDialog(manager: ProgressManager()),
+);
+class ProgressManager extends TProgressManagerSimple {
+  @override
+  void cancel() {
+    // TODO: implement cancel
+  }
+
+  @override
+  Future<void> startWorking(StreamController<TProgress> controller) {
+    // TODO: implement startWorking
+    throw UnimplementedError();
+  }
+}
+```
+
 ## Multi Uploader && Downloader
 
 ```Dart
@@ -36,6 +76,37 @@ showDialog(
     ],
   ),
 );
+
+//You can Use DownloadManagerSimple
+class UploadManager extends TUploadManagerSimple {
+  @override
+  void cancel() {
+    // TODO: implement cancel
+  }
+
+  @override
+  Future<void> startWorking(
+    StreamController<TProgress> controller,
+    List<String> pathList,
+  ) {
+    // TODO: implement startWorking
+    throw UnimplementedError();
+  }
+}
+
+//You can Use UploadManagerSimple
+class DownloadManager extends TDownloadManagerSimple {
+  @override
+  void cancel() {
+    // TODO: implement cancel
+  }
+
+  @override
+  Future<void> startWorking(StreamController<TProgress> controller, List<String> urls) {
+    // TODO: implement startWorking
+    throw UnimplementedError();
+  }
+}
 
 class DownloadManager extends TDownloadManager {
   final token = TClientToken(isCancelFileDelete: true);

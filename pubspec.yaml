@@ -1,6 +1,6 @@
 name: t_widgets
 description: "A collection of reusable Flutter custom widgets designed to simplify UI development, speed up prototyping, and enhance cross-platform apps."
-version: 1.5.2
+version: 1.6.4
 homepage: https://github.com/ThanCoder/t_widget.git
 repository: https://github.com/ThanCoder/t_widget.git
 

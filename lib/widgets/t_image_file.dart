@@ -64,6 +64,7 @@ class TImageFile extends StatelessWidget {
             errorBuilder ??
             (context, error, stackTrace) {
               TWidgets.showDebugLog('TImageFile: ${error.toString()}');
+              file.deleteSync();
               return Image.asset(defaultAssetsPath!, fit: fit);
             },
       );

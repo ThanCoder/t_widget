@@ -60,11 +60,7 @@ class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
       title: widget.title,
       content: TScrollableColumn(
         children: [
-          errorMsg == null
-              ? progress == null
-                    ? Text('Preparing...')
-                    : _getMessage()
-              : Text(errorMsg!, style: TextStyle(color: Colors.red)),
+          _getMessage(),
           // progress
           _getProgress(),
         ],
@@ -76,6 +72,9 @@ class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
   Widget _getMessage() {
     if (progress == null) {
       return SizedBox.shrink();
+    }
+    if (errorMsg != null) {
+      return Text(errorMsg!, style: TextStyle(color: Colors.red));
     }
     return Text(progress!.message);
   }

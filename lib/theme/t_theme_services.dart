@@ -1,7 +1,39 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:t_widgets/t_widgets.dart';
+
+class TThemeServices with WidgetsBindingObserver {
+  static final TThemeServices instance = TThemeServices._();
+  TThemeServices._();
+  factory TThemeServices() => instance;
+
+  final _controller = StreamController<TThemeModes>.broadcast();
+  Stream<TThemeModes> get onBrightnessChanged => _controller.stream;
+
+  void init() {
+    WidgetsBinding.instance.addObserver(this);
+    // initial checkThemeEvent
+    checkThemeEvent();
+  }
+
+  void checkThemeEvent() {
+    // Android <10, Linux မှာ အမြဲ light ဖြစ်နိုင်တယ်
+    final brightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    _controller.add(TThemeModes.fromBrightness(brightness));
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    // OS theme ပြောင်းတာ detect
+    checkThemeEvent();
+  }
+
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _controller.close();
+  }
+}
 
 enum TThemeModes {
   system,
@@ -32,32 +64,5 @@ enum TThemeModes {
     }
 
     return TThemeModes.system;
-  }
-}
-
-class TThemeServices with WidgetsBindingObserver {
-  final _controller = StreamController<TThemeModes>.broadcast();
-  Stream<TThemeModes> get onBrightnessChanged => _controller.stream;
-
-  TThemeServices() {
-    WidgetsBinding.instance.addObserver(this);
-    // init
-
-    Future.delayed(TWidgets.instance.getThemeServicesInitDelay(), () => init());
-  }
-  void init() {
-    final brightness = WidgetsBinding.instance.window.platformBrightness;
-    _controller.add(TThemeModes.fromBrightness(brightness));
-  }
-
-  @override
-  void didChangePlatformBrightness() {
-    final brightness = WidgetsBinding.instance.window.platformBrightness;
-    _controller.add(TThemeModes.fromBrightness(brightness));
-  }
-
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _controller.close();
   }
 }
