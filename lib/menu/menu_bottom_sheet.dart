@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 
 class MenuBottomSheet extends StatelessWidget {
-  Widget? title;
-  List<Widget> children;
-  double minHeight;
-  MenuBottomSheet({
+  final Widget? title;
+  final List<Widget> children;
+  final double minHeight;
+  final double spacing;
+  final CrossAxisAlignment crossAxisAlignment;
+  final MainAxisAlignment mainAxisAlignment;
+  final EdgeInsetsGeometry padding;
+  const MenuBottomSheet({
     super.key,
     required this.children,
     this.title,
     this.minHeight = 150,
+    this.spacing = 0.0,
+    this.crossAxisAlignment = CrossAxisAlignment.center,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.padding = const EdgeInsets.all(0.0),
   });
 
   @override
@@ -16,7 +24,20 @@ class MenuBottomSheet extends StatelessWidget {
     return SingleChildScrollView(
       child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: minHeight),
-        child: Column(children: [_getHeader(), ...children]),
+        child: Column(
+          children: [
+            _getHeader(),
+            Padding(
+              padding: padding,
+              child: Column(
+                spacing: spacing,
+                crossAxisAlignment: crossAxisAlignment,
+                mainAxisAlignment: mainAxisAlignment,
+                children: children,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

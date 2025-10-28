@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:t_widgets/menu/menu_bottom_sheet_single.dart';
 import 'package:t_widgets/t_widgets.dart';
 
 void showTAlertDialog(
@@ -123,6 +124,36 @@ void showTMenuBottomSheet(
   bool isScrollControlled = false,
   bool useSafeArea = false,
   bool isDismissible = true,
+  double spacing = 0.0,
+  Widget? title,
+  CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
+  MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
+  EdgeInsetsGeometry padding = const EdgeInsets.all(0.0),
+}) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: isScrollControlled,
+    useSafeArea: useSafeArea,
+    isDismissible: isDismissible,
+    builder: (context) => MenuBottomSheet(
+      minHeight: minHeight,
+      title: title,
+      spacing: spacing,
+      crossAxisAlignment: crossAxisAlignment,
+      mainAxisAlignment: mainAxisAlignment,
+      padding: padding,
+      children: children,
+    ),
+  );
+}
+
+void showTMenuBottomSheetSingle(
+  BuildContext context, {
+  required Widget child,
+  double minHeight = 150,
+  bool isScrollControlled = false,
+  bool useSafeArea = false,
+  bool isDismissible = true,
   Widget? title,
 }) {
   showModalBottomSheet(
@@ -130,8 +161,11 @@ void showTMenuBottomSheet(
     isScrollControlled: isScrollControlled,
     useSafeArea: useSafeArea,
     isDismissible: isDismissible,
-    builder: (context) =>
-        MenuBottomSheet(minHeight: minHeight, title: title, children: children),
+    builder: (context) => MenuBottomSheetSingle(
+      minHeight: minHeight,
+      title: title,
+      child: child,
+    ),
   );
 }
 

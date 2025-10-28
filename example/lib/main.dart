@@ -40,11 +40,44 @@ class _MyAppState extends State<MyApp> {
           // url =
           //     'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=2000';
           // setState(() {});
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => TProgressDialog(manager: ProgressManager()),
+          // showDialog(
+          //   context: context,
+          //   barrierDismissible: false,
+          //   builder: (context) => TProgressDialog(manager: ProgressManager()),
+          // );
+          showTMenuBottomSheetSingle(
+            context,
+            title: Text('title'),
+            child: ListTile(title: Text('list tile')),
           );
+          // showTMenuBottomSheet(
+          //   context,
+          //   title: Text('title'),
+          //   // spacing: 20,
+          //   children: [
+          //     ListTile(
+          //       leading: Icon(Icons.favorite),
+          //       title: Text('fav'),
+          //       onTap: () {
+          //         Navigator.pop(context);
+          //       },
+          //     ),
+          //     ListTile(
+          //       leading: Icon(Icons.favorite),
+          //       title: Text('fav'),
+          //       onTap: () {
+          //         Navigator.pop(context);
+          //       },
+          //     ),
+          //     ListTile(
+          //       leading: Icon(Icons.favorite),
+          //       title: Text('fav'),
+          //       onTap: () {
+          //         Navigator.pop(context);
+          //       },
+          //     ),
+          //   ],
+          // );
         },
       ),
     );

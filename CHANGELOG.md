@@ -1,4 +1,9 @@
-# 1.6.4
+# 1.7.4
+
+- Added `showTMenuBottomSheetSingle` -> Single Child Widget
+- Added `showTMenuBottomSheet` -> Added Some Props
+
+## 1.6.4
 
 - Added `TProgressManagerSimple`,`TUploadManagerSimple`,`TDownloadManagerSimple` -> `abstract class`
 - Fixed `TCacheImage`
