@@ -49,7 +49,6 @@ class _TCacheImageState extends State<TCacheImage> {
       cacheFile = null;
       init();
     }
-    // print('old: ${oldWidget.url} - new: ${widget.url}');
   }
 
   File? cacheFile;
@@ -98,7 +97,13 @@ class _TCacheImageState extends State<TCacheImage> {
       height: widget.height,
       width: widget.width,
       size: widget.size,
-      errorBuilder: widget.errorBuilder,
+      errorBuilder:
+          widget.errorBuilder ??
+          (context, error, stackTrace) {
+            TWidgets.showDebugLog(error.toString());
+            
+            return TImage(source: source);
+          },
       frameBuilder: widget.frameBuilder,
       loadingBuilder:
           widget.loadingBuilder ??

@@ -13,9 +13,7 @@ dependencies:
     path: ../
   cupertino_icons: ^1.0.8
   dio: ^5.9.0
-  # t_client: ^0.0.2
-  t_client:
-    path: /home/than/projects/plugins/t_client
+  t_client: ^0.1.6
 
 dev_dependencies:
   integration_test:

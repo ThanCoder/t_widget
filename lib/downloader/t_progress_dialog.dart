@@ -85,7 +85,7 @@ class _TProgressDialogState extends State<TProgressDialog> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // progress lable
+        // progress status lable
         progress!.status == TProgressTypes.preparing
             ? SizedBox.shrink()
             : Text('${progress!.index}/${progress!.indexLength}'),
@@ -95,10 +95,6 @@ class _TProgressDialogState extends State<TProgressDialog> {
               ? null
               : progress!.loaded / progress!.total,
         ),
-        // label
-        progress!.total == 0
-            ? const SizedBox.shrink()
-            : Text('${progress!.loaded} / ${progress!.total}'),
       ],
     );
   }

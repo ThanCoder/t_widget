@@ -1,4 +1,9 @@
-# 1.7.4
+# 1.8.5
+
+- Added `TImageAsset`
+- Fixed `TProgressDialog`
+
+## 1.7.4
 
 - Added `showTMenuBottomSheetSingle` -> Single Child Widget
 - Added `showTMenuBottomSheet` -> Added Some Props

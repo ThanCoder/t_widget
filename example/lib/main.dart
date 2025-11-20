@@ -1,19 +1,19 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:t_client/t_client.dart';
 import 'package:t_widgets/internal.dart';
 import 'package:t_widgets/t_widgets.dart';
 
 void main() async {
-  final dio = Dio();
+  final client = TClient();
 
   await TWidgets.instance.init(
-    defaultImageAssetsPath: 'assets/cover.png',
+    defaultImageAssetsPath: 'assets/thancoder_logo_1.png',
     getCachePath: (url) =>
         '/home/than/projects/plugins/t_widget/example/.cache/1234-${url.getName()}.png',
     onDownloadImage: (url, savePath) async {
-      await dio.download(url, savePath);
+      await client.download(url, savePath: savePath);
     },
   );
   runApp(MaterialApp(home: const MyApp()));
@@ -34,50 +34,17 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Plugin example app')),
-      body: Center(child: TCacheImage(url: url)),
+      body: Center(child: TImageAsset(assetPath: 'assets/cover.png')),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // url =
           //     'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=2000';
           // setState(() {});
-          // showDialog(
-          //   context: context,
-          //   barrierDismissible: false,
-          //   builder: (context) => TProgressDialog(manager: ProgressManager()),
-          // );
-          showTMenuBottomSheetSingle(
-            context,
-            title: Text('title'),
-            child: ListTile(title: Text('list tile')),
-          );
-          // showTMenuBottomSheet(
-          //   context,
-          //   title: Text('title'),
-          //   // spacing: 20,
-          //   children: [
-          //     ListTile(
-          //       leading: Icon(Icons.favorite),
-          //       title: Text('fav'),
-          //       onTap: () {
-          //         Navigator.pop(context);
-          //       },
-          //     ),
-          //     ListTile(
-          //       leading: Icon(Icons.favorite),
-          //       title: Text('fav'),
-          //       onTap: () {
-          //         Navigator.pop(context);
-          //       },
-          //     ),
-          //     ListTile(
-          //       leading: Icon(Icons.favorite),
-          //       title: Text('fav'),
-          //       onTap: () {
-          //         Navigator.pop(context);
-          //       },
-          //     ),
-          //   ],
-          // );
+          //   showDialog(
+          //     context: context,
+          //     barrierDismissible: false,
+          //     builder: (context) => TProgressDialog(manager: ProgressManager()),
+          //   );
         },
       ),
     );
@@ -85,50 +52,38 @@ class _MyAppState extends State<MyApp> {
 }
 
 class ProgressManager extends TProgressManagerSimple {
+  bool isCancel = false;
   @override
   void cancel() {
-    // TODO: implement cancel
+    isCancel = true;
   }
 
   @override
-  Future<void> startWorking(StreamController<TProgress> controller) {
-    // TODO: implement startWorking
-    throw UnimplementedError();
+  Future<void> startWorking(StreamController<TProgress> controller) async {
+    try {
+      controller.add(TProgress.preparing(indexLength: 100));
+
+      await Future.delayed(Duration(seconds: 1));
+
+      for (var i = 0; i <= 100; i++) {
+        if (isCancel) {
+          controller.addError('progress cancel');
+          break;
+        }
+        controller.add(
+          TProgress.progress(
+            index: 1,
+            indexLength: 1,
+            loaded: i,
+            total: 100,
+            message: 'Progress: $i',
+          ),
+        );
+        await Future.delayed(Duration(milliseconds: 100));
+      }
+      await controller.close();
+    } catch (e) {
+      controller.addError(e);
+    }
   }
 }
-// class ProgressManager extends TProgressManagerSimple {
-//   bool isCancel = false;
-//   @override
-//   void cancel() {
-//     isCancel = true;
-//   }
-
-//   @override
-//   Future<void> startWorking(StreamController<TProgress> controller) async {
-//     try {
-//       controller.add(TProgress.preparing(indexLength: 100));
-
-//       await Future.delayed(Duration(seconds: 1));
-
-//       for (var i = 0; i <= 100; i++) {
-//         if (isCancel) {
-//           controller.addError('progress cancel');
-//           break;
-//         }
-//         controller.add(
-//           TProgress.progress(
-//             index: 1,
-//             indexLength: 1,
-//             loaded: i,
-//             total: 100,
-//             message: 'Progress: $i',
-//           ),
-//         );
-//         await Future.delayed(Duration(milliseconds: 100));
-//       }
-//       await controller.close();
-//     } catch (e) {
-//       controller.addError(e);
-//     }
-//   }
-// }

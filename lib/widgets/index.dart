@@ -14,3 +14,4 @@ export 't_image.dart';
 export 't_scrollable_column.dart';
 export 't_search_field.dart';
 export 'widget_types.dart';
+export 't_image_asset.dart';
