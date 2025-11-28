@@ -1,4 +1,4 @@
-# TWidget 1.2.0
+# TWidget 1.9.6
 
 ```Dart
 await TWidgets.instance.init(
@@ -27,18 +27,27 @@ final text = await TAppServices.pasteFromClipboard();
 ## Theme Services
 
 ```Dart
-//init
-TThemeServices.instance.init();
-//theme check event
-TThemeServices.instance.checkThemeEvent();
-// start listen
-StreamSubscription subscription = TThemeServices.instance.onBrightnessChanged
-    .listen((themeMode) {});
-//listen end
-subscription.cancel();
-//dispose
-TThemeServices.instance.dispose();
+// you need to initalize theme sevices //very important
+await TWidgets.instance.init(
+  initialThemeServices: true,
+);
 
+return ThemeModeListener(
+  builder: (context, themeMode) => MaterialApp(
+    themeMode: themeMode,
+    theme: ThemeData.light(),
+    darkTheme: ThemeData.dark(),
+    home: Scaffold(
+      appBar: AppBar(title: const Text('Plugin example app')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Menual Check
+          TThemeServices.instance.checkCurrentTheme();
+        },
+      ),
+    ),
+  ),
+);
 ```
 
 ## Progress

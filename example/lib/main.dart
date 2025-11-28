@@ -9,6 +9,7 @@ void main() async {
   final client = TClient();
 
   await TWidgets.instance.init(
+    initialThemeServices: true,
     defaultImageAssetsPath: 'assets/thancoder_logo_1.png',
     getCachePath: (url) =>
         '/home/than/projects/plugins/t_widget/example/.cache/1234-${url.getName()}.png',
@@ -16,7 +17,7 @@ void main() async {
       await client.download(url, savePath: savePath);
     },
   );
-  runApp(MaterialApp(home: const MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -27,25 +28,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String url =
-      'https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=2000';
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Plugin example app')),
-      body: Center(child: TImageAsset(assetPath: 'assets/cover.png')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // url =
-          //     'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=2000';
-          // setState(() {});
-          //   showDialog(
-          //     context: context,
-          //     barrierDismissible: false,
-          //     builder: (context) => TProgressDialog(manager: ProgressManager()),
-          //   );
-        },
+    return ThemeModeListener(
+      builder: (context, themeMode) => MaterialApp(
+        themeMode: themeMode,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        home: Scaffold(
+          appBar: AppBar(title: const Text('Plugin example app')),
+          body: Center(child: TImageAsset(assetPath: 'assets/cover.png')),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              TThemeServices.instance.checkCurrentTheme();
+            },
+          ),
+        ),
       ),
     );
   }

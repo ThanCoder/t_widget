@@ -7,26 +7,31 @@ class TThemeServices with WidgetsBindingObserver {
   TThemeServices._();
   factory TThemeServices() => instance;
 
-  final _controller = StreamController<TThemeModes>.broadcast();
-  Stream<TThemeModes> get onBrightnessChanged => _controller.stream;
+  final _controller = StreamController<Brightness>.broadcast();
+  Stream<Brightness> get onBrightnessChanged => _controller.stream;
+  Brightness currentBrightness = Brightness.light;
 
   void init() {
     WidgetsBinding.instance.addObserver(this);
     // initial checkThemeEvent
-    checkThemeEvent();
+    checkCurrentTheme();
+    // Future.delayed(Duration(milliseconds: 500), checkCurrentTheme);
   }
 
-  void checkThemeEvent() {
+  void checkCurrentTheme() {
     // Android <10, Linux မှာ အမြဲ light ဖြစ်နိုင်တယ်
-    final brightness =
+    final newBrightness =
         WidgetsBinding.instance.platformDispatcher.platformBrightness;
-    _controller.add(TThemeModes.fromBrightness(brightness));
+    if (newBrightness != currentBrightness) {
+      currentBrightness = newBrightness;
+      _controller.add(currentBrightness);
+    }
   }
 
   @override
   void didChangePlatformBrightness() {
     // OS theme ပြောင်းတာ detect
-    checkThemeEvent();
+    checkCurrentTheme();
   }
 
   void dispose() {

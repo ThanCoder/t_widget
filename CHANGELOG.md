@@ -1,4 +1,9 @@
-# 1.8.5
+# 1.9.6
+
+- Added `ThemeModeListener` -> example look at README.
+- Fixed `TThemeServices` -> Not Working!...
+
+## 1.8.5
 
 - Added `TImageAsset`
 - Fixed `TProgressDialog`

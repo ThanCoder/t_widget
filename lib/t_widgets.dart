@@ -2,7 +2,8 @@ library;
 
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:t_widgets/theme/t_theme_services.dart';
 
 export 'dialogs/index.dart';
 export 'downloader/index.dart';
@@ -15,6 +16,7 @@ export 'types/index.dart';
 export 'views/index.dart';
 export 'widgets/index.dart';
 export 'choosers/index.dart';
+export 'theme/index.dart';
 
 typedef DownloadImageCallback =
     Future<void> Function(String url, String savePath);
@@ -50,8 +52,13 @@ class TWidgets {
     /// all `TImageCache` path
     ///
     String Function(String url)? getCachePath,
+    bool initialThemeServices = false,
   }) async {
     isDebugPrint = isDebugPrint;
+    if (initialThemeServices) {
+      WidgetsFlutterBinding.ensureInitialized();
+      TThemeServices.instance.init();
+    }
     this.defaultImageAssetsPath = defaultImageAssetsPath;
     this.onDownloadImage = onDownloadImage;
     this.getDarkMode = getDarkMode ?? () => false;
@@ -60,6 +67,8 @@ class TWidgets {
     this.getThemeServicesInitDelay =
         getThemeServicesInitDelay ?? () => Duration(milliseconds: 500);
     this.getCachePath = getCachePath;
+
+    await Future.delayed(Duration.zero);
   }
 
   static void showDebugLog(String msg, {String? tag}) {
