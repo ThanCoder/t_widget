@@ -12,7 +12,6 @@ dependencies:
   t_widgets:
     path: ../
   cupertino_icons: ^1.0.8
-  dio: ^5.9.0
   t_client: ^0.1.6
 
 dev_dependencies:

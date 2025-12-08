@@ -1,11 +1,11 @@
-# TWidget 1.9.6
+# TWidget 2.0.0
 
 ```Dart
 await TWidgets.instance.init(
   // required for TImage,TCoverImage -> default cover path
   defaultImageAssetsPath: 'assets/logo.webp',
   isDebugPrint: true,
-  getDarkMode: () => true,
+  isDarkTheme: () => true,
   getCachePath: (url) => '.cache/1234-${url.getName()}.png',
   onDownloadImage: (url, savePath) async {
     //your logic here
@@ -31,23 +31,38 @@ final text = await TAppServices.pasteFromClipboard();
 await TWidgets.instance.init(
   initialThemeServices: true,
 );
+// Change Notifier
+final appDarkThemeNotifier = ValueNotifier<bool>(false);
 
-return ThemeModeListener(
-  builder: (context, themeMode) => MaterialApp(
-    themeMode: themeMode,
-    theme: ThemeData.light(),
-    darkTheme: ThemeData.dark(),
-    home: Scaffold(
-      appBar: AppBar(title: const Text('Plugin example app')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Menual Check
-          TThemeServices.instance.checkCurrentTheme();
-        },
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return PBrightnessListener(
+      // save config
+      onChanged: (brightness) {
+        appDarkThemeNotifier.value = brightness.isDark;
+        print('brightness: $brightness');
+      },
+      // ui
+      builder: (context, brightness) => MaterialApp(
+        themeMode: brightness == Brightness.dark
+            ? ThemeMode.dark
+            : ThemeMode.light,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        home: Scaffold(
+          appBar: AppBar(title: const Text('Plugin example app')),
+          body: Center(child: TLoaderRandom()),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              print(PBrightnessServices.instance.currentBrightness);
+            },
+          ),
+        ),
       ),
-    ),
-  ),
-);
+    );
+  }
+}
 ```
 
 ## Progress

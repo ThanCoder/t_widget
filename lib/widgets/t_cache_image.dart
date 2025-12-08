@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:t_widgets/t_widgets_dev.dart';
+import 'package:t_widgets/t_widgets.dart';
 
-class TCacheImage extends StatefulWidget {
+class TCacheImage extends StatelessWidget {
   final String url;
   final String? defaultAssetsPath;
   final BoxFit fit;
@@ -32,85 +32,64 @@ class TCacheImage extends StatefulWidget {
   });
 
   @override
-  State<TCacheImage> createState() => _TCacheImageState();
-}
-
-class _TCacheImageState extends State<TCacheImage> {
-  @override
-  void initState() {
-    super.initState();
-    init();
-  }
-
-  @override
-  void didUpdateWidget(covariant TCacheImage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.url != widget.url) {
-      cacheFile = null;
-      init();
-    }
-  }
-
-  File? cacheFile;
-
-  void init() async {
-    try {
-      if (TWidgets.instance.getCachePath == null) return;
-      if (TWidgets.instance.onDownloadImage == null) {
-        throw Exception(TWidgets.getOnDownloadImageErrorText);
-      }
-      final cachePath = TWidgets.instance.getCachePath?.call(widget.url);
-      //check file
-      final file = File(cachePath ?? '');
-      if (file.existsSync()) {
-        setState(() {
-          cacheFile = file;
-        });
-        return;
-      }
-      if (cachePath == null) {
-        setState(() {});
-        return;
-      }
-      await TWidgets.instance.onDownloadImage!(widget.url, file.path);
-
-      if (!mounted) return;
-      setState(() {
-        cacheFile = file;
-      });
-    } catch (e) {
-      if (!mounted) return;
-      setState(() {});
-      TWidgets.showDebugLog('TCacheImage:error: ${e.toString()}');
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final source = cacheFile == null ? widget.url : cacheFile!.path;
+    final cacheFile = File(TWidgets.instance.getCachePath?.call(url) ?? '');
+    if (cacheFile.existsSync()) {
+      return TImageFile(
+        key: key,
+        path: cacheFile.path,
+        errorBuilder: _errorBuilder,
+        frameBuilder: frameBuilder,
+        borderRadius: borderRadius,
+        defaultAssetsPath: defaultAssetsPath,
+        filterQuality: filterQuality,
+        fit: fit,
+        height: height,
+        width: width,
+        size: size,
+      );
+    }
+    return FutureBuilder(
+      future: TWidgets.instance.onDownloadImage?.call(url, cacheFile.path),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return TLoader.random();
+        }
+        return TImageFile(
+          key: key,
+          path: cacheFile.path,
+          errorBuilder: _errorBuilder,
+          frameBuilder: frameBuilder,
+          borderRadius: borderRadius,
+          defaultAssetsPath: defaultAssetsPath,
+          filterQuality: filterQuality,
+          fit: fit,
+          height: height,
+          width: width,
+          size: size,
+        );
+      },
+    );
+  }
+
+  Widget _errorBuilder(
+    BuildContext context,
+    Object error,
+    StackTrace? stackTrace,
+  ) {
     return TImage(
-      source: source,
-      defaultAssetsPath: widget.defaultAssetsPath,
-      borderRadius: widget.borderRadius,
-      filterQuality: widget.filterQuality,
-      fit: widget.fit,
-      height: widget.height,
-      width: widget.width,
-      size: widget.size,
-      errorBuilder:
-          widget.errorBuilder ??
-          (context, error, stackTrace) {
-            TWidgets.showDebugLog(error.toString());
-            
-            return TImage(source: source);
-          },
-      frameBuilder: widget.frameBuilder,
-      loadingBuilder:
-          widget.loadingBuilder ??
-          (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Center(child: TLoader());
-          },
+      key: key,
+      source: url,
+      borderRadius: borderRadius,
+      defaultAssetsPath: defaultAssetsPath,
+      filterQuality: filterQuality,
+      fit: fit,
+      height: height,
+      width: width,
+      size: size,
+      frameBuilder: frameBuilder,
+      errorBuilder: errorBuilder,
+      loadingBuilder: loadingBuilder,
     );
   }
 }

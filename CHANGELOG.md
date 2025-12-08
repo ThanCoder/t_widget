@@ -1,4 +1,16 @@
-# 1.9.6
+# 2.0.0
+
+- Added `PBrightnessListener`
+- Added `PBrightnePBrightnessServicesssListener`
+- Fixed `TTagsWrapView`
+- Fixed `TLoaderRandom`
+- Fixed `TLoader`
+- Fixed `TCacheImage`
+- Deprecated `ThemeModeListener`
+- Deprecated `TThemeServices`
+- Deprecated `TThemeModes`
+
+## 1.9.6
 
 - Added `ThemeModeListener` -> example look at README.
 - Fixed `TThemeServices` -> Not Working!...

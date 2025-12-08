@@ -4,6 +4,8 @@ import 'package:t_widgets/theme/t_theme_services.dart';
 typedef ThemeModeListenerBuilder =
     Widget Function(BuildContext context, ThemeMode themeMode);
 
+/// **Deprecated:** Use `ThemeModeListener` instead.
+@Deprecated('Use PBrightnessListener ')
 class ThemeModeListener extends StatelessWidget {
   final ThemeModeListenerBuilder builder;
   const ThemeModeListener({super.key, required this.builder});

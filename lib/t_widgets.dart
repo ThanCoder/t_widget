@@ -3,7 +3,7 @@ library;
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-import 'package:t_widgets/theme/t_theme_services.dart';
+import 'package:t_widgets/theme/index.dart';
 
 export 'dialogs/index.dart';
 export 'downloader/index.dart';
@@ -33,7 +33,7 @@ class TWidgets {
   String? defaultImageAssetsPath;
   static bool isDebugPrint = true;
   DownloadImageCallback? onDownloadImage;
-  late bool Function() getDarkMode;
+  bool Function()? isDarkTheme;
   late Duration Function() getThemeServicesInitDelay;
   OpenImageFileChooserCallback? onOpenImageFileChooser;
   OnFileChooserGetCoverPath? onFileChooserGetCoverPath;
@@ -43,7 +43,7 @@ class TWidgets {
     required String defaultImageAssetsPath,
     bool isDebugPrint = true,
     DownloadImageCallback? onDownloadImage,
-    bool Function()? getDarkMode,
+    bool Function()? isDarkTheme,
     OpenImageFileChooserCallback? onOpenImageFileChooser,
     OnFileChooserGetCoverPath? onFileChooserGetCoverPath,
     Duration Function()? getThemeServicesInitDelay,
@@ -57,11 +57,11 @@ class TWidgets {
     isDebugPrint = isDebugPrint;
     if (initialThemeServices) {
       WidgetsFlutterBinding.ensureInitialized();
-      TThemeServices.instance.init();
+      PBrightnessServices.instance.init();
     }
     this.defaultImageAssetsPath = defaultImageAssetsPath;
     this.onDownloadImage = onDownloadImage;
-    this.getDarkMode = getDarkMode ?? () => false;
+    this.isDarkTheme = isDarkTheme;
     this.onOpenImageFileChooser = onOpenImageFileChooser;
     this.onFileChooserGetCoverPath = onFileChooserGetCoverPath;
     this.getThemeServicesInitDelay =

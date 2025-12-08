@@ -60,25 +60,24 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder:
-            (context) => TSearchListPage(
-              type: widget.searchListType,
-              list: widget.allTags,
-              values: widget.values,
-              autofocus: true,
-              cancelText: 'Close',
-              submitText: 'New',
-              onCheckIsError: (text) {
-                if (widget.values.contains(text)) {
-                  return 'Already Exists!';
-                }
-                return null;
-              },
-              onSubmit: (List<String> values) {
-                if (widget.onApply == null) return;
-                widget.onApply!(values);
-              },
-            ),
+        builder: (context) => TSearchListPage(
+          type: widget.searchListType,
+          list: widget.allTags,
+          values: widget.values,
+          autofocus: true,
+          cancelText: 'Close',
+          submitText: 'New',
+          onCheckIsError: (text) {
+            if (widget.values.contains(text)) {
+              return 'Already Exists!';
+            }
+            return null;
+          },
+          onSubmit: (List<String> values) {
+            if (widget.onApply == null) return;
+            widget.onApply!(values);
+          },
+        ),
       ),
     );
   }
@@ -97,7 +96,7 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
   }
 
   Widget _getTextTagWidget(int index, String name) {
-    final isDark = TWidgets.instance.getDarkMode();
+    final isDark = TWidgets.instance.isDarkTheme?.call() ?? false;
 
     return GestureDetector(
       onTap: () {
@@ -121,17 +120,17 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
                   : widget.onApply == null
                   ? SizedBox.shrink()
                   : GestureDetector(
-                    onTap: () {
-                      widget.values.removeAt(index);
-                      if (widget.onApply == null) return;
-                      widget.onApply!(widget.values);
-                    },
-                    child: Icon(
-                      Icons.close_rounded,
-                      size: 20,
-                      color: const Color.fromARGB(255, 201, 34, 22),
+                      onTap: () {
+                        widget.values.removeAt(index);
+                        if (widget.onApply == null) return;
+                        widget.onApply!(widget.values);
+                      },
+                      child: Icon(
+                        Icons.close_rounded,
+                        size: 20,
+                        color: const Color.fromARGB(255, 201, 34, 22),
+                      ),
                     ),
-                  ),
             ],
           ),
         ),
@@ -143,10 +142,9 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
     return TChip(
       backgroundColor: widget.backgroundColor,
       title: Text(name, style: TextStyle(color: widget.textColor)),
-      avatar:
-          widget.onChecked != null && widget.allTags.contains(name)
-              ? Icon(Icons.check)
-              : null,
+      avatar: widget.onChecked != null && widget.allTags.contains(name)
+          ? Icon(Icons.check)
+          : null,
       onClick: () {
         if (widget.onChecked != null) {
           widget.onChecked!(false, name);
@@ -155,18 +153,17 @@ class _TTagsWrapViewState extends State<TTagsWrapView> {
           widget.onClicked!(name);
         }
       },
-      onDelete:
-          widget.onApply == null
-              ? null
-              : () {
-                widget.values.removeAt(index);
-                if (widget.onApply != null) {
-                  widget.onApply!(widget.values);
-                }
-                if (widget.onChecked != null) {
-                  widget.onChecked!(true, name);
-                }
-              },
+      onDelete: widget.onApply == null
+          ? null
+          : () {
+              widget.values.removeAt(index);
+              if (widget.onApply != null) {
+                widget.onApply!(widget.values);
+              }
+              if (widget.onChecked != null) {
+                widget.onChecked!(true, name);
+              }
+            },
     );
   }
 

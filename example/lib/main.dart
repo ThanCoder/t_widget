@@ -1,21 +1,29 @@
-import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:t_client/t_client.dart';
 import 'package:t_widgets/internal.dart';
 import 'package:t_widgets/t_widgets.dart';
 
+final appDarkThemeNotifier = ValueNotifier<bool>(false);
+
 void main() async {
   final client = TClient();
+  final cacheDir = Directory(
+    '/home/than/projects/plugins/t_widget/example/.cache',
+  );
+  if (!cacheDir.existsSync()) {
+    await cacheDir.create();
+  }
 
   await TWidgets.instance.init(
     initialThemeServices: true,
     defaultImageAssetsPath: 'assets/thancoder_logo_1.png',
-    getCachePath: (url) =>
-        '/home/than/projects/plugins/t_widget/example/.cache/1234-${url.getName()}.png',
+    getCachePath: (url) => '${cacheDir.path}/${url.getName()}.png',
     onDownloadImage: (url, savePath) async {
       await client.download(url, savePath: savePath);
     },
+    isDarkTheme: () => appDarkThemeNotifier.value,
   );
   runApp(const MyApp());
 }
@@ -30,58 +38,32 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return ThemeModeListener(
-      builder: (context, themeMode) => MaterialApp(
-        themeMode: themeMode,
+    return PBrightnessListener(
+      onChanged: (brightness) {
+        appDarkThemeNotifier.value = brightness.isDark;
+        print('brightness: $brightness');
+      },
+      builder: (context, brightness) => MaterialApp(
+        themeMode: brightness == Brightness.dark
+            ? ThemeMode.dark
+            : ThemeMode.light,
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
         home: Scaffold(
           appBar: AppBar(title: const Text('Plugin example app')),
-          body: Center(child: TImageAsset(assetPath: 'assets/cover.png')),
+          body: Center(
+            child: TCacheImage(
+              url:
+                  'https://help.imgur.com/hc/article_attachments/26512175039515?utm_source=chatgpt.com',
+            ),
+          ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              TThemeServices.instance.checkCurrentTheme();
+              setState(() {});
             },
           ),
         ),
       ),
     );
-  }
-}
-
-class ProgressManager extends TProgressManagerSimple {
-  bool isCancel = false;
-  @override
-  void cancel() {
-    isCancel = true;
-  }
-
-  @override
-  Future<void> startWorking(StreamController<TProgress> controller) async {
-    try {
-      controller.add(TProgress.preparing(indexLength: 100));
-
-      await Future.delayed(Duration(seconds: 1));
-
-      for (var i = 0; i <= 100; i++) {
-        if (isCancel) {
-          controller.addError('progress cancel');
-          break;
-        }
-        controller.add(
-          TProgress.progress(
-            index: 1,
-            indexLength: 1,
-            loaded: i,
-            total: 100,
-            message: 'Progress: $i',
-          ),
-        );
-        await Future.delayed(Duration(milliseconds: 100));
-      }
-      await controller.close();
-    } catch (e) {
-      controller.addError(e);
-    }
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:t_widgets/internal.dart';
-import 'package:t_widgets/t_widgets_dev.dart';
+import 'package:t_widgets/t_widgets.dart';
 
 class TMultiUploaderDialog extends StatefulWidget {
   final List<String> pathList;

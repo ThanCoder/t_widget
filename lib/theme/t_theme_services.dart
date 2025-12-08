@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 
+/// **Deprecated:** Use `TThemeServices` instead.
+@Deprecated('Use PBrightnessServices ')
 class TThemeServices with WidgetsBindingObserver {
   static final TThemeServices instance = TThemeServices._();
   TThemeServices._();
@@ -40,6 +42,8 @@ class TThemeServices with WidgetsBindingObserver {
   }
 }
 
+/// **Deprecated:**.
+@Deprecated('TThemeModes ')
 enum TThemeModes {
   system,
   light,
