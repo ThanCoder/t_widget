@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
       onChanged: (brightness) {
         appDarkThemeNotifier.value = brightness.isDark;
         print('brightness: $brightness');
+        return false;
       },
       builder: (context, brightness) => MaterialApp(
         themeMode: brightness == Brightness.dark

@@ -6,15 +6,21 @@ import 'package:t_widgets/theme/p_brightness_services.dart';
 typedef PBrightnessListenerBuilder =
     Widget Function(BuildContext context, Brightness brightness);
 typedef PBrightnessListenerOnChangeCallback =
-    void Function(Brightness brightness);
+    bool Function(Brightness brightness);
 
 class PBrightnessListener extends StatefulWidget {
   final PBrightnessListenerBuilder builder;
+
+  ///
+  /// ### Return <`bool`> `UI Refersh`
+  /// 
+  /// if `true` ? `call setState` else `No Call` or `No Refersh UI`
+  ///
   final PBrightnessListenerOnChangeCallback onChanged;
   const PBrightnessListener({
     super.key,
-    required this.builder,
     required this.onChanged,
+    required this.builder,
   });
 
   @override
@@ -29,8 +35,10 @@ class _PBrightnessListenerState extends State<PBrightnessListener> {
     _streamSubscription = PBrightnessServices.instance.onBrightnessChanged
         .listen((brightness) {
           _brightness = brightness;
-          widget.onChanged(brightness);
-          setState(() {});
+          final isUiRefresh = widget.onChanged(brightness);
+          if (isUiRefresh) {
+            setState(() {});
+          }
         });
     super.initState();
   }
