@@ -1,11 +1,15 @@
-# 2.0.1
+# 2.0.2
+
+- Fixed `PBrightnessServices`
+
+## 2.0.1
 
 - Fixed `PBrightnessListener`
 
 ## 2.0.0
 
 - Added `PBrightnessListener`
-- Added `PBrightnePBrightnessServicesssListener`
+- Added `PBrightnessServices`
 - Fixed `TTagsWrapView`
 - Fixed `TLoaderRandom`
 - Fixed `TLoader`

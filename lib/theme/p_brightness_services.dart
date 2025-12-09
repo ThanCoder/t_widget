@@ -26,11 +26,8 @@ class PBrightnessServices with WidgetsBindingObserver {
 
   void checkCurrentTheme() {
     // Android <10, Linux မှာ အမြဲ light ဖြစ်နိုင်တယ်
-    final newBrightness =
+    currentBrightness =
         WidgetsBinding.instance.platformDispatcher.platformBrightness;
-    if (newBrightness != currentBrightness) {
-      currentBrightness = newBrightness;
-      _controller.add(currentBrightness);
-    }
+    _controller.add(currentBrightness);
   }
 }
