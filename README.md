@@ -24,6 +24,66 @@ final text = await TAppServices.pasteFromClipboard();
 
 ```
 
+## New Progress Manager
+
+```Dart
+showProgressDialog(
+  context: context,
+  progressManager: ProgressManager(),
+);
+//or
+showAdaptiveDialog(
+  context: context,
+  builder: (context) =>
+      ProgressDialog(progressManager: ProgressManager()),
+);
+```
+
+### ProgressManagerInterface
+
+```Dart
+class ProgressManager extends ProgressManagerInterface {
+  bool isCancel = false;
+  @override
+  void cancel() {
+    isCancel = true;
+  }
+
+  @override
+  Future<void> start(StreamController<ProgressMessage> streamController) async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    streamController.add(ProgressMessage.preparing());
+
+    await Future.delayed(Duration(milliseconds: 1400));
+
+    for (int i = 0; i <= 100; i++) {
+      if (isCancel) {
+        // await streamController.close();
+        streamController.addError('Cancel');
+        break;
+      }
+      await Future.delayed(Duration(milliseconds: 100));
+
+      streamController.add(
+        ProgressMessage.progress(
+          index: i,
+          indexLength: 100,
+          progress: i / 100,
+          message: 'Progress: $i',
+        ),
+      );
+    }
+    if (isCancel) return;
+
+    streamController.add(ProgressMessage.done());
+
+    await Future.delayed(Duration(milliseconds: 1400));
+
+    await streamController.close();
+  }
+}
+```
+
 ## Theme Services
 
 ```Dart

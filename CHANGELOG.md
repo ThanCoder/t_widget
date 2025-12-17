@@ -1,4 +1,8 @@
-# 2.0.2
+# 2.1.0
+
+- Added `ProgressDialog` -> New Progress Manager
+
+## 2.0.2
 
 - Fixed `PBrightnessServices`
 
