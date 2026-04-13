@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
 class TChip extends StatelessWidget {
-  Widget title;
-  Widget? avatar;
-  Color? backgroundColor;
-  void Function()? onClick;
-  void Function()? onDelete;
-  TChip({
+  final Widget title;
+  final Widget? avatar;
+  final MouseCursor? mouseCursor;
+  final Color? backgroundColor;
+  final void Function()? onClick;
+  final void Function()? onDelete;
+  const TChip({
     super.key,
     required this.title,
     this.backgroundColor,
     this.avatar,
     this.onClick,
     this.onDelete,
+    this.mouseCursor,
   });
 
   @override
@@ -21,12 +23,11 @@ class TChip extends StatelessWidget {
       onTap: onClick,
       child: Chip(
         backgroundColor: backgroundColor,
-        mouseCursor: SystemMouseCursors.click,
+        mouseCursor: mouseCursor ?? SystemMouseCursors.click,
         deleteIconColor: Colors.red[900],
         label: title,
         avatar: avatar,
         onDeleted: onDelete,
-        
       ),
     );
   }

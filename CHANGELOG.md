@@ -1,4 +1,16 @@
-# 2.1.0
+# 2.2.1
+
+- Added `ExpandableTags`
+- Added `RefreshButton`
+- Added `TagsView`
+- Added `ConfirmDialog`
+- Added `ConfirmBottomSheet`
+- Added `RenameDialog`
+- Added `RenameBottomSheet`
+- Fixed `TCacheImage`
+- Fixed `getDefaultList` -> `TSort(id: 101, title: 'Date', ascTitle: 'Newest', descTitle: 'Oldest'),` -> Old Version `TSort(id: 101, title: 'Date', ascTitle: 'Oldest', descTitle: 'Newest'),`
+
+## 2.1.0
 
 - Added `ProgressDialog` -> New Progress Manager
 

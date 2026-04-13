@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:t_widgets/internal.dart';
+import 'package:t_widgets/extensions/t_widgets_extensions.dart';
+
 class TTextField extends StatefulWidget {
   TextEditingController? controller;
   Widget? label;
@@ -33,7 +34,7 @@ class TTextField extends StatefulWidget {
     this.onTap,
     this.onSubmitted,
     this.style,
-    this.autofocus=false,
+    this.autofocus = false,
     this.enabled,
   });
 

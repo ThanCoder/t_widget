@@ -18,12 +18,18 @@ export 'widgets/index.dart';
 export 'choosers/index.dart';
 export 'theme/index.dart';
 
-typedef DownloadImageCallback =
-    Future<void> Function(String url, String savePath);
+typedef CustomDownloadImageCallback =
+    Future<void> Function(
+      String url,
+      String savePath, {
+      void Function(double progress)? onProgress,
+      void Function(String error)? onError,
+    });
 typedef OpenImageFileChooserCallback =
     Future<String?> Function({String? initialDirectory});
 typedef OnFileChooserGetCoverPath =
     Future<String> Function(FileSystemEntity file);
+typedef ImageCachePathCallback = String Function(String url, String cacheName);
 
 class TWidgets {
   static final TWidgets instance = TWidgets._();
@@ -32,17 +38,17 @@ class TWidgets {
 
   String? defaultImageAssetsPath;
   static bool isDebugPrint = true;
-  DownloadImageCallback? onDownloadImage;
+  CustomDownloadImageCallback? onCustomDownloadImage;
   bool Function()? isDarkTheme;
   late Duration Function() getThemeServicesInitDelay;
   OpenImageFileChooserCallback? onOpenImageFileChooser;
   OnFileChooserGetCoverPath? onFileChooserGetCoverPath;
-  String Function(String url)? getCachePath;
+  ImageCachePathCallback? getCachePath;
 
   Future<void> init({
     required String defaultImageAssetsPath,
     bool isDebugPrint = true,
-    DownloadImageCallback? onDownloadImage,
+    CustomDownloadImageCallback? onCustomDownloadImage,
     bool Function()? isDarkTheme,
     OpenImageFileChooserCallback? onOpenImageFileChooser,
     OnFileChooserGetCoverPath? onFileChooserGetCoverPath,
@@ -51,7 +57,7 @@ class TWidgets {
     ///
     /// all `TImageCache` path
     ///
-    String Function(String url)? getCachePath,
+    ImageCachePathCallback? getCachePath,
     bool initialThemeServices = false,
   }) async {
     isDebugPrint = isDebugPrint;
@@ -60,7 +66,7 @@ class TWidgets {
       PBrightnessServices.instance.init();
     }
     this.defaultImageAssetsPath = defaultImageAssetsPath;
-    this.onDownloadImage = onDownloadImage;
+    this.onCustomDownloadImage = onCustomDownloadImage;
     this.isDarkTheme = isDarkTheme;
     this.onOpenImageFileChooser = onOpenImageFileChooser;
     this.onFileChooserGetCoverPath = onFileChooserGetCoverPath;

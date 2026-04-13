@@ -18,6 +18,7 @@ class TCoverChooser extends StatefulWidget {
 class _TCoverChooserState extends State<TCoverChooser> {
   bool isLoading = false;
   late String imagePath;
+  final client = HttpClient();
 
   @override
   void initState() {
@@ -99,10 +100,24 @@ class _TCoverChooserState extends State<TCoverChooser> {
               isLoading = true;
             });
 
-            if (TWidgets.instance.onDownloadImage == null) {
+            if (TWidgets.instance.onCustomDownloadImage == null) {
               throw Exception(TWidgets.getOnDownloadImageErrorText);
             }
-            await TWidgets.instance.onDownloadImage!(url, widget.coverPath);
+            if (TWidgets.instance.onCustomDownloadImage != null) {
+              await TWidgets.instance.onCustomDownloadImage!(
+                url,
+                widget.coverPath,
+              );
+            } else {
+              // default
+              await downloadImageDefaultFun(
+                url,
+                widget.coverPath,
+                client: client,
+                onProgress: (double progress) {},
+                onDownloadStart: (subscription, request) {},
+              );
+            }
 
             if (!mounted) return;
 

@@ -3,8 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+extension TWidgetsContextExtensions on BuildContext {
+  void close({bool? dialogReturns}) {
+    Navigator.pop(this, dialogReturns);
+  }
+}
+
 @internal
-extension DoubleExtension on double {
+extension TWidgetsDoubleExtension on double {
   String toFileSizeLabel({int asFixed = 2}) {
     String res = '';
     int pow = 1024;
@@ -23,7 +29,7 @@ extension DoubleExtension on double {
 }
 
 @internal
-extension IntExtension on int {
+extension TWidgetsIntExtension on int {
   String getSizeLabel({int asFixed = 2}) {
     return toDouble().toFileSizeLabel(asFixed: asFixed);
   }
@@ -34,7 +40,7 @@ extension IntExtension on int {
 }
 
 @internal
-extension StringExtension on String {
+extension TWidgetsStringExtension on String {
   String toCaptalize() {
     if (isEmpty) return this;
     return '${this[0].toUpperCase()}${substring(1, length)}';
@@ -54,7 +60,7 @@ extension StringExtension on String {
 }
 
 @internal
-extension FileExtension on File {
+extension TWidgetsFileExtension on File {
   String getName({bool withExt = true}) {
     final name = path.split('/').last;
     if (!withExt) {
@@ -93,7 +99,7 @@ extension FileExtension on File {
 }
 
 @internal
-extension FileSystemEntityExtension on FileSystemEntity {
+extension TWidgetsFileSystemEntityExtension on FileSystemEntity {
   String getName({bool withExt = true}) {
     final name = path.split('/').last;
     if (!withExt) {
@@ -132,7 +138,7 @@ extension FileSystemEntityExtension on FileSystemEntity {
 }
 
 @internal
-extension TPlatform on Platform {
+extension TWidgetsTPlatform on Platform {
   static bool get isDesktop {
     return Platform.isLinux || Platform.isMacOS || Platform.isWindows;
   }
@@ -143,7 +149,7 @@ extension TPlatform on Platform {
 }
 
 @internal
-extension TextEditingControllerExtension on TextEditingController {
+extension TWidgetsTextEditingControllerExtension on TextEditingController {
   void selectAll() {
     selection = TextSelection(baseOffset: 0, extentOffset: text.length);
   }

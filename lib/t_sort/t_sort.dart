@@ -14,7 +14,7 @@ class TSort {
   static List<TSort> get getDefaultList {
     return [
       TSort(id: 100, title: 'Title', ascTitle: 'A-Z', descTitle: 'Z-A'),
-      TSort(id: 101, title: 'Date', ascTitle: 'Oldest', descTitle: 'Newest'),
+      TSort(id: 101, title: 'Date', ascTitle: 'Newest', descTitle: 'Oldest'),
     ];
   }
 

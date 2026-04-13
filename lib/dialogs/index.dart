@@ -3,3 +3,5 @@ export 't_rename_dialog.dart';
 export 't_message_dialog.dart';
 export 't_list_dialog.dart';
 export 't_alert_dialog.dart';
+export 'rename_dialog.dart';
+export 'confirm_dialog.dart';

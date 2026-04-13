@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 typedef FrameBuilderCallback =
     Widget Function(
       BuildContext context,
-      Widget,
+      Widget widget,
       int? frame,
       bool wasSynchronouslyLoaded,
     );

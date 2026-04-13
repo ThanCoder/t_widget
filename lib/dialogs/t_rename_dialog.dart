@@ -17,6 +17,7 @@ class TRenameDialog extends StatefulWidget {
   final String? Function(String text)? onCheckIsError;
   final bool autofocus;
   final String? hintText;
+  final bool isSelectAll;
 
   const TRenameDialog({
     super.key,
@@ -33,6 +34,7 @@ class TRenameDialog extends StatefulWidget {
     this.onCheckIsError,
     this.autofocus = false,
     this.hintText,
+    this.isSelectAll = true,
   });
 
   @override
@@ -100,7 +102,7 @@ class _TRenameDialogState extends State<TRenameDialog> {
                 baseOffset: 0,
                 extentOffset: controller.text.length,
               );
-              isSelectAll = true;
+              isSelectAll = isSelectAll;
             }
           },
           onSubmitted: (value) {
