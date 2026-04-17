@@ -1,3 +1,7 @@
+# 2.2.2
+
+- Fixed `TLoader,TLoaderRandom` -> auto change app brightness
+
 # 2.2.1
 
 - Added `ExpandableTags`

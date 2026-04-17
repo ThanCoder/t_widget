@@ -18,28 +18,33 @@ class TLoader extends StatelessWidget {
     return TLoaderRandom(size: size, color: color, isDarkMode: isDarkMode);
   }
 
-  Widget _getLoaderWidget() {
+  Widget _getLoaderWidget(BuildContext context) {
     return TLoaderTypes.getLoaderWidget(
       types,
       loaderSize: size,
-      color: _getCurrentColor(),
+      color: _getCurrentColor(context),
     );
   }
 
-  Color _getCurrentColor() {
+  Color _getCurrentColor(BuildContext context) {
     if (color != null) {
       return color!;
     }
     if (isDarkMode != null) {
       return isDarkMode! ? Colors.white : Colors.black;
     }
-
-    final isDark = TWidgets.instance.isDarkTheme?.call() ?? false;
-    return isDark ? Colors.white : Colors.black;
+    if (TWidgets.instance.isDarkTheme == null) {
+      return Theme.of(context).brightness == Brightness.dark
+          ? Colors.white
+          : Colors.black;
+    } else {
+      final isDark = TWidgets.instance.isDarkTheme?.call() ?? false;
+      return isDark ? Colors.white : Colors.black;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return _getLoaderWidget();
+    return _getLoaderWidget(context);
   }
 }
