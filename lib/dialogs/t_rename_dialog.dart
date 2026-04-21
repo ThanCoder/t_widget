@@ -34,7 +34,7 @@ class TRenameDialog extends StatefulWidget {
     this.onCheckIsError,
     this.autofocus = false,
     this.hintText,
-    this.isSelectAll = true,
+    this.isSelectAll = false,
   });
 
   @override
@@ -51,7 +51,6 @@ class _TRenameDialogState extends State<TRenameDialog> {
     super.initState();
   }
 
-  bool isSelectAll = false;
   String? errorText;
 
   void _checkError(String value) {
@@ -76,63 +75,50 @@ class _TRenameDialogState extends State<TRenameDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        isSelectAll = false;
-      },
-      child: AlertDialog(
-        title: widget.title,
-        content: TTextField(
-          controller: controller,
-          inputFormatters: widget.inputFormatters,
-          textInputType: widget.textInputType,
-          label: widget.renameLabelText,
-          autofocus: widget.autofocus,
-          errorText: errorText,
-          hintText: widget.hintText,
-          onChanged: (value) {
-            _checkError(value);
-            if (widget.onChanged != null) {
-              widget.onChanged!(value);
-            }
-          },
-          onTap: () {
-            if (!isSelectAll) {
-              controller.selection = TextSelection(
-                baseOffset: 0,
-                extentOffset: controller.text.length,
-              );
-              isSelectAll = isSelectAll;
-            }
-          },
-          onSubmitted: (value) {
-            if (errorText == null) {
-              Navigator.pop(context);
-              widget.onSubmit(value);
-            }
-          },
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-              if (widget.onCancel != null) {
-                widget.onCancel!();
-              }
-            },
-            child: Text(widget.cancelText ?? 'Cancel'),
-          ),
-          TextButton(
-            onPressed: errorText != null
-                ? null
-                : () {
-                    Navigator.of(context).pop(true);
-                    widget.onSubmit(controller.text);
-                  },
-            child: Text(widget.submitText ?? 'Rename'),
-          ),
-        ],
+    return AlertDialog(
+      title: widget.title,
+      content: TTextField(
+        controller: controller,
+        inputFormatters: widget.inputFormatters,
+        textInputType: widget.textInputType,
+        label: widget.renameLabelText,
+        autofocus: widget.autofocus,
+        errorText: errorText,
+        hintText: widget.hintText,
+        onChanged: (value) {
+          _checkError(value);
+          if (widget.onChanged != null) {
+            widget.onChanged!(value);
+          }
+        },
+
+        onSubmitted: (value) {
+          if (errorText == null) {
+            Navigator.pop(context);
+            widget.onSubmit(value);
+          }
+        },
       ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(false);
+            if (widget.onCancel != null) {
+              widget.onCancel!();
+            }
+          },
+          child: Text(widget.cancelText ?? 'Cancel'),
+        ),
+        TextButton(
+          onPressed: errorText != null
+              ? null
+              : () {
+                  Navigator.of(context).pop(true);
+                  widget.onSubmit(controller.text);
+                },
+          child: Text(widget.submitText ?? 'Rename'),
+        ),
+      ],
     );
   }
 }

@@ -88,6 +88,7 @@ class _TCoverChooserState extends State<TCoverChooser> {
         cancelText: 'Close',
         text: '',
         hintText: 'http***....',
+        textInputType: TextInputType.url,
         onCheckIsError: (text) {
           if (!text.startsWith('http')) {
             return 'url required!';
@@ -99,10 +100,6 @@ class _TCoverChooserState extends State<TCoverChooser> {
             setState(() {
               isLoading = true;
             });
-
-            if (TWidgets.instance.onCustomDownloadImage == null) {
-              throw Exception(TWidgets.getOnDownloadImageErrorText);
-            }
             if (TWidgets.instance.onCustomDownloadImage != null) {
               await TWidgets.instance.onCustomDownloadImage!(
                 url,

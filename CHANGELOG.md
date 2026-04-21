@@ -1,3 +1,8 @@
+# 2.3.3
+
+- Fixed `TCoverChooser`
+- Fixed `showTReanmeDialog`
+
 # 2.2.2
 
 - Fixed `TLoader,TLoaderRandom` -> auto change app brightness

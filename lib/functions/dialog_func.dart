@@ -72,6 +72,7 @@ void showTReanmeDialog(
   String? Function(String text)? onCheckIsError,
   bool autofocus = false,
   String? hintText,
+  bool isSelectAll = false,
 }) {
   showCupertinoDialog(
     context: context,
@@ -90,6 +91,7 @@ void showTReanmeDialog(
       cancelText: cancelText,
       submitText: submitText,
       hintText: hintText,
+      isSelectAll: isSelectAll,
     ),
   );
 }
@@ -161,11 +163,8 @@ void showTMenuBottomSheetSingle(
     isScrollControlled: isScrollControlled,
     useSafeArea: useSafeArea,
     isDismissible: isDismissible,
-    builder: (context) => MenuBottomSheetSingle(
-      minHeight: minHeight,
-      title: title,
-      child: child,
-    ),
+    builder: (context) =>
+        MenuBottomSheetSingle(minHeight: minHeight, title: title, child: child),
   );
 }
 

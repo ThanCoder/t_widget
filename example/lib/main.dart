@@ -42,18 +42,12 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       appBar: AppBar(title: const Text('Plugin example app')),
       body: SingleChildScrollView(
-        child: Center(
-          child: ExpandableTags(
-            list: List.generate(100, (index) => 'index: $index'),
-            onTap: (name) {
-              print(name);
-            },
-          ),
-        ),
+        child: Center(child: TCoverChooser(coverPath: '')),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // showTSnackBar(context, message)
+          showTReanmeDialog(context, text: 'test', onSubmit: (text) {});
         },
       ),
     );
