@@ -1,4 +1,8 @@
-# 2.3.3
+# 2.4.0
+
+- Fixed `TCacheImage`
+
+## 2.3.3
 
 - Fixed `TCoverChooser`
 - Fixed `showTReanmeDialog`

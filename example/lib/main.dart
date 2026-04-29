@@ -42,7 +42,13 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       appBar: AppBar(title: const Text('Plugin example app')),
       body: SingleChildScrollView(
-        child: Center(child: TCoverChooser(coverPath: '')),
+        child: Center(
+          child: TCacheImage(
+            url: 'url',
+            // errorBuilder: (context, error, stackTrace) => Text('error'),
+            placeholder: (message) => TImageFile(path: ''),
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
