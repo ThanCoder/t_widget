@@ -43,7 +43,9 @@ Future<void> downloadImageDefaultFun(
         },
         onDone: () async {
           await sink.close();
-          await temFile.rename(savePath);
+          if (temFile.existsSync()) {
+            await temFile.rename(savePath);
+          }
           // print('Download complete and saved to $savePath');
           onDownloaded?.call();
           completer.complete();
