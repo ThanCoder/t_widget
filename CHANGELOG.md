@@ -1,5 +1,7 @@
 # 2.6.1
 
+- Added `TTextEditingControllerExtension.selectAll`
+- Added `TTextEditingControllerExtension.unselectAll`
 - Fixed `Some Known Error.`
 
 ## 2.5.0

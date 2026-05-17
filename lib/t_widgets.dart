@@ -18,6 +18,7 @@ export 'src/theme/index.dart';
 export 'src/types/index.dart';
 export 'src/views/index.dart';
 export 'src/widgets/index.dart';
+export 'src/extensions/index.dart';
 
 export 'src/extensions/t_widgets_extensions.dart'
     hide
