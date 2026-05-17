@@ -1,4 +1,8 @@
-# 2.5.0
+# 2.6.1
+
+- Fixed `Some Known Error.`
+
+## 2.5.0
 
 - Fixed `TCacheImage`
 

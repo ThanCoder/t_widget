@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:t_widgets/menu/menu_bottom_sheet_single.dart';
-import 'package:t_widgets/t_widgets.dart';
+import 'package:t_widgets/src/menu/menu_bottom_sheet_single.dart';
+
+import '../dialogs/index.dart';
+import '../menu/index.dart';
 
 void showTAlertDialog(
   BuildContext context, {

@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
-import '../t_widgets.dart';
+import 'package:t_widgets/src/types/index.dart';
+import 'package:t_widgets/src/widgets/index.dart';
 
 class TSearchListPage extends StatefulWidget {
   Widget? title;

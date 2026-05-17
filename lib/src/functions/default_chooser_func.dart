@@ -1,14 +1,14 @@
 import 'package:file_selector/file_selector.dart';
+import 'package:meta/meta.dart';
 import 'package:t_widgets/t_widgets.dart';
 
+@visibleForTesting
 Future<String?> getDefaultImageChooser({String? initialDirectory}) async {
   try {
     final files = await openFiles(
       initialDirectory: initialDirectory,
       acceptedTypeGroups: [
-        const XTypeGroup(
-          mimeTypes: ['image/*'],
-        ),
+        const XTypeGroup(mimeTypes: ['image/*']),
       ],
     );
     if (files.isNotEmpty) {

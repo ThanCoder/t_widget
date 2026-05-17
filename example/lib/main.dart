@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ void main() async {
   if (!cacheDir.existsSync()) {
     await cacheDir.create();
   }
+  final name = 'thancoder';
 
   await TWidgets.instance.init(
     initialThemeServices: true,
@@ -53,7 +56,7 @@ class _MyAppState extends State<MyApp> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // showTSnackBar(context, message)
-          showTReanmeDialog(context, text: 'test', onSubmit: (text) {});
+          // showProgressDialog(context: context, progressManager: progressManager)
         },
       ),
     );

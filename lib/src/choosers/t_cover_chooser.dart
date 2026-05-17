@@ -1,9 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:t_widgets/downloader/default_downloader.dart';
-
-import '../t_widgets.dart';
+import 'package:t_widgets/src/downloader/default_downloader.dart';
+import 'package:t_widgets/t_widgets.dart';
 
 String? initialDirectory;
 

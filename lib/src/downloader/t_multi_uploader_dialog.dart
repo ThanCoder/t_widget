@@ -1,26 +1,30 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:t_widgets/t_widgets.dart';
+import 'package:t_widgets/src/downloader/t_manager.dart';
+import 'package:t_widgets/src/widgets/t_scrollable_column.dart';
+import 'package:t_widgets/src/extensions/t_widgets_extensions.dart';
 
-class TProgressDialog extends StatefulWidget {
-  final TProgressManager manager;
+
+class TMultiUploaderDialog extends StatefulWidget {
+  final List<String> pathList;
+  final TManager manager;
   final void Function(String message)? onError;
-  final Widget? title;
   final VoidCallback? onSuccess;
-  const TProgressDialog({
+  final Widget? title;
+  const TMultiUploaderDialog({
     super.key,
     required this.manager,
-    this.title,
+    required this.pathList,
     this.onError,
     this.onSuccess,
+    this.title = const Text('All Upload'),
   });
 
   @override
-  State<TProgressDialog> createState() => _TProgressDialogState();
+  State<TMultiUploaderDialog> createState() => _TMultiUploaderDialogState();
 }
 
-class _TProgressDialogState extends State<TProgressDialog> {
+class _TMultiUploaderDialogState extends State<TMultiUploaderDialog> {
   late final StreamSubscription<TProgress> _streamSub;
   TProgress? progress;
   String? errorMsg;
@@ -28,19 +32,21 @@ class _TProgressDialogState extends State<TProgressDialog> {
 
   @override
   void initState() {
-    _streamSub = widget.manager.run().listen(
-      (event) {
-        if (!mounted) return;
-        progress = event;
-        setState(() {});
-      },
-      onDone: _closeDialog,
-      onError: (e) {
-        if (!mounted) return;
-        errorMsg = e.toString();
-        _closeDialog();
-      },
-    );
+    _streamSub = widget.manager
+        .actions(widget.pathList)
+        .listen(
+          (event) {
+            if (!mounted) return;
+            progress = event;
+            setState(() {});
+          },
+          onDone: _closeDialog,
+          onError: (e) {
+            if (!mounted) return;
+            errorMsg = e.toString();
+            _closeDialog();
+          },
+        );
     super.initState();
   }
 
@@ -56,7 +62,11 @@ class _TProgressDialogState extends State<TProgressDialog> {
       title: widget.title,
       content: TScrollableColumn(
         children: [
-          _getMessage(),
+          errorMsg == null
+              ? progress == null
+                    ? Text('Preparing...')
+                    : _getMessage()
+              : Text(errorMsg!, style: TextStyle(color: Colors.red)),
           // progress
           _getProgress(),
         ],
@@ -68,9 +78,6 @@ class _TProgressDialogState extends State<TProgressDialog> {
   Widget _getMessage() {
     if (progress == null) {
       return SizedBox.shrink();
-    }
-    if (errorMsg != null) {
-      return Text(errorMsg!, style: TextStyle(color: Colors.red));
     }
     return Text(progress!.message);
   }
@@ -85,16 +92,20 @@ class _TProgressDialogState extends State<TProgressDialog> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // progress status lable
-        progress!.status == TProgressTypes.preparing
-            ? SizedBox.shrink()
-            : Text('${progress!.index}/${progress!.indexLength}'),
+        // progress lable
+        Text('${progress!.index}/${progress!.indexLength}'),
         // progress
         LinearProgressIndicator(
           value: progress!.total == 0
               ? null
               : progress!.loaded / progress!.total,
         ),
+        // label
+        progress!.total == 0
+            ? const SizedBox.shrink()
+            : Text(
+                '${progress!.loaded.toDouble().toFileSizeLabel()} / ${progress!.total.toDouble().toFileSizeLabel()}',
+              ),
       ],
     );
   }

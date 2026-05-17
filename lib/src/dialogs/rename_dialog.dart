@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:t_widgets/extensions/t_widgets_extensions.dart';
-import 'package:t_widgets/t_widgets.dart';
+import 'package:t_widgets/src/widgets/t_text_field.dart';
+
 
 void showRenameDialog(BuildContext context) {
   showDialog(context: context, builder: (context) => RenameDialog());
@@ -106,11 +106,11 @@ class _RenameDialogState extends State<RenameDialog> {
   }
 
   void _onCancel() {
-    context.close();
+    Navigator.pop(context);
   }
 
   void _onSubmit() {
-    context.close();
+    Navigator.pop(context);
   }
 }
 
@@ -233,10 +233,10 @@ class _RenameBottomSheetState extends State<RenameBottomSheet> {
   }
 
   void _onCancel() {
-    context.close();
+    Navigator.pop(context);
   }
 
   void _onSubmit() {
-    context.close();
+    Navigator.pop(context);
   }
 }

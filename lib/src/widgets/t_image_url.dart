@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../t_widgets.dart';
+import 'package:t_widgets/t_widgets.dart';
 
 class TImageUrl extends StatelessWidget {
   final String url;

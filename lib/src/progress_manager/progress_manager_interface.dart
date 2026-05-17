@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:t_widgets/progress_manager/progress_message.dart';
+import 'package:t_widgets/src/progress_manager/progress_message.dart';
 
 abstract class ProgressManagerInterface {
   void cancel();
-  Future<void> start(StreamController<ProgressMessage> streamController);
+  Future<void> start(StreamController<ProgressMessage> controller);
 
   Stream<ProgressMessage> run() {
     final controller = StreamController<ProgressMessage>.broadcast();

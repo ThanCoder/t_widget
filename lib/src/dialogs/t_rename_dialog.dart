@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:t_widgets/src/widgets/t_text_field.dart';
 
-import '../../widgets/index.dart';
 
 class TRenameDialog extends StatefulWidget {
   final Widget? title;

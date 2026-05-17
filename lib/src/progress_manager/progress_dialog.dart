@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:t_widgets/progress_manager/progress_manager_interface.dart';
-import 'package:t_widgets/progress_manager/progress_message.dart';
+import 'package:t_widgets/src/progress_manager/progress_manager_interface.dart';
+import 'package:t_widgets/src/progress_manager/progress_message.dart';
 
 Future<T?> showProgressDialog<T>({
   required BuildContext context,
@@ -82,28 +82,37 @@ class _ProgressDialogState extends State<ProgressDialog> {
   Widget build(BuildContext context) {
     return AlertDialog.adaptive(
       scrollable: true,
-      content: _progress == null
-          ? Text('Preparing...')
-          : Column(
-              spacing: 4,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _progress!.indexLength == 0
-                    ? SizedBox.shrink()
-                    : Text(
-                        '${_progress!.index}/${_progress!.indexLength}',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                _getMessage(),
-                LinearProgressIndicator(value: _progress!.progress),
-              ],
-            ),
-      actions: _getActions(),
+      content: _contentWiget,
+      actions: _actions,
     );
   }
 
-  Widget _getMessage() {
+  Widget get _contentWiget {
+    if (_progress == null) {
+      return Text('Preparing...');
+    }
+    if (_progress!.type == ProgressMessageType.progress) {
+      return Text(_progress!.message);
+    }
+    return Column(
+      spacing: 4,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (_progress!.indexLength == 0)
+          SizedBox.shrink()
+        else
+          Text(
+            '${_progress!.index}/${_progress!.indexLength}',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        _messageWiget,
+        LinearProgressIndicator(value: _progress!.progress),
+      ],
+    );
+  }
+
+  Widget get _messageWiget {
     if (errorMsg != null) {
       return Text('Error: $errorMsg', style: TextStyle(color: Colors.red));
     } else {
@@ -111,7 +120,7 @@ class _ProgressDialogState extends State<ProgressDialog> {
     }
   }
 
-  List<Widget> _getActions() {
+  List<Widget> get _actions {
     return [
       !isDone
           ? TextButton(

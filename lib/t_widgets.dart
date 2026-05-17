@@ -3,20 +3,30 @@ library;
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-import 'package:t_widgets/theme/index.dart';
+import 'package:t_widgets/src/theme/p_brightness_services.dart';
 
-export 'dialogs/index.dart';
-export 'downloader/index.dart';
-export 'functions/index.dart';
-export 'menu/index.dart';
-export 'pages/index.dart';
-export 'services/index.dart';
-export 't_sort/index.dart';
-export 'types/index.dart';
-export 'views/index.dart';
-export 'widgets/index.dart';
-export 'choosers/index.dart';
-export 'theme/index.dart';
+export 'src/choosers/index.dart';
+export 'src/dialogs/index.dart';
+export 'src/downloader/index.dart';
+export 'src/functions/index.dart';
+export 'src/menu/index.dart';
+export 'src/pages/index.dart';
+export 'src/progress_manager/index.dart';
+export 'src/services/index.dart';
+export 'src/t_sort/index.dart';
+export 'src/theme/index.dart';
+export 'src/types/index.dart';
+export 'src/views/index.dart';
+export 'src/widgets/index.dart';
+
+export 'src/extensions/t_widgets_extensions.dart'
+    hide
+        TWidgetsDoubleExtension,
+        TWidgetsFileExtension,
+        TWidgetsFileSystemEntityExtension,
+        TWidgetsIntExtension,
+        TWidgetsStringExtension,
+        TWidgetsTextEditingControllerExtension;
 
 typedef CustomDownloadImageCallback =
     Future<void> Function(

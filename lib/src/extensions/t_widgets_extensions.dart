@@ -1,16 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
-extension TWidgetsContextExtensions on BuildContext {
-  void close({bool? dialogReturns}) {
-    Navigator.pop(this, dialogReturns);
-  }
-}
-
-@internal
+@visibleForTesting
 extension TWidgetsDoubleExtension on double {
+  @visibleForTesting
   String toFileSizeLabel({int asFixed = 2}) {
     String res = '';
     int pow = 1024;
@@ -28,24 +22,28 @@ extension TWidgetsDoubleExtension on double {
   }
 }
 
-@internal
+@visibleForTesting
 extension TWidgetsIntExtension on int {
+  @visibleForTesting
   String getSizeLabel({int asFixed = 2}) {
     return toDouble().toFileSizeLabel(asFixed: asFixed);
   }
 
+  @visibleForTesting
   String toFileSizeLabel({int asFixed = 2}) {
     return toDouble().toFileSizeLabel(asFixed: asFixed);
   }
 }
 
-@internal
+@visibleForTesting
 extension TWidgetsStringExtension on String {
+  @visibleForTesting
   String toCaptalize() {
     if (isEmpty) return this;
     return '${this[0].toUpperCase()}${substring(1, length)}';
   }
 
+  @visibleForTesting
   String getName({bool withExt = true}) {
     final name = split('/').last;
     if (!withExt) {
@@ -54,12 +52,12 @@ extension TWidgetsStringExtension on String {
     return name;
   }
 
+  @visibleForTesting
   String get getExt {
     return split('/').last;
   }
 }
 
-@internal
 extension TWidgetsFileExtension on File {
   String getName({bool withExt = true}) {
     final name = path.split('/').last;
@@ -69,36 +67,43 @@ extension TWidgetsFileExtension on File {
     return name;
   }
 
+  @visibleForTesting
   String get getExt {
     return path.split('/').last;
   }
 
+  @visibleForTesting
   bool get isDirectory {
     return statSync().type == FileSystemEntityType.directory;
   }
 
+  @visibleForTesting
   bool get isFile {
     return statSync().type == FileSystemEntityType.file;
   }
 
+  @visibleForTesting
   int get getSize {
     return statSync().size;
   }
 
+  @visibleForTesting
   DateTime get getDate {
     return statSync().modified;
   }
 
+  @visibleForTesting
   String getSizeLabel({int asFixed = 2}) {
     return statSync().size.toDouble().toFileSizeLabel(asFixed: asFixed);
   }
 
+  @visibleForTesting
   String toFileSizeLabel({int asFixed = 2}) {
     return statSync().size.toDouble().toFileSizeLabel(asFixed: asFixed);
   }
 }
 
-@internal
+@visibleForTesting
 extension TWidgetsFileSystemEntityExtension on FileSystemEntity {
   String getName({bool withExt = true}) {
     final name = path.split('/').last;
@@ -108,48 +113,60 @@ extension TWidgetsFileSystemEntityExtension on FileSystemEntity {
     return name;
   }
 
+  @visibleForTesting
   String get getExt {
     return path.split('/').last;
   }
 
+  @visibleForTesting
   bool get isDirectory {
     return statSync().type == FileSystemEntityType.directory;
   }
 
+  @visibleForTesting
   bool get isFile {
     return statSync().type == FileSystemEntityType.file;
   }
 
+  @visibleForTesting
   int get getSize {
     return statSync().size;
   }
 
+  @visibleForTesting
   DateTime get getDate {
     return statSync().modified;
   }
 
+  @visibleForTesting
   String getSizeLabel({int asFixed = 2}) {
     return statSync().size.toDouble().toFileSizeLabel(asFixed: asFixed);
   }
 
+  @visibleForTesting
   String toFileSizeLabel({int asFixed = 2}) {
     return statSync().size.toDouble().toFileSizeLabel(asFixed: asFixed);
   }
 }
 
-@internal
+@Deprecated(
+  'Use `dart_core_extensions` instead.This extension will be removed in version V6.0.0',
+)
+@visibleForTesting
 extension TWidgetsTPlatform on Platform {
+  @visibleForTesting
   static bool get isDesktop {
     return Platform.isLinux || Platform.isMacOS || Platform.isWindows;
   }
 
+  @visibleForTesting
   static bool get isMobile {
     return Platform.isAndroid || Platform.isIOS;
   }
 }
 
-@internal
 extension TWidgetsTextEditingControllerExtension on TextEditingController {
+  @visibleForTesting
   void selectAll() {
     selection = TextSelection(baseOffset: 0, extentOffset: text.length);
   }

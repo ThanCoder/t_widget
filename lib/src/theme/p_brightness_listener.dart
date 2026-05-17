@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:t_widgets/theme/p_brightness_services.dart';
+
+import 'p_brightness_services.dart';
 
 typedef PBrightnessListenerBuilder =
     Widget Function(BuildContext context, Brightness brightness);

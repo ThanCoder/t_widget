@@ -1,13 +1,17 @@
+enum ProgressMessageType { preparing, progress, error, done }
+
 class ProgressMessage {
   final int index;
   final int indexLength;
   final double? progress;
   final String message;
+  final ProgressMessageType type;
   ProgressMessage({
     required this.index,
     required this.indexLength,
     required this.progress,
     required this.message,
+    required this.type,
   });
 
   factory ProgressMessage.progress({
@@ -21,6 +25,7 @@ class ProgressMessage {
       indexLength: indexLength,
       progress: progress,
       message: message,
+      type: ProgressMessageType.progress,
     );
   }
 
@@ -30,6 +35,7 @@ class ProgressMessage {
       indexLength: 0,
       progress: null,
       message: message,
+      type: ProgressMessageType.preparing,
     );
   }
   factory ProgressMessage.done({String message = 'Done'}) {
@@ -38,20 +44,16 @@ class ProgressMessage {
       indexLength: 0,
       progress: 1,
       message: message,
+      type: ProgressMessageType.done,
     );
   }
-
-  ProgressMessage copyWith({
-    int? index,
-    int? indexLength,
-    double? progress,
-    String? message,
-  }) {
+  factory ProgressMessage.error({String message = 'Error'}) {
     return ProgressMessage(
-      index: index ?? this.index,
-      indexLength: indexLength ?? this.indexLength,
-      progress: progress ?? this.progress,
-      message: message ?? this.message,
+      index: 0,
+      indexLength: 0,
+      progress: 1,
+      message: message,
+      type: ProgressMessageType.error,
     );
   }
 }

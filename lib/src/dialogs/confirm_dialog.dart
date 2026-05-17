@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:t_widgets/extensions/t_widgets_extensions.dart';
 
 class ConfirmDialog extends StatefulWidget {
   final Widget? title;
@@ -48,11 +47,11 @@ class _ConfirmDialogState extends State<ConfirmDialog> {
   }
 
   void _onCancel() {
-    context.close();
+    Navigator.pop(context);
   }
 
   void _onSubmit() {
-    context.close();
+    Navigator.pop(context);
   }
 }
 
@@ -123,10 +122,10 @@ class _ConfirmBottomSheetState extends State<ConfirmBottomSheet> {
   }
 
   void _onCancel() {
-    context.close();
+    Navigator.pop(context);
   }
 
   void _onSubmit() {
-    context.close();
+    Navigator.pop(context);
   }
 }

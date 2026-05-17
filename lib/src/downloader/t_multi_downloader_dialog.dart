@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:t_widgets/extensions/t_widgets_extensions.dart';
-import 'package:t_widgets/t_widgets.dart';
+import 'package:t_widgets/src/downloader/t_manager.dart';
+import 'package:t_widgets/src/widgets/t_scrollable_column.dart';
+import 'package:t_widgets/src/extensions/t_widgets_extensions.dart';
 
 class TMultiDownloaderDialog extends StatefulWidget {
   final List<String> urls;
