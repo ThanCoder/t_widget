@@ -23,6 +23,13 @@ await TAppServices.copyText('text');
 final text = await TAppServices.pasteFromClipboard();
 
 ```
+## Document Files
+
+[progress_dialog_example](https://github.com/ThanCoder/t_widget/blob/main/example/lib/md/progress_dialog_example.md)
+
+[sort_provider_example](https://github.com/ThanCoder/t_widget/blob/main/example/lib/md/sort_provider_example.md)
+
+
 ## Sort Provider
 ```dart
 SortButton(
