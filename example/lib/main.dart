@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: avoid_print, unused_local_variable
 
 import 'dart:io';
 
@@ -18,14 +18,6 @@ void main() async {
     initialThemeServices: true,
     defaultImageAssetsPath: 'assets/thancoder_logo_1.png',
     getCachePath: (url, cacheName) => '${cacheDir.path}/$cacheName',
-    // onCustomDownloadImage: (url, savePath, {onProgress}) async {
-    //   await client.download(
-    //     url,
-    //     savePath: savePath,
-    //     onReceiveProgress: (received, total) =>
-    //         onProgress?.call(received / total),
-    //   );
-    // },
     isDarkTheme: () => appDarkThemeNotifier.value,
   );
   runApp(MaterialApp(home: Scaffold(body: const MyApp())));
@@ -42,22 +34,34 @@ class _MyAppState extends State<MyApp> {
   //https://help.imgur.com/hc/article_attachments/26512175039515?utm_source=chatgpt.com
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Plugin example app')),
-      body: SingleChildScrollView(
-        child: Center(
-          child: TCacheImage(
-            url: 'url',
-            // errorBuilder: (context, error, stackTrace) => Text('error'),
-            placeholder: (message) => TImageFile(path: ''),
-          ),
+    return MaterialThemeProvider(
+      value: .system,
+      onChanged: (value) {
+        print('changed: $value');
+      },
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Plugin example app')),
+        body: Column(
+          children: [
+            MaterialThemeProviderChooser(),
+            SortButton(
+              value: .dateSortItem,
+              list: [.nameSortItem, .dateSortItem, .sizeSortItem],
+            ),
+          ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // showTSnackBar(context, message)
-          // showProgressDialog(context: context, progressManager: progressManager)
-        },
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            SortItem? item = await showModalBottomSheet<SortItem>(
+              context: context,
+              builder: (context) => SortProviderDialog(
+                list: [.nameSortItem, .dateSortItem, .sizeSortItem],
+                value: .nameSortItem,
+              ),
+            );
+            print('SortItem: $item');
+          },
+        ),
       ),
     );
   }

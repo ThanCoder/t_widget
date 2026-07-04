@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:t_widgets/src/theme/index.dart';
+import 'package:t_widgets/src/old_widgets/theme/index.dart';
 
 typedef ThemeModeListenerBuilder =
     Widget Function(BuildContext context, ThemeMode themeMode);

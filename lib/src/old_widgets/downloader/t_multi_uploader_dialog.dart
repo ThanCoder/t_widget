@@ -1,29 +1,30 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:t_widgets/src/downloader/t_manager.dart';
-import 'package:t_widgets/src/widgets/t_scrollable_column.dart';
-import 'package:t_widgets/src/extensions/t_widgets_extensions.dart';
+import 'package:t_widgets/src/old_widgets/downloader/t_manager.dart';
+import 'package:t_widgets/src/old_widgets/widgets/t_scrollable_column.dart';
+import 'package:t_widgets/src/old_widgets/extensions/t_widgets_extensions.dart';
 
-class TMultiDownloaderDialog extends StatefulWidget {
-  final List<String> urls;
+
+class TMultiUploaderDialog extends StatefulWidget {
+  final List<String> pathList;
   final TManager manager;
   final void Function(String message)? onError;
   final VoidCallback? onSuccess;
   final Widget? title;
-  const TMultiDownloaderDialog({
+  const TMultiUploaderDialog({
     super.key,
     required this.manager,
-    required this.urls,
+    required this.pathList,
     this.onError,
     this.onSuccess,
-    this.title = const Text('Downloader'),
+    this.title = const Text('All Upload'),
   });
 
   @override
-  State<TMultiDownloaderDialog> createState() => _TMultiDownloaderDialogState();
+  State<TMultiUploaderDialog> createState() => _TMultiUploaderDialogState();
 }
 
-class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
+class _TMultiUploaderDialogState extends State<TMultiUploaderDialog> {
   late final StreamSubscription<TProgress> _streamSub;
   TProgress? progress;
   String? errorMsg;
@@ -32,7 +33,7 @@ class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
   @override
   void initState() {
     _streamSub = widget.manager
-        .actions(widget.urls)
+        .actions(widget.pathList)
         .listen(
           (event) {
             if (!mounted) return;
@@ -61,7 +62,11 @@ class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
       title: widget.title,
       content: TScrollableColumn(
         children: [
-          _getMessage(),
+          errorMsg == null
+              ? progress == null
+                    ? Text('Preparing...')
+                    : _getMessage()
+              : Text(errorMsg!, style: TextStyle(color: Colors.red)),
           // progress
           _getProgress(),
         ],
@@ -73,9 +78,6 @@ class _TMultiDownloaderDialogState extends State<TMultiDownloaderDialog> {
   Widget _getMessage() {
     if (progress == null) {
       return SizedBox.shrink();
-    }
-    if (errorMsg != null) {
-      return Text(errorMsg!, style: TextStyle(color: Colors.red));
     }
     return Text(progress!.message);
   }

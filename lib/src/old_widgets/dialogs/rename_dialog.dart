@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:t_widgets/src/widgets/t_text_field.dart';
+import 'package:t_widgets/src/old_widgets/widgets/t_text_field.dart';
 
 
 void showRenameDialog(BuildContext context) {

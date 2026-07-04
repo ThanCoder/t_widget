@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:t_widgets/src/progress_manager/progress_message.dart';
+import 'package:t_widgets/src/old_widgets/progress_manager/progress_message.dart';
 
 abstract class ProgressManagerInterface {
   void cancel();

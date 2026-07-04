@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:t_widgets/src/extensions/t_widgets_extensions.dart';
+import 'package:t_widgets/src/old_widgets/extensions/t_widgets_extensions.dart';
 
 class TTextField extends StatefulWidget {
   TextEditingController? controller;

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:t_widgets/src/progress_manager/progress_manager_interface.dart';
-import 'package:t_widgets/src/progress_manager/progress_message.dart';
+import 'package:t_widgets/src/old_widgets/progress_manager/progress_manager_interface.dart';
+import 'package:t_widgets/src/old_widgets/progress_manager/progress_message.dart';
 
 Future<T?> showProgressDialog<T>({
   required BuildContext context,
@@ -91,9 +91,6 @@ class _ProgressDialogState extends State<ProgressDialog> {
     if (_progress == null) {
       return Text('Preparing...');
     }
-    if (_progress!.type == ProgressMessageType.progress) {
-      return Text(_progress!.message);
-    }
     return Column(
       spacing: 4,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,19 +119,20 @@ class _ProgressDialogState extends State<ProgressDialog> {
 
   List<Widget> get _actions {
     return [
-      !isDone
-          ? TextButton(
-              onPressed: () {
-                widget.progressManager.cancel();
-              },
-              child: Text('Cancel'),
-            )
-          : TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Close'),
-            ),
+      if (!isDone)
+        TextButton(
+          onPressed: () {
+            widget.progressManager.cancel();
+          },
+          child: Text('Cancel'),
+        )
+      else
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Close'),
+        ),
     ];
   }
 }

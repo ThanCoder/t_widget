@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:t_widgets/src/widgets/index.dart';
+import 'package:t_widgets/src/old_widgets/widgets/index.dart';
 
 class TImage extends StatelessWidget {
   final String source;

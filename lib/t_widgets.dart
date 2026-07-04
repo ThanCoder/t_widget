@@ -3,24 +3,26 @@ library;
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
-import 'package:t_widgets/src/theme/p_brightness_services.dart';
 
-export 'src/choosers/index.dart';
-export 'src/dialogs/index.dart';
-export 'src/downloader/index.dart';
-export 'src/functions/index.dart';
-export 'src/menu/index.dart';
-export 'src/pages/index.dart';
-export 'src/progress_manager/index.dart';
-export 'src/services/index.dart';
-export 'src/t_sort/index.dart';
-export 'src/theme/index.dart';
-export 'src/types/index.dart';
-export 'src/views/index.dart';
-export 'src/widgets/index.dart';
-export 'src/extensions/index.dart';
+export 'src/news/partials/material_theme_provider.dart';
+export 'src/news/partials/sort_provider.dart';
 
-export 'src/extensions/t_widgets_extensions.dart'
+export 'src/old_widgets/choosers/index.dart';
+export 'src/old_widgets/dialogs/index.dart';
+export 'src/old_widgets/downloader/index.dart';
+export 'src/old_widgets/functions/index.dart';
+export 'src/old_widgets/menu/index.dart';
+export 'src/old_widgets/pages/index.dart';
+export 'src/old_widgets/progress_manager/index.dart';
+export 'src/old_widgets/services/index.dart';
+export 'src/old_widgets/t_sort/index.dart';
+export 'src/old_widgets/theme/index.dart';
+export 'src/old_widgets/types/index.dart';
+export 'src/old_widgets/views/index.dart';
+export 'src/old_widgets/widgets/index.dart';
+export 'src/old_widgets/extensions/index.dart';
+
+export 'src/old_widgets/extensions/t_widgets_extensions.dart'
     hide
         TWidgetsDoubleExtension,
         TWidgetsFileExtension,
@@ -72,10 +74,6 @@ class TWidgets {
     bool initialThemeServices = false,
   }) async {
     isDebugPrint = isDebugPrint;
-    if (initialThemeServices) {
-      WidgetsFlutterBinding.ensureInitialized();
-      PBrightnessServices.instance.init();
-    }
     this.defaultImageAssetsPath = defaultImageAssetsPath;
     this.onCustomDownloadImage = onCustomDownloadImage;
     this.isDarkTheme = isDarkTheme;

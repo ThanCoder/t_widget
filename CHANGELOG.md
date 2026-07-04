@@ -1,3 +1,8 @@
+# 2.7.0
+- Fixed `Some Known Error.`
+- Added `MaterialThemeProvider`
+- Added `SortProvider`
+
 # 2.6.1
 
 - Added `TTextEditingControllerExtension.selectAll`

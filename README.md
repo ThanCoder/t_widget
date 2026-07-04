@@ -23,7 +23,43 @@ await TAppServices.copyText('text');
 final text = await TAppServices.pasteFromClipboard();
 
 ```
+## Sort Provider
+```dart
+SortButton(
+  value: .dateSortItem,
+  list: [.nameSortItem, .dateSortItem, .sizeSortItem],
+),
+```
+## Sort Provider && With Dialog
+```dart
+ SortItem? item = await showModalBottomSheet<SortItem>(
+    context: context,
+    builder: (context) => SortProviderDialog(
+    list: [.nameSortItem, .dateSortItem, .sizeSortItem],
+    value: .nameSortItem,
+    ),
+);
+print('SortItem: $item'); // SortItem: SortItem(id: 1000, title: Text("Name"), isTrue: true, trueTitle: Text("A To Z"), falseTitle: Text("Z To A"))
+```
 
+## MaterialTheme Provider
+```dart
+return MaterialThemeProvider(
+  value: .system,
+  onChanged: (value) {
+    print('changed: $value');
+  },
+  child: Scaffold(
+    appBar: AppBar(title: const Text('Plugin example app')),
+    body: Column(
+      children: [
+        MaterialThemeProviderChooser(),
+        
+      ],
+    ),
+  ),
+);
+```
 ## New Progress Manager
 
 ```Dart

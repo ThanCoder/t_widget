@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:t_widgets/src/dialogs/t_message_dialog.dart';
+import 'package:t_widgets/src/old_widgets/dialogs/t_message_dialog.dart';
 
 
 
